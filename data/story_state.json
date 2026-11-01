@@ -1,5 +1,14 @@
 {
-  "updated": "2026-10-28T15:42:47Z",
-  "unlocked": [],
-  "counters": {}
+  "updated": "2026-10-31T22:18:10.5214950Z",
+  "unlocked": [
+    "toad",
+    "margins"
+  ],
+  "counters": {
+    "checkins": 36,
+    "fed": 650510,
+    "tsath_fills": 7,
+    "messages": 200,
+    "banishes": 31
+  }
 }

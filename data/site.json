@@ -1,6 +1,13 @@
 {
-  "updated": "2026-10-28T15:42:47Z",
+  "updated": "2026-11-01T14:15:06Z",
   "version": "1.0.0",
-  "reason": "first upload",
-  "files": {}
+  "reason": "routine",
+  "files": {
+    "story_chapters.json": "2026-11-01T14:15:06Z",
+    "story_state.json": "2026-11-01T14:15:06Z",
+    "pacts.json": "2026-11-01T14:15:06Z",
+    "circles.json": "2026-11-01T14:15:06Z",
+    "codex.json": "2026-11-01T14:15:06Z",
+    "partners.json": "2026-11-01T14:15:06Z"
+  }
 }
