@@ -1,5 +1,5 @@
 /* =====================================================================================
-   ⛧ THE ELDRITCH LEDGER — embed.js
+   THE ELDRITCH LEDGER — embed.js
    Draws the Eldritzh community pages inside any page (Fourthwall Custom HTML sections).
 
    Fourthwall section (paste once, never again):
@@ -249,7 +249,7 @@
     if (opts.noTitle) return null;
     return el('header', { class: 'eldr-head' }, [
       el('p', { class: 'eldr-tag', text: tag || 'Embrace the Tentacle' }),
-      el('h1', { text: '⛧ ' + title + ' ⛧' }),
+      el('h1', { text: '' + title + '' }),
       intro ? el('p', { class: 'eldr-intro', text: intro }) : null
     ]);
   }
