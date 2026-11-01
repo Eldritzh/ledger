@@ -1,0 +1,117 @@
+[
+  {
+    "id": "prologue",
+    "title": "The Ledger Opens",
+    "text": "No one remembers who first opened the Ledger. It was simply there one night: a black book on a desk that had not held a book before, its pages the colour of old teeth.\n\nThe first name in it was written in a hand no one recognised. The second was yours.\n\nEvery soul who speaks in this place signs it, whether they mean to or not. The ink drinks a little of their sanity and gives back something else. Something that glows faintly in the dark, and itches, and wants to be spent.\n\nThey call it Madness. The Ledger calls it payment."
+  },
+  {
+    "id": "ink",
+    "title": "Ink That Remembers",
+    "unlock": {
+      "counter": "checkins",
+      "value": 150,
+      "hint": "Sign the Ledger 150 times (check-ins)"
+    },
+    "text": "The Ledger keeps more than names.\n\nTurn back far enough and the entries begin to change. Times, at first: the exact second each soul arrived. Then small things nobody wrote down. What they were drinking. Who they were waiting for. The dream they had the night before and did not tell anyone.\n\nThe Keeper tried to burn a page once, to see what would happen. The flames would not take. In the morning the page had grown back, a little thicker, and his own name had been added to the bottom of it in that same unfamiliar hand.\n\nHe stopped trying after that. The Ledger, it seemed, was keeping him too."
+  },
+  {
+    "id": "margins",
+    "title": "Things in the Margins",
+    "unlock": {
+      "counter": "banishes",
+      "value": 30,
+      "hint": "Banish 30 Beings"
+    },
+    "text": "Where there is ink, there are things that crawl along its edges.\n\nThey came through the margins at first, small and curious: a hound made of corners, a wet shape that called itself Wilbur. They wanted what the congregation had. They wanted the Madness.\n\nBut the Ledger had taught its signers something. Speak a thing's true name and it loosens. Speak it fast enough, all together, and it comes apart like wet paper.\n\nEvery banished Being leaves a stain behind, black and slow. The congregation learned to collect it. Ichor, the old books call it. The Ledger seems pleased that they do."
+  },
+  {
+    "id": "toad",
+    "title": "The Toad Beneath",
+    "unlock": {
+      "counter": "fed",
+      "value": 60000,
+      "hint": "Feed Tsathoggua 60,000 in all"
+    },
+    "text": "Below the desk, below the floor, below the stone under the floor, there is a cavern called N'kai, and in it something enormous breathes.\n\nTsathoggua does not hunt. Tsathoggua does not need to. It waits, and the world brings it things.\n\nThe congregation began feeding it out of fear. Now they feed it out of something closer to love. When it is full it sleeps, and when it sleeps its dreams leak upward through the stone and into the Ledger, and the Madness flows a little easier for everyone.\n\nThe Keeper swears he has heard it purr. No one has asked him what a god-toad's purr sounds like. No one wants to know."
+  },
+  {
+    "id": "chant",
+    "title": "Voices in Unison",
+    "unlock": {
+      "counter": "chants",
+      "value": 3,
+      "hint": "Complete 3 chants together (Iä! Iä!)"
+    },
+    "text": "It started as a joke. Someone typed the old words, and someone else answered, and then there were eight voices saying the same thing at the same moment, and the room went very quiet.\n\nThe candles flickered all at once.\n\nThe Ledger recorded it differently from anything before: not as eight names, but as one. A single entry, written in eight hands, overlapping. Underneath, in the unfamiliar script, a single word that no one could read but everyone understood.\n\nAgain."
+  },
+  {
+    "id": "deaths",
+    "title": "The Keeper's Hundred Deaths",
+    "unlock": {
+      "counter": "deaths",
+      "value": 100,
+      "hint": "The Keeper must fall 100 times"
+    },
+    "text": "The Keeper dies a great deal. In the bayou, in the dark, to things with too many teeth and to his own impatience.\n\nEvery death goes in the Ledger. At first they were simple marks. Then the congregation began to mourn, one candle for every fall, and the marks changed into something more like gravestones.\n\nOn the hundredth, the Ledger did something new. It turned its own page and showed him all of them at once: a hundred small deaths laid side by side, a hundred versions of him that did not come back.\n\nHe counted them. All hundred were smiling."
+  },
+  {
+    "id": "candles",
+    "title": "Candles Against the Dark",
+    "unlock": {
+      "counter": "rituals",
+      "value": 10,
+      "hint": "Complete 10 ritual circles"
+    },
+    "text": "A single candle is a small, brave thing. Twelve candles, lit in the right order by twelve different hands, is a door.\n\nThe congregation learned to draw the circle together. When it closes, the Ledger glows from inside, and for a while every word written in it is worth more.\n\nBut every door opens both ways. On the tenth circle, the Keeper noticed something on the far side of the flames, watching. It did not come through. It only looked, and took note of the names of everyone who had lit a candle, and then it went away to wait.\n\nIt is very patient. So is the Ledger."
+  },
+  {
+    "id": "dreamers",
+    "title": "Dreamers Abroad",
+    "unlock": {
+      "counter": "expeditions",
+      "value": 25,
+      "hint": "Return from 25 dream expeditions"
+    },
+    "text": "Seventy steps of light slumber lead down to the Gate of Deeper Slumber, and beyond it lie the Dreamlands.\n\nThe congregation began sending their dreamers through with purses of Madness, to trade in Ulthar and Celephaïs, to haggle with the hooded men of Leng. Most came back richer. Some came back strange. A few did not come back at all, and their entries in the Ledger simply stop, mid-word.\n\nThe returning dreamers all say the same thing, unprompted. That somewhere beyond the Cerenerian Sea there is a black book on a desk, and that its pages are the colour of old teeth, and that their names are in it too."
+  },
+  {
+    "id": "stars",
+    "title": "When the Stars Were Right",
+    "unlock": {
+      "counter": "great_ones",
+      "value": 1,
+      "hint": "Bring down a Great Old One when the stars are right"
+    },
+    "text": "For one night, the stars came right.\n\nSomething rose that the Ledger had no name for, only a shape: a mountain that walked, a sea that stood up. It was not interested in the congregation. It was simply waking, the way the tide simply comes in.\n\nAnd the congregation fought it anyway. Every word, every banishment, every coin of Madness thrown at it chipped a little away, until the stars turned wrong again and it sank back, wounded, into whatever deep it came from.\n\nThe Ledger recorded the night in gold ink. It has not used gold ink before, or since."
+  },
+  {
+    "id": "tome",
+    "title": "The Book Within the Book",
+    "unlock": {
+      "counter": "tomes",
+      "value": 1,
+      "hint": "Bind the Necronomicon from its scattered pages"
+    },
+    "text": "The pages had been falling for months. Out of banished Beings, out of raids, out of the margins of the Ledger itself, loose and singed and written in a script that hurt to look at.\n\nWhen someone finally gathered thirteen and bound them together, the room went cold. It was not a new book. It was the Necronomicon, or a piece of it, and it fit inside the Ledger's spine as if a space had always been waiting there.\n\nNow the Ledger has a second voice. At night, when the stream is dark, the Keeper can hear the two books talking. He cannot make out the words. He is fairly sure they are talking about the congregation. He is fairly sure they are making plans."
+  },
+  {
+    "id": "grudges",
+    "title": "The Things That Remember",
+    "unlock": {
+      "counter": "nemeses_slain",
+      "value": 10,
+      "hint": "Slay 10 nemeses in the deep"
+    },
+    "text": "The dark used to forget. You went down, you lost, you came back up, and whatever beat you went back to whatever it was doing.\n\nNot anymore. Somewhere below, the things that win have started keeping names. They give themselves titles. They wear what they took from you. They wait at the turns of the stair, because they know you will come back down.\n\nTen of them are dead now, hunted by the people they hunted. The Ledger lists each one on its own page, name and epithet and the hand that ended it. The pages are still warm. The Keeper does not like how many blank ones come after."
+  },
+  {
+    "id": "warchief",
+    "title": "The Crown in the Deep",
+    "unlock": {
+      "counter": "warchiefs",
+      "value": 1,
+      "hint": "Bring down a Warchief together"
+    },
+    "text": "One of them grew greater than the rest. It had killed more of the congregation than any other, and the lesser things in the dark began to kneel when it passed. Someone, or something, set a crown of black iron on its head.\n\nThe congregation swore the oath and went down together. They found it on a throne of the things it had taken from them, and it knew every one of their names.\n\nIt fell anyway. The crown rolled down the stair and was never found. The Ledger notes, in a small and careful hand, that the throne was still there afterwards. Empty, for now. Waiting."
+  }
+]

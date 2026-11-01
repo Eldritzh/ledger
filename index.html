@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Eldritch Ledger</title>
+<meta name="description" content="The Eldritzh community pages: the story, chat commands, the Pact Wheel, summoning circles, the Codex and partners.">
+<meta name="robots" content="noindex">
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; background: #07080a; color: #d9d6cc; font: 300 15px/1.5 Montserrat, system-ui, sans-serif; }
+  nav { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 12px 16px; background: #07080af2; border-bottom: 1px solid #1f2328; }
+  nav a { color: #d9d6cc; text-decoration: none; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; border: 1px solid #1f2328; border-radius: 999px; padding: 6px 12px; }
+  nav a:hover, nav a:focus-visible { border-color: #D4AF37; color: #D4AF37; outline: none; }
+  nav a[aria-current="page"] { background: #D4AF37; color: #111; border-color: #D4AF37; font-weight: 600; }
+  main { padding: 16px; }
+  .hint { max-width: 960px; margin: 0 auto 14px; font-size: 13px; color: #9a968b; text-align: center; }
+  .hint code { color: #D4AF37; }
+</style>
+</head>
+<body>
+<!-- Preview page for ledger.eldritzh.com. The real pages live on eldritzh.com (Fourthwall),
+     each as a Custom HTML section: <div data-eldr-page="story"></div><script src="https://ledger.eldritzh.com/embed.js" defer></script> -->
+<nav id="nav" aria-label="Pages"></nav>
+<main>
+  <p class="hint">Preview of the pages that appear on <a href="https://eldritzh.com" style="color:#52B788">eldritzh.com</a>. Fourthwall section: <code>&lt;div data-eldr-page="<span id="pg">story</span>"&gt;&lt;/div&gt;</code> plus the embed script.</p>
+  <div id="mount"></div>
+</main>
+<script>
+  (function () {
+    var pages = [['story', 'The Story'], ['commands', 'Commands'], ['pacts', 'Pact Wheel'], ['circles', 'Circles'], ['codex', 'Codex'], ['partners', 'Partners']];
+    var q = new URLSearchParams(location.search), cur = (q.get('page') || 'story').toLowerCase();
+    var nav = document.getElementById('nav');
+    pages.forEach(function (p) {
+      var a = document.createElement('a');
+      a.href = '?page=' + p[0]; a.textContent = p[1];
+      if (p[0] === cur) a.setAttribute('aria-current', 'page');
+      nav.appendChild(a);
+    });
+    document.getElementById('pg').textContent = cur;
+    var d = document.getElementById('mount');
+    d.setAttribute('data-eldr-page', cur);
+    if (q.get('game')) d.setAttribute('data-eldr-game', q.get('game'));
+    var s = document.createElement('script');
+    s.src = 'embed.js'; s.defer = true;
+    document.body.appendChild(s);
+  })();
+</script>
+</body>
+</html>
