@@ -1,13 +1,14 @@
 {
-  "updated": "2026-11-01T14:15:06Z",
+  "updated": "2026-11-01T14:43:40Z",
   "version": "1.0.0",
-  "reason": "routine",
+  "reason": "!web push",
   "files": {
     "story_chapters.json": "2026-11-01T14:15:06Z",
     "story_state.json": "2026-11-01T14:15:06Z",
     "pacts.json": "2026-11-01T14:15:06Z",
     "circles.json": "2026-11-01T14:15:06Z",
     "codex.json": "2026-11-01T14:15:06Z",
-    "partners.json": "2026-11-01T14:15:06Z"
+    "partners.json": "2026-11-01T14:15:06Z",
+    "commands.md": "2026-11-01T14:43:40Z"
   }
 }
