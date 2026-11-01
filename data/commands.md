@@ -2,7 +2,6 @@
 
 *Madness is earned by chatting, checking in, banishing Beings and supporting the stream. Pacts and Eldritch Pacts are rarer, and worth more. Most commands work on Twitch, YouTube and Kick.*
 
-(Master copy, updated 28 Oct 2026: sounds, summoning circles, the Gilded Merchant, Beings that stir before they appear, and happy hours that stack. 29 Oct: lines marked *(new)* are built but not switched on yet: nemesis hunts and trophies, timed challenges, treasure goblins.)
 
 ## 📜 Your Ledger
 

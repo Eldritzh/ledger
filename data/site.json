@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-01T14:43:40Z",
+  "updated": "2026-11-01T14:45:03Z",
   "version": "1.0.0",
   "reason": "!web push",
   "files": {
@@ -9,6 +9,6 @@
     "circles.json": "2026-11-01T14:15:06Z",
     "codex.json": "2026-11-01T14:15:06Z",
     "partners.json": "2026-11-01T14:15:06Z",
-    "commands.md": "2026-11-01T14:43:40Z"
+    "commands.md": "2026-11-01T14:45:03Z"
   }
 }
