@@ -1,4 +1,27 @@
 {
-  "updated": "2026-10-22T20:12:16Z",
-  "partners": []
+  "updated": "2026-11-02T18:24:46Z",
+  "partners": [
+    {
+      "id": "g-portal",
+      "name": "G-Portal",
+      "label": "Ad",
+      "blurb": "",
+      "link": "",
+      "logo": "logos/g-portal.png",
+      "codes": [],
+      "commands": [],
+      "circles": []
+    },
+    {
+      "id": "wehype",
+      "name": "WeHype",
+      "label": "Ad",
+      "blurb": "",
+      "link": "",
+      "logo": "logos/wehype.png",
+      "codes": [],
+      "commands": [],
+      "circles": []
+    }
+  ]
 }
