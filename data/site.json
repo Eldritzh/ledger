@@ -1,14 +1,19 @@
 {
-  "updated": "2026-11-04T19:34:52Z",
-  "version": "1.0.0",
-  "reason": "story",
+  "updated": "2026-11-04T19:50:52Z",
+  "version": "1.1.0",
+  "reason": "routine",
   "files": {
     "story_chapters.json": "2026-11-04T19:34:52Z",
     "story_state.json": "2026-11-04T19:34:52Z",
     "pacts.json": "2026-11-02T18:44:26Z",
     "circles.json": "2026-11-02T21:26:23Z",
-    "codex.json": "2026-11-02T21:26:23Z",
+    "codex.json": "2026-11-04T19:50:52Z",
     "partners.json": "2026-11-02T18:29:25Z",
-    "commands.md": "2026-11-04T19:34:52Z"
-  }
+    "commands.md": "2026-11-04T19:34:52Z",
+    "guide.md": "2026-11-04T19:50:52Z",
+    "sounds.json": "2026-11-04T19:50:52Z",
+    "bestiary.json": "2026-11-04T19:50:52Z",
+    "congregation.json": "2026-11-04T19:50:52Z"
+  },
+  "staffApi": "https://forge-web.eldritzh.com"
 }
