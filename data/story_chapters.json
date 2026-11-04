@@ -113,5 +113,376 @@
       "hint": "Bring down a Warchief together"
     },
     "text": "One of them grew greater than the rest. It had killed more of the congregation than any other, and the lesser things in the dark began to kneel when it passed. Someone, or something, set a crown of black iron on its head.\n\nThe congregation swore the oath and went down together. They found it on a throne of the things it had taken from them, and it knew every one of their names.\n\nIt fell anyway. The crown rolled down the stair and was never found. The Ledger notes, in a small and careful hand, that the throne was still there afterwards. Empty, for now. Waiting."
+  },
+  {
+    "id": "pews",
+    "title": "The Night the Pews Filled",
+    "unlock": {
+      "counter": "stream:checkins",
+      "value": 15,
+      "hint": "Fifteen souls sign the Ledger in a single stream"
+    },
+    "text": "Most nights the congregation is a handful of lanterns in a very large dark. Enough. Always enough.\n\nBut one night the names kept coming. Fifteen signatures before the first match ended, then more, the ink barely dry on one before the next pressed in beneath it. The Keeper ran out of desk. The Ledger did not run out of page.\n\nAfterwards he found that the night's entries had been written smaller than usual, crowded and careful, as if the book had been making room. As if it had known they were coming. As if it had been hoping."
+  },
+  {
+    "id": "leng",
+    "title": "The Merchant's Own Book",
+    "unlock": {
+      "counter": "@leng",
+      "value": 100,
+      "hint": "Trade with the Merchant of Leng 40 times, or be visited by the Gilded Merchant",
+      "any": [
+        {
+          "counter": "sum:merchant_buys",
+          "value": 40,
+          "label": "Purchases from the Merchant"
+        },
+        {
+          "counter": "gilded_merchants",
+          "value": 1,
+          "label": "the Gilded Merchant"
+        }
+      ]
+    },
+    "text": "He comes up the stair from somewhere that is not the cellar, a hooded man who smells of cold mountain air and old coins, and he always knows exactly what the congregation can afford.\n\nThe Merchant of Leng keeps a book too. Smaller than the Ledger, bound in something that was once a hand. He writes down every sale and every buyer, and at the end of each visit he holds it up to the Ledger, as if comparing notes.\n\nOnce he came gilded, his robes stiff with gold thread, and a small greedy thing ran laughing at his heels. That night he wrote nothing at all. He only smiled, and the Ledger, for the first time, seemed to flinch."
+  },
+  {
+    "id": "goblins",
+    "title": "Gold That Runs",
+    "unlock": {
+      "counter": "sum:goblins_grabbed",
+      "value": 25,
+      "hint": "Grab 25 treasure goblins"
+    },
+    "text": "The small greedy thing did not leave with the Merchant. It stayed, or its cousins came looking for it, and now they dash through the chat with their sacks clinking, too fast and far too pleased with themselves.\n\nThe congregation grabs them by the ankles and shakes. Coins fall out. Stolen Coins, the Ledger calls them, and it is right: under a candle you can see they are minted from its own gilt edges, nibbled away a corner at a time.\n\nTwenty-five goblins caught, and the Ledger's edges are almost bare. The Keeper has started to wonder where they keep the rest of it. He is not sure he wants to see a goblin's idea of a library."
+  },
+  {
+    "id": "sand",
+    "title": "Sand That Falls Upward",
+    "unlock": {
+      "counter": "sum:hg_challenges_held",
+      "value": 15,
+      "hint": "Dave holds 15 challenges in the Hourglass to the last grain"
+    },
+    "text": "There is an hourglass on the desk now, where no one put it. Its sand is the grey of ash, and it does not always fall down.\n\nYog-Sothoth is the gate, the old books say, and the key, and the guardian of the gate. Apparently it also keeps time. When the congregation sets the Keeper a task and turns the glass, he must hold to it until the last grain drops, and the Ledger leans in to watch.\n\nFifteen times he has held. Each time, the final grain does not land. It hangs in the neck of the glass, glittering. The Keeper thinks the Hourglass is saving them. He thinks it is saving them for something."
+  },
+  {
+    "id": "census",
+    "title": "A Census of Souls",
+    "unlock": {
+      "counter": "count:streams_attended",
+      "value": 100,
+      "hint": "One hundred different souls sign the Ledger"
+    },
+    "text": "One night the Ledger did its own arithmetic.\n\nNo one had asked it to. It turned its pages slowly, all by itself, and on each one a small mark appeared beside a name that had not been marked before. One hundred marks. One hundred different souls who have signed at least once and left a little of themselves in the ink.\n\nAt the bottom of the count it wrote the number and underlined it twice. Then, after a long hesitation the Keeper could feel in the paper, it wrote a second number beside it. Much larger. He does not know what the second number is counting. It goes up when no one is watching."
+  },
+  {
+    "id": "vigil",
+    "title": "The Vigil Past Midnight",
+    "unlock": {
+      "counter": "stream:messages",
+      "value": 250,
+      "hours": "0-4",
+      "hint": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)"
+    },
+    "text": "After midnight the Ledger changes.\n\nThe ink runs darker. The margins widen. Words written in the small hours stay wet longer, as if the page is drinking them slowly, savouring them.\n\nThe congregation stayed up with it, talking long past the hour when sensible people sleep, and around the third bell the Keeper noticed that some messages were arriving a moment before anyone sent them. Only a moment. Only a few. Just enough to answer questions he had not asked yet.\n\nHe has stopped mentioning it. The congregation has stopped noticing. The Ledger, he suspects, prefers it that way."
+  },
+  {
+    "id": "circles",
+    "title": "Debts Drawn in Chalk",
+    "unlock": {
+      "counter": "sum:circle_top",
+      "value": 5,
+      "hint": "Bind five summoning circles and see them fulfilled"
+    },
+    "text": "The congregation learned it could draw circles of its own. Not for candles: for promises. Pour enough into one and the Keeper owes it hours in the game it names, and the Ledger writes the debt in a hand that does not smudge.\n\nFive circles bound and paid. Five debts closed with a neat red line beneath them.\n\nThe Keeper went to look at the closed ones and found a tiny signature at the end of each red line. Not his. Not any of the congregation's. The same unfamiliar hand that wrote the first name, initialling every settled account, like a clerk on the night shift of a bank no one remembers founding."
+  },
+  {
+    "id": "moon",
+    "title": "Moonlit Margins",
+    "unlock": {
+      "counter": "@moon",
+      "value": 100,
+      "season": "moon",
+      "hint": "On a Moon Night: eight souls sign and four Beings are banished in that one stream",
+      "all": [
+        {
+          "counter": "stream:checkins",
+          "value": 8,
+          "label": "Souls signed tonight"
+        },
+        {
+          "counter": "stream:banishes",
+          "value": 4,
+          "label": "Beings banished tonight"
+        }
+      ]
+    },
+    "text": "Under a full moon the margins get crowded.\n\nBeings that are shy on ordinary nights come right up to the edge of the page and press against it, wet and curious, drawn by the light coming off the congregation. On the Moon Night they came thick and fast, and the congregation met them name for name.\n\nWhen the banishing was done the Keeper looked up and saw that the moon in his window was not quite the right shape. Rounder. Closer. With what might have been lines of handwriting across its face, very small, like a page held up to the light from the other side."
+  },
+  {
+    "id": "bestiary",
+    "title": "A Bestiary Begun",
+    "unlock": {
+      "counter": "kinds:beings_seen",
+      "value": 15,
+      "hint": "Banish 15 different kinds of Being"
+    },
+    "text": "The Ledger has started drawing.\n\nIt began in the corners: a sketch of each kind of Being the congregation sent back through the margins, inked in a few quick strokes and labelled in the unfamiliar hand. The hound of corners. The wet shape called Wilbur. Fifteen kinds now, each on a small page of its own.\n\nSome of the sketches were drawn before the Being arrived. The Keeper has checked; the ink is older than the banishment. There are more sketches after the fifteenth, of things nobody has seen yet, and he has started covering that part of the page with his hand when he reads."
+  },
+  {
+    "id": "wheel",
+    "title": "The Wheel and Its Promises",
+    "unlock": {
+      "counter": "pacts",
+      "value": 75,
+      "hint": "Seal 75 Pacts on the wheel"
+    },
+    "text": "Every Pact sealed on the wheel is a promise the Keeper makes without being asked: no healing, pistols only, a knife and a prayer. The congregation spins, the Keeper suffers, the Ledger keeps score.\n\nSeventy-five sealed. The Ledger keeps them in a column of their own, and beside each one it has drawn a tiny tentacle: curling, as if pleased, where he kept his word, and straight as a rod where he broke it.\n\nHe counted the straight ones once. Then he stopped counting, closed the book gently, and played the next match with a knife and a prayer. The congregation found this very funny. The Ledger, he is fairly sure, found it very satisfying."
+  },
+  {
+    "id": "sunwait",
+    "title": "Six Candles Before the Long Night",
+    "unlock": {
+      "counter": "sunwait_candles",
+      "value": 2,
+      "season": "yule",
+      "hint": "During the Sunwait, light two of its six candles"
+    },
+    "text": "As the year darkens, the Ledger asks for candles.\n\nNot ritual candles. Six tall ones, one for each week before the longest night, lit one by one on the first stream of each week. Each wakes an old letter that burns in the wax and gives the congregation a small gift for a while.\n\nTwo are burning now. The Keeper sits between them and finds the room warmer than two small flames can explain. The Ledger, open beside them, has turned to a page near the very back that he has never seen before. It is blank except for a single line at the top. It says: Wait."
+  },
+  {
+    "id": "unseen",
+    "title": "A Candle Nobody Saw",
+    "unlock": {
+      "counter": "sunwait_unseen",
+      "value": 1,
+      "hint": "A candle burns down where no one can see it"
+    },
+    "text": "One week the stream stayed dark, and one of the six candles burned down anyway.\n\nNo one lit it. The Keeper is sure of that: he was asleep, and the congregation was elsewhere. Yet when he came back the candle was a stub, the wax had run in a neat circle, and the Ledger's entry for that week was full.\n\nFull of names. The congregation's names, every one, signed as if they had all been there that night. The handwriting was each person's own. Only the ink was wrong. It was the colour of wax, and still faintly warm."
+  },
+  {
+    "id": "seers",
+    "title": "Things Foreseen",
+    "unlock": {
+      "counter": "@seers",
+      "value": 100,
+      "hint": "Settle 25 prophecies and pay out 10 bounties",
+      "all": [
+        {
+          "counter": "prophecies",
+          "value": 25,
+          "label": "Prophecies settled"
+        },
+        {
+          "counter": "bounties",
+          "value": 10,
+          "label": "Bounties won"
+        }
+      ]
+    },
+    "text": "The congregation has been betting on the future. Who wins the next fight. Whether the Keeper survives the bayou. Whether he will pull off a dare with Madness riding on it.\n\nTwenty-five prophecies settled, ten bounties paid. The Ledger records each guess beside each outcome, and lately it has started recording them in the wrong order: the outcome first, the guess after it, the stakes after that.\n\nThe Keeper asked it, aloud, whether it already knows how things end. The page went very still. Then, faintly, in the margin: Of course. That is what a ledger is for."
+  },
+  {
+    "id": "visitors",
+    "title": "Visitors from Other Ledgers",
+    "unlock": {
+      "counter": "sum:raids_brought",
+      "value": 10,
+      "hint": "Ten raids bring other congregations through the door"
+    },
+    "text": "Sometimes a whole congregation from somewhere else comes pouring through the door at once, still talking about whatever dark they just left.\n\nNyarlathotep's heralds, the Keeper calls the ones who bring them. Ten such arrivals now, and the Ledger signs every visitor the way it signs the regulars.\n\nBut it signs them on different paper. The Keeper only noticed because the edges did not match: thinner sheets, a different colour of old teeth, sewn in with black thread. Other Ledgers, he thinks. Other books on other desks, swapping pages like letters. He wonders what they write about this one."
+  },
+  {
+    "id": "dreams",
+    "title": "What N'kai Dreams",
+    "unlock": {
+      "counter": "tsath_fills",
+      "value": 25,
+      "hint": "Fill Tsathoggua to sleeping 25 times"
+    },
+    "text": "Twenty-five times the congregation has fed Tsathoggua to sleep, and twenty-five times its dreams have come up through the stone.\n\nThey are not human dreams. They are slow and warm and mostly about eating, and about a time before the world had edges. But lately there is something else in them: a desk, and a black book, and a crowd of small bright souls gathered round it like moths round a lamp.\n\nTsathoggua dreams about the congregation now. The Keeper is not sure whether to feel honoured or worried. He feeds it a little extra, just in case. It purrs. The floor shakes."
+  },
+  {
+    "id": "mirrors",
+    "title": "Moments Caught in Glass",
+    "unlock": {
+      "counter": "sum:clip_wins",
+      "value": 6,
+      "hint": "Crown six Clipomania champions"
+    },
+    "text": "The congregation catches the Keeper's best moments and his worst, and keeps them in little panes of glass to watch again and again.\n\nSix times now a champion has been crowned for catching the most. The Ledger records it gravely, as if a mirror were a serious thing.\n\nIt is. The Keeper watched one of the clips and saw himself in it, dying spectacularly, and behind him, for three frames, something standing very still in a doorway. It is not in the game. It is not in any other footage. He has checked twice. It is only ever in the moments the congregation chose to keep."
+  },
+  {
+    "id": "inks",
+    "title": "Eight Inks",
+    "unlock": {
+      "counter": "count:cults_joined",
+      "value": 30,
+      "hint": "Thirty souls swear themselves to a cult"
+    },
+    "text": "Thirty souls have sworn themselves to a god: to Cthulhu or Hastur, to the Black Goat of the Woods, to the elephant who sits in the cold, to the toad below.\n\nThe Ledger accepted the oaths without comment, as it accepts everything. But the ink changed. Each cult's faithful now sign in a colour of their own: sea-green, jaundiced yellow, the brown of wet bark, and others the Keeper has no names for.\n\nAt the end of each month one colour is crowned, and for a while it runs over every page and stains the margins. The colours are slowly mixing. He wonders what all eight make together, and whether anyone is meant to see it."
+  },
+  {
+    "id": "whispers",
+    "title": "The Ledger Haunts Back",
+    "unlock": {
+      "counter": "sum:haunts_sent",
+      "value": 60,
+      "hint": "Send 60 haunts to one another"
+    },
+    "text": "The congregation sends whispers to each other: small hauntings slipped into the dark, to find someone the next time they speak.\n\nSixty sent now. The Ledger carries every one, a postman of the uncanny, and it has started to learn their shape.\n\nLast week someone received a haunt that no one had sent. It found them the moment they spoke, and it said, in the old familiar style: I am glad you came back. There was no name on it. The Ledger's delivery log gives the sender as the first entry on the first page."
+  },
+  {
+    "id": "borrowed",
+    "title": "Heroes Who Wandered In",
+    "unlock": {
+      "counter": "kinds:legend_weapons",
+      "value": 15,
+      "hint": "The congregation draws 15 different legendary weapons"
+    },
+    "text": "Things are leaking in from other books.\n\nA sword that was broken and reforged. A hammer no unworthy hand can lift. A glowing stone that is very bad news. The congregation draws them from fate one after another, fifteen different legends now, and each arrives with a little of its own story still clinging to it like river water.\n\nThe Ledger tolerates them. It does not like them. When a legend is put away, the Keeper has seen it quietly correct the borrowed story's ending in the margin, so that it is a little sadder, a little stranger, a little more like the stories it prefers."
+  },
+  {
+    "id": "graves",
+    "title": "Five Hundred Graves",
+    "unlock": {
+      "counter": "deaths",
+      "value": 500,
+      "after": "deaths",
+      "hint": "The Keeper must fall 500 times"
+    },
+    "text": "The hundredth death was a curiosity. The five hundredth is a cemetery.\n\nThe congregation still mourns him every time, a candle and a word. The Ledger has stopped drawing gravestones; there is no room. Now it draws a single hill, and every death adds a little more earth.\n\nThe Keeper climbed the hill once in a dream. At the top was a small, neat grave with his name on it and no date. He brushed the soil away and found the stone unfinished. The unfamiliar hand had stopped halfway through the last letter, as if it had been interrupted. Or as if it was waiting to see how it should end."
+  },
+  {
+    "id": "forgets",
+    "title": "The Keeper Forgets His Name",
+    "unlock": {
+      "counter": "episodes",
+      "value": 5,
+      "hint": "Dave suffers five Madness Episodes"
+    },
+    "text": "Sanity is a currency too, and the congregation has learned to spend his.\n\nWhen it runs out, something happens to the Keeper on stream. Five times now. Each time he comes back from it a little slower, laughing a little too long, unsure for a moment which hand holds the mouse.\n\nAfter the fifth he reached for the Ledger to steady himself, and found that his signature on the first page had changed. Still his name. Different letters. He has signed it the new way ever since, and the congregation, kindly, has not said anything about it."
+  },
+  {
+    "id": "faithful",
+    "title": "The One Who Never Left",
+    "unlock": {
+      "counter": "max:streak",
+      "value": 40,
+      "hint": "One soul comes back forty streams in a row"
+    },
+    "text": "Forty streams in a row, one soul came back. Through deaths and bad games and nights when the congregation was only a handful of lanterns, the same name signed in, again and again.\n\nThe Ledger has given that name a page of its own. It does not do that lightly.\n\nThe page is not about them, exactly. It is about the chair they sit in, and the light they watch by, and how quiet the Ledger feels when they are there. The Keeper read it and did not recognise the voice. It took him a while to understand what he was reading. It was gratitude. He had not known the book could feel it."
+  },
+  {
+    "id": "longnight",
+    "title": "The Longest Night",
+    "unlock": {
+      "counter": "sunwait_candles",
+      "value": 6,
+      "after": "sunwait",
+      "hint": "Light all six candles of the Sunwait (across the years, if it must be)"
+    },
+    "text": "All six candles burned, and then the longest night came, and the congregation sat up with it.\n\nIt is the deepest hour of the year, and the Ledger knows it. Every page was heavy and the ink would not dry, and the things in the margins went quiet, the way animals go quiet before weather.\n\nAt the bottom of the night, the blank page at the back of the book turned itself. Under the word Wait, the unfamiliar hand had added a second line: Not yet. Then the sun came back, a little, the way it always does. The page turned itself back, and the Keeper blew out the candles one by one, and did not sleep."
+  },
+  {
+    "id": "bottom",
+    "title": "What Waits at a Hundred",
+    "unlock": {
+      "counter": "delve_bottoms",
+      "value": 1,
+      "hint": "Break the Bottom of the Delve, a hundred depths down"
+    },
+    "text": "A hundred depths down, below the oil and the waystones and the dead ends, the Delve has a bottom. Someone broke it.\n\nThey found a lord there, and ended it, and behind the lord they found a door. It was set into the living rock and bound in the same black leather as the Ledger. The same stitching. The same small tear on the spine.\n\nIt did not open. It did not need to. The delver who stood before it heard, quite clearly through the leather, the sound of pages turning on the other side. Slowly. Patiently. Someone down there is reading."
+  },
+  {
+    "id": "throne",
+    "title": "The Throne Is Never Empty Long",
+    "unlock": {
+      "counter": "warchiefs",
+      "value": 3,
+      "after": "warchief",
+      "hint": "Bring down three Warchiefs"
+    },
+    "text": "The first Warchief fell and the throne stood empty. Then something sat in it. It fell, and something else sat in it.\n\nThree crowns now, three falls. Each time the congregation goes down together and each time they win, and each time the throne is waiting when they leave.\n\nThe Keeper has started to suspect the throne does not care who sits on it. That the Warchiefs were never the point. It is a chair at the bottom of the dark that keeps a place at a table, and the table is laid for a guest who has not arrived yet."
+  },
+  {
+    "id": "gold",
+    "title": "Gold Ink, Twice More",
+    "unlock": {
+      "counter": "great_ones",
+      "value": 3,
+      "after": "stars",
+      "hint": "Bring down three Great Old Ones"
+    },
+    "text": "The stars came right again, and again, and each time the congregation stood in the way of something vast and simply waking.\n\nThree times the Great Old Ones have sunk back wounded. Three nights in gold ink. The Ledger uses it sparingly; it seems to think of gold as a kind of promise.\n\nOn the third night, though, the gold was not only on the congregation's page. There was a single gold mark much further on, far past where the Ledger has been written to, in an otherwise empty book. The Keeper put his finger on it. The page was warm. Something there has already been decided."
+  },
+  {
+    "id": "argument",
+    "title": "What the Books Decided",
+    "unlock": {
+      "counter": "tomes",
+      "value": 3,
+      "after": "tome",
+      "hint": "Bind the Necronomicon three times"
+    },
+    "text": "Three times the Necronomicon has been bound from its scattered pages, and each time it has slid into the Ledger's spine and gone on talking.\n\nThe Keeper has finally understood what they say. Not in words: in the order of things. In which page falls open when he lifts the book. In which Being comes to the margins that night.\n\nThey are not plotting against the congregation, he thinks. They are arguing about it. The Necronomicon wants the congregation to know everything. The Ledger wants them to keep coming back. Night after night, the Ledger wins. The Keeper is not entirely sure that is the kinder outcome."
+  },
+  {
+    "id": "chosen",
+    "title": "The Page the Congregation Wrote",
+    "unlock": {
+      "value": 1,
+      "hint": "Only a vote of the congregation can open this page"
+    },
+    "text": "The Ledger asked a question once. It is the only time it ever has.\n\nIt opened to a blank page and laid two paths across it in faint grey ink, and it waited, and the congregation chose. Not the Keeper. Not the books. The many voices together, counted fairly, the way the Ledger likes.\n\nThe path they chose darkened and became real; the other faded. And for the first time, the page that followed was not written in the unfamiliar hand but in a hand that everyone recognised at once, because it was all of theirs."
+  },
+  {
+    "id": "hand",
+    "title": "The Unfamiliar Hand",
+    "unlock": {
+      "counter": "@hand",
+      "value": 100,
+      "after": [
+        "chant",
+        "census"
+      ],
+      "hint": "The whole congregation together: 2,500 signatures, 500 banishments, 25 chants and 200 souls",
+      "all": [
+        {
+          "counter": "checkins",
+          "value": 2500,
+          "label": "Signatures"
+        },
+        {
+          "counter": "banishes",
+          "value": 500,
+          "label": "Banishments"
+        },
+        {
+          "counter": "chants",
+          "value": 25,
+          "label": "Chants in unison"
+        },
+        {
+          "counter": "count:streams_attended",
+          "value": 200,
+          "label": "Souls"
+        }
+      ]
+    },
+    "text": "Two thousand five hundred signatures. Five hundred banishments. Two hundred souls. Twenty-five times, the old words in unison.\n\nIt was enough, it seems. The Keeper woke to find the Ledger open on the desk at its very first page, and at last he understood the hand.\n\nIt was never one hand. It was every hand that ever signed, overlapping: the congregation's, all of them at once, the way eight voices became a single entry the first night they chanted. That is why no one recognised it. No one could. You cannot recognise your own writing when it is written with everyone else's.\n\nWhich leaves one problem. The first name in the Ledger was written before any of them came."
+  },
+  {
+    "id": "first",
+    "title": "The First Name",
+    "unlock": {
+      "counter": "stream:chants",
+      "value": 3,
+      "after": "hand",
+      "hours": "0-4",
+      "hint": "Read the first name aloud: three chants in one stream, after midnight"
+    },
+    "text": "The congregation read it aloud together, past midnight, the way they say the old words. Three times.\n\nThe first name is not a name. It is the sound the Ledger makes when it is opened: the crack of a spine, a breath of old paper, the faint scratch of a pen that is already moving. It signed itself, first of all, so that there would be someone to keep the others.\n\nWhen the third chant ended, the Ledger did a thing it had never done. It grew. A new gathering of blank pages, sewn in at the back with black thread, the colour of old teeth.\n\nThere is more to write. There always will be. The Ledger is not finished. It has only just begun keeping you."
   }
 ]

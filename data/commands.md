@@ -59,6 +59,8 @@ A run into the dark that lasts: push deeper five depths at a time, carry your ha
 | `!delve deep 2000 from 40` | Start at a waystone you've reached (one every 10 depths, yours forever) | 
 | `!delve shallow 500 lure:grave` | Bring a lure: mostly that enemy type, more of its materials, and its lord waits at the bottom | 
 | `!deepest` | The deepest delvers, and who has broken the Bottom | 
+| `!cast hand @user` | Cast a spell on someone in the Delve. `!spells` lists them: the Hand takes a wound (never the last), Dim the Lantern steals oil, the Yellow Sign darkens their next push, Tsathoggua's Slumber heals one of their wounds, the Veil spares their next lost fight. Costs Pacts and Void Dust. If they're not in the Delve, nothing is spent | 
+| `!cast @user` | A wild cast: a random spell for 1 Pact. It might help them. It might hit you | 
 
 Three wounds and you fall: the dark keeps your stake and your haul, and a fifth of it stays where you fell for the next delver to find. A **Ward** you carry in drags you out with your whole stake (a Lesser Ward with half). Hit a **dead end** without a **Rope** and the way down is shut: you have to surface, with your stake and your haul, and the run is over. Carry Ropes (or roll Pathfinder) if you mean to go deep. At depth 100 waits **the Bottom**: beat its lord to double your haul. Oil comes back 1 every 30 minutes, up to 8. Forge Torches, Ropes, Salves, Smoke, Lockpicks and Waystone Shards in Discord (category Delve), or buy them from the Merchant, to go deeper.
 
@@ -102,7 +104,7 @@ The nemesis with the most victims becomes the **Warchief**. Once a month the str
 | Command | What it does | 
 | ----- | ----- | 
 | `!rites` | The list of rites | 
-| `!sign` | Your Elder Signs. They turn aside curses and binds by themselves. `!sign use` burns away your curses now | 
+| `!sign` | Your Elder Signs. They turn aside curses, binds and hostile spells by themselves. `!sign use` burns away your curses now | 
 | `!read` | Your Necronomicon Pages. `!read tome` binds 13 pages into the book for great rewards | 
 | `!whisper` | Spend a Page for a word from the void, and a gift | 
 | `!ritual` | Open a ritual circle (3 Ritual Candles) | 
@@ -196,6 +198,36 @@ If Dave holds a challenge to the end, the Pact Wheel pool grows. If he breaks it
 
 During a happy hour it's a **gold rush**: goblins everywhere, and every catch pays double.
 
+## 🕯 The Remembrance
+
+| Command | What it does | 
+| ----- | ----- | 
+| `!devotion` | How many stream days the Old Ones have seen you this month, your chances in the next Remembrance, and any gift waiting for you | 
+| `!devotion last` | Last month's Remembrance: the Heralds and who got what | 
+| `!devotion gifts` | The gifts of the Old Ones | 
+
+Keep showing up and the Old Ones notice. Chat on **3 different stream days** in a month and you are *devoted*: when the next month begins, every devoted soul gets Madness, the three most devoted become **Heralds of the Old Ones** for the month with a rare gift, and a quarter of the rest win a gift (a free Pact, a Ward, Ichor, a Ritual Candle, a Madness blessing…). Subs, gifted subs, bits, raids and super chats count as devotion too and add extra chances, never a bigger gift. Gifts that bless your Madness or luck wait for you and wake the next time you chat while we're live.
+
+## 🐙 The Esoteric Order of the Tentacle
+
+| Command | What it does | 
+| ----- | ----- | 
+| `!order` | Your rank in the Order, how many stream days you have, how many to the next rank, and this week's Pact | 
+| `!order <user>` | Someone else's rank and circle | 
+| `!order ranks` | The five circles and what they give | 
+| `!order top` | The five highest-ranked | 
+
+Every stream day you chat on climbs you through **25 ranks in 5 circles**, from *Seeker* to *Hierarch of the Esoteric Order*. Your own sub adds a bonus day once a month. Rank never drops, but from the Lantern Circle on you need **3 stream days in the last 30** to keep your perks; otherwise you're *astray* until you return. At rank 13, *Oathsworn*, you swear the Oath and the Order tithes you **a Pact every week** you show up; in the last circle, an **Eldritch Pact** every month as well. Your rank shows on your check-in line.
+
+## 🕯 Seasons & the Sunwait
+
+| Command | What it does | 
+| ----- | ----- | 
+| `!season` | The season upon us and when it ends, or the next one | 
+| `!sunwait` | The Sunwait candles before Yule: how many are lit and which rune is awake this week | 
+
+Some nights are different. On a **Moon Night** (around every full moon) the omens run wild, Beings stir sooner and Madness flows a little thicker; during **the Sunwait**, the six weeks before the winter solstice, the first stream of each week lights a candle whose rune blesses everyone for two hours. Some pages of the Ledger only open in these seasons.
+
 ## 🔊 Sounds
 
 | Command | What it does | 
@@ -233,6 +265,8 @@ Some sounds are cheaper (or free) for subs, members and the special folk. Happy 
 | Command | What it does | 
 | ----- | ----- | 
 | `!fx` | Spend Pacts on an effect that hits the stream | 
+| `!fx roll` | Rift Roulette: one Pact for a random effect (it can bite back) | 
+| `!seal` | Spend an Elder Sign to stop an Eldritch effect before it lands | 
 | `!claim <code>` | Bind a Ko-fi or Fourthwall offering to your account | 
 | `!partners` | The stream's current partners and their commands | 
 | `!stirring` | How close the stars are to a hype train | 
@@ -287,6 +321,7 @@ On Twitch, prophecies also appear as a **Twitch prediction** (bet Sanity there) 
 | `!haunt @user <message>` | 1 Pact: a whisper that finds them the next time they speak | 
 | `Iä! Iä!` | Chant the old words in chat. When enough voices chant together, something answers | 
 | `!story` | The Eldritch Ledger, the community's story. New pages unlock as you play | 
+| `!story goals` | The three sealed pages closest to opening, and how far along each is | 
 
 ## 🧠 Dave's Sanity
 
@@ -306,7 +341,7 @@ On Twitch, prophecies also appear as a **Twitch prediction** (bet Sanity there) 
 
 In **#gibbering-forge**: `/forge satchel`, `/forge recipes`, `/forge craft <recipe>`, `/forge salvage <item>`, `/forge link`. Crafted Wards, Elder Signs and Candles arrive in your stream relics within a minute.
 
-In **#descent**: `!descend`, `!delve`, `!push`, `!surface`, or `/delve`, `/push`, `/surface`, `/deepest`. Your run card has Push, Surface and Salve buttons.
+In **#descent**: `!descend`, `!delve`, `!push`, `!surface`, `!cast`, or `/delve`, `/push`, `/surface`, `/deepest`, `/cast`, `/spells`. Your run card has Push, Surface and Salve buttons.
 
 ## 🛠 Moderator & Staff Commands
 

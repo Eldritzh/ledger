@@ -1,8 +1,9 @@
 {
-  "updated": "2026-11-04T05:45:10.9762354Z",
+  "updated": "2026-11-04T19:34:52.0355613Z",
   "unlocked": [
     "toad",
-    "margins"
+    "margins",
+    "bottom"
   ],
   "counters": {
     "checkins": 46,
@@ -10,6 +11,480 @@
     "tsath_fills": 8,
     "messages": 375,
     "banishes": 36,
-    "delve_bottoms": 1
+    "delve_bottoms": 1,
+    "chants": 0,
+    "deaths": 0,
+    "rituals": 0,
+    "expeditions": 0,
+    "great_ones": 0,
+    "tomes": 0,
+    "nemeses_slain": 0,
+    "warchiefs": 0,
+    "stream:checkins": 0,
+    "sum:merchant_buys": 0,
+    "gilded_merchants": 0,
+    "@leng": 0,
+    "sum:goblins_grabbed": 0,
+    "sum:hg_challenges_held": 0,
+    "count:streams_attended": 0,
+    "stream:messages": 0,
+    "sum:circle_top": 0,
+    "stream:banishes": 0,
+    "@moon": 0,
+    "kinds:beings_seen": 0,
+    "pacts": 0,
+    "sunwait_candles": 0,
+    "sunwait_unseen": 0,
+    "prophecies": 0,
+    "bounties": 0,
+    "@seers": 0,
+    "sum:raids_brought": 0,
+    "sum:clip_wins": 0,
+    "count:cults_joined": 0,
+    "sum:haunts_sent": 0,
+    "kinds:legend_weapons": 0,
+    "episodes": 0,
+    "max:streak": 0,
+    "@hand": 2,
+    "stream:chants": 0
+  },
+  "progress": {
+    "ink": {
+      "pct": 30.7,
+      "parts": [
+        {
+          "label": "Sign the Ledger 150 times (check-ins)",
+          "have": 46,
+          "need": 150
+        }
+      ],
+      "wait": ""
+    },
+    "chant": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Complete 3 chants together (Iä! Iä!)",
+          "have": 0,
+          "need": 3
+        }
+      ],
+      "wait": ""
+    },
+    "deaths": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "The Keeper must fall 100 times",
+          "have": 0,
+          "need": 100
+        }
+      ],
+      "wait": ""
+    },
+    "candles": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Complete 10 ritual circles",
+          "have": 0,
+          "need": 10
+        }
+      ],
+      "wait": ""
+    },
+    "dreamers": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Return from 25 dream expeditions",
+          "have": 0,
+          "need": 25
+        }
+      ],
+      "wait": ""
+    },
+    "stars": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Bring down a Great Old One when the stars are right",
+          "have": 0,
+          "need": 1
+        }
+      ],
+      "wait": ""
+    },
+    "tome": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Bind the Necronomicon from its scattered pages",
+          "have": 0,
+          "need": 1
+        }
+      ],
+      "wait": ""
+    },
+    "grudges": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Slay 10 nemeses in the deep",
+          "have": 0,
+          "need": 10
+        }
+      ],
+      "wait": ""
+    },
+    "warchief": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Bring down a Warchief together",
+          "have": 0,
+          "need": 1
+        }
+      ],
+      "wait": ""
+    },
+    "pews": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Fifteen souls sign the Ledger in a single stream",
+          "have": 0,
+          "need": 15
+        }
+      ],
+      "wait": ""
+    },
+    "leng": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Purchases from the Merchant or the Gilded Merchant",
+          "have": 0,
+          "need": 40
+        }
+      ],
+      "wait": ""
+    },
+    "goblins": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Grab 25 treasure goblins",
+          "have": 0,
+          "need": 25
+        }
+      ],
+      "wait": ""
+    },
+    "sand": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Dave holds 15 challenges in the Hourglass to the last grain",
+          "have": 0,
+          "need": 15
+        }
+      ],
+      "wait": ""
+    },
+    "census": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "One hundred different souls sign the Ledger",
+          "have": 0,
+          "need": 100
+        }
+      ],
+      "wait": ""
+    },
+    "vigil": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
+          "have": 0,
+          "need": 250
+        }
+      ],
+      "wait": "only between 00:00 and 04:00"
+    },
+    "circles": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Bind five summoning circles and see them fulfilled",
+          "have": 0,
+          "need": 5
+        }
+      ],
+      "wait": ""
+    },
+    "moon": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Souls signed tonight",
+          "have": 0,
+          "need": 8
+        },
+        {
+          "label": "Beings banished tonight",
+          "have": 0,
+          "need": 4
+        }
+      ],
+      "wait": "only during a Moon Night"
+    },
+    "bestiary": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Banish 15 different kinds of Being",
+          "have": 0,
+          "need": 15
+        }
+      ],
+      "wait": ""
+    },
+    "wheel": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Seal 75 Pacts on the wheel",
+          "have": 0,
+          "need": 75
+        }
+      ],
+      "wait": ""
+    },
+    "sunwait": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "During the Sunwait, light two of its six candles",
+          "have": 0,
+          "need": 2
+        }
+      ],
+      "wait": "only during the Sunwait"
+    },
+    "unseen": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "A candle burns down where no one can see it",
+          "have": 0,
+          "need": 1
+        }
+      ],
+      "wait": ""
+    },
+    "seers": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Prophecies settled",
+          "have": 0,
+          "need": 25
+        },
+        {
+          "label": "Bounties won",
+          "have": 0,
+          "need": 10
+        }
+      ],
+      "wait": ""
+    },
+    "visitors": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Ten raids bring other congregations through the door",
+          "have": 0,
+          "need": 10
+        }
+      ],
+      "wait": ""
+    },
+    "dreams": {
+      "pct": 32.0,
+      "parts": [
+        {
+          "label": "Fill Tsathoggua to sleeping 25 times",
+          "have": 8,
+          "need": 25
+        }
+      ],
+      "wait": ""
+    },
+    "mirrors": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Crown six Clipomania champions",
+          "have": 0,
+          "need": 6
+        }
+      ],
+      "wait": ""
+    },
+    "inks": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Thirty souls swear themselves to a cult",
+          "have": 0,
+          "need": 30
+        }
+      ],
+      "wait": ""
+    },
+    "whispers": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Send 60 haunts to one another",
+          "have": 0,
+          "need": 60
+        }
+      ],
+      "wait": ""
+    },
+    "borrowed": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "The congregation draws 15 different legendary weapons",
+          "have": 0,
+          "need": 15
+        }
+      ],
+      "wait": ""
+    },
+    "graves": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "The Keeper must fall 500 times",
+          "have": 0,
+          "need": 500
+        }
+      ],
+      "wait": "after \"The Keeper's Hundred Deaths\""
+    },
+    "forgets": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Dave suffers five Madness Episodes",
+          "have": 0,
+          "need": 5
+        }
+      ],
+      "wait": ""
+    },
+    "faithful": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "One soul comes back forty streams in a row",
+          "have": 0,
+          "need": 40
+        }
+      ],
+      "wait": ""
+    },
+    "longnight": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Light all six candles of the Sunwait (across the years, if it must be)",
+          "have": 0,
+          "need": 6
+        }
+      ],
+      "wait": "after \"Six Candles Before the Long Night\""
+    },
+    "throne": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Bring down three Warchiefs",
+          "have": 0,
+          "need": 3
+        }
+      ],
+      "wait": "after \"The Crown in the Deep\""
+    },
+    "gold": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Bring down three Great Old Ones",
+          "have": 0,
+          "need": 3
+        }
+      ],
+      "wait": "after \"When the Stars Were Right\""
+    },
+    "argument": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Bind the Necronomicon three times",
+          "have": 0,
+          "need": 3
+        }
+      ],
+      "wait": "after \"The Book Within the Book\""
+    },
+    "chosen": {
+      "pct": 0.0,
+      "parts": [],
+      "wait": ""
+    },
+    "hand": {
+      "pct": 2.3,
+      "parts": [
+        {
+          "label": "Signatures",
+          "have": 46,
+          "need": 2500
+        },
+        {
+          "label": "Banishments",
+          "have": 36,
+          "need": 500
+        },
+        {
+          "label": "Chants in unison",
+          "have": 0,
+          "need": 25
+        },
+        {
+          "label": "Souls",
+          "have": 0,
+          "need": 200
+        }
+      ],
+      "wait": "after \"Voices in Unison\""
+    },
+    "first": {
+      "pct": 0.0,
+      "parts": [
+        {
+          "label": "Read the first name aloud: three chants in one stream, after midnight",
+          "have": 0,
+          "need": 3
+        }
+      ],
+      "wait": "after \"The Unfamiliar Hand\""
+    }
   }
 }
