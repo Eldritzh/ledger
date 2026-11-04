@@ -343,14 +343,5 @@ In **#gibbering-forge**: `/forge satchel`, `/forge recipes`, `/forge craft <reci
 
 In **#descent**: `!descend`, `!delve`, `!push`, `!surface`, `!cast`, or `/delve`, `/push`, `/surface`, `/deepest`, `/cast`, `/spells`. Your run card has Push, Surface and Salve buttons.
 
-## 🛠 Moderator & Staff Commands
-
-| Command | What it does | 
-| ----- | ----- | 
-| `!web push` | Force immediate website sync to GitHub | 
-| `!web check` | Inspect pending file changes without publishing | 
-| `!web test` | Verify GitHub API access and write permissions | 
-| `!web reset` | Reset commit hashes to re-publish all files | 
-| `!web on` / `!web off` | Enable or disable automated website sync | 
 
 *Happy hours multiply all Madness earned and discount Madness costs. Hype trains, completed rituals, Pact Wheel jackpots, votes, Summoning Hours and an awakened Tsathoggua all open them, and they stack: a ritual completed during a hype train counts both. (New:) the higher a hype train climbs, the bigger its multiplier, and Golden Kappa and treasure trains pay extra.*

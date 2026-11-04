@@ -1,19 +1,19 @@
 {
-  "updated": "2026-11-04T19:50:52Z",
+  "updated": "2026-11-04T19:52:27Z",
   "version": "1.1.0",
-  "reason": "routine",
+  "reason": "!web push",
   "files": {
-    "story_chapters.json": "2026-11-04T19:34:52Z",
-    "story_state.json": "2026-11-04T19:34:52Z",
-    "pacts.json": "2026-11-02T18:44:26Z",
-    "circles.json": "2026-11-02T21:26:23Z",
-    "codex.json": "2026-11-04T19:50:52Z",
-    "partners.json": "2026-11-02T18:29:25Z",
-    "commands.md": "2026-11-04T19:34:52Z",
-    "guide.md": "2026-11-04T19:50:52Z",
-    "sounds.json": "2026-11-04T19:50:52Z",
-    "bestiary.json": "2026-11-04T19:50:52Z",
-    "congregation.json": "2026-11-04T19:50:52Z"
+    "story_chapters.json": "2026-11-04T19:52:27Z",
+    "story_state.json": "2026-11-04T19:52:27Z",
+    "pacts.json": "2026-11-04T19:52:27Z",
+    "circles.json": "2026-11-04T19:52:27Z",
+    "codex.json": "2026-11-04T19:52:27Z",
+    "partners.json": "2026-11-04T19:52:27Z",
+    "commands.md": "2026-11-04T19:52:27Z",
+    "guide.md": "2026-11-04T19:52:27Z",
+    "sounds.json": "2026-11-04T19:52:27Z",
+    "bestiary.json": "2026-11-04T19:52:27Z",
+    "congregation.json": "2026-11-04T19:52:27Z"
   },
   "staffApi": "https://forge-web.eldritzh.com"
 }
