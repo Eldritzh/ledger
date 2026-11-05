@@ -22,7 +22,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.3.2';
+  var VERSION = '1.3.3';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -212,7 +212,17 @@
     '.eldr-site .cx-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}',
     /* partners */
     '.eldr-site .pt{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:8px}',
-    '.eldr-site .pt img{max-width:160px;max-height:64px;object-fit:contain;align-self:flex-start}',
+    '.eldr-site .pt-plate{display:flex;align-items:center;justify-content:center;height:96px;margin:-4px -4px 4px;padding:12px 16px;background:var(--panel);border:1px solid var(--line);border-radius:8px}',
+    '.eldr-site .pt-plate img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}',
+    '.eldr-site .pt-plate.art{height:140px;padding:0;overflow:hidden}',
+    '.eldr-site .pt-plate.art img{width:100%;height:100%;object-fit:cover}',
+    '.eldr-site .pt-plate .nm{font-family:Cinzel,Georgia,serif;font-weight:700;font-size:22px;color:var(--gold);text-align:center;line-height:1.15}',
+    '.eldr-site .pt-cos{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:0 0 2px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}',
+    '.eldr-site .pt-co{flex:1 1 0;min-width:96px;display:grid;grid-template-rows:56px auto;justify-items:center;align-items:center;gap:6px;padding:10px 12px}',
+    '.eldr-site .pt-co + .pt-co{border-left:1px solid var(--line)}',
+    '.eldr-site .pt-co img{max-width:100%;max-height:56px;object-fit:contain}',
+    '.eldr-site .pt-co .nm{font-family:Cinzel,Georgia,serif;font-weight:700;font-size:15px;color:#f0ead6;text-align:center;line-height:1.15}',
+    '.eldr-site .pt-co .rl{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-align:center}',
     '.eldr-site .pt h3{margin:0;font-size:18px;color:#f0ead6}',
     '.eldr-site .pt .cd{display:flex;flex-wrap:wrap;gap:6px;align-items:center}',
     '.eldr-site details.eldr-about{border:1px solid rgba(82,183,136,.25);border-radius:8px;background:rgba(82,183,136,.04);margin:0 0 14px;padding:0 12px}',
@@ -666,6 +676,22 @@
   }
 
   // ================================================================== PARTNERS
+  // a partner logo: an https URL, or logos/<file> that Website :: Publish uploaded next to partners.json
+  function logoUrl(v) {
+    v = String(v || '').trim();
+    if (/^https:\/\//i.test(v)) return v;
+    if (/^logos\/[A-Za-z0-9._-]+$/.test(v) && v.indexOf('..') < 0) return BASE + 'data/' + v;
+    return '';
+  }
+  // the image; if it fails to load, the alt text's name in Cinzel takes its place
+  function logoImg(src, alt) {
+    var img = el('img', { src: src, alt: alt, loading: 'lazy', decoding: 'async' });
+    img.addEventListener('error', function () {
+      var n = el('span', { class: 'nm', text: String(alt || '').replace(/ logo$/, '') });
+      if (img.parentNode) img.parentNode.replaceChild(n, img);
+    });
+    return img;
+  }
   function partners(ctx) {
     return load('partners.json').then(function (d) {
       var list = d.partners || [];
@@ -674,9 +700,21 @@
       if (!list.length) { out.push(empty('No patrons have signed the Ledger yet.')); return out.concat(foot(d.updated)); }
       var grid = el('div', { class: 'eldr-grid' });
       list.forEach(function (p) {
-        var logo = /^https:\/\//i.test(p.logo || '') ? el('img', { src: p.logo, alt: p.name + ' logo', loading: 'lazy' }) : null;
+        var cos = (p.partners || []).filter(function (m) { return m && m.name; });
+        var art = cos.length > 0;                    // a deal: its own logo is the game's key art, the companies follow
+        var src = logoUrl(p.logo);
+        var plate = src ? el('div', { class: 'pt-plate' + (art ? ' art' : '') }, logoImg(src, p.name + (art ? '' : ' logo')))
+                        : (art ? null : el('div', { class: 'pt-plate' }, el('span', { class: 'nm', text: p.name })));
+        var row = art ? el('div', { class: 'pt-cos' }, cos.map(function (m) {
+          var u = logoUrl(m.logo);
+          return el('div', { class: 'pt-co', title: m.name + (m.role ? ' (' + m.role + ')' : '') }, [
+            u ? logoImg(u, m.name + ' logo') : el('span', { class: 'nm', text: m.name }),
+            el('span', { class: 'rl', text: m.role || '' })
+          ]);
+        })) : null;
         grid.appendChild(el('article', { class: 'pt' }, [
-          logo,
+          plate,
+          row,
           el('div', { class: 'eldr-row' }, [el('h3', { text: p.name }), el('span', { class: 'eldr-badge', text: p.label || 'Ad' })]),
           p.blurb ? el('p', { text: p.blurb, style: { margin: 0 } }) : null,
           (p.codes || []).length ? el('div', { class: 'cd' }, p.codes.map(function (c) {
