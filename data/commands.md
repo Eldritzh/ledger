@@ -352,5 +352,4 @@ In **#gibbering-forge**: `/forge satchel`, `/forge recipes`, `/forge craft <reci
 
 In **#descent**: `!descend`, `!delve`, `!push`, `!surface`, `!cast`, or `/delve` (also `/delve rank`, `/delve perk`, `/delve feed`, `/delve respec`), `/push`, `/surface`, `/deepest`, `/cast`, `/spells`. Your run card has Push, Surface and Salve buttons.
 
-
 *Happy hours multiply all Madness earned and discount Madness costs. Hype trains, completed rituals, Pact Wheel jackpots, votes, Summoning Hours and an awakened Tsathoggua all open them, and they stack: a ritual completed during a hype train counts both. (New:) the higher a hype train climbs, the bigger its multiplier, and Golden Kappa and treasure trains pay extra.*
