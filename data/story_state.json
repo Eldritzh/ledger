@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-05T19:36:33.1643729Z",
+  "updated": "2026-11-05T19:50:56.3086321Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 47,
+    "checkins": 49,
     "fed": 988717,
     "tsath_fills": 9,
     "messages": 375,
-    "banishes": 36,
+    "banishes": 39,
     "delve_bottoms": 1,
     "chants": 0,
     "deaths": 0,
@@ -20,18 +20,18 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 1,
+    "stream:checkins": 3,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
-    "sum:goblins_grabbed": 1,
+    "sum:goblins_grabbed": 2,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 20,
     "stream:messages": 0,
     "sum:circle_top": 0,
-    "stream:banishes": 0,
-    "@moon": 6,
-    "kinds:beings_seen": 10,
+    "stream:banishes": 3,
+    "@moon": 56,
+    "kinds:beings_seen": 11,
     "pacts": 0,
     "sunwait_candles": 0,
     "sunwait_unseen": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 31.3,
+      "pct": 32.7,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 47,
+          "have": 49,
           "need": 150
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 6.7,
+      "pct": 20.0,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 1,
+          "have": 3,
           "need": 15
         }
       ],
@@ -171,11 +171,11 @@
       "wait": ""
     },
     "goblins": {
-      "pct": 4.0,
+      "pct": 8.0,
       "parts": [
         {
           "label": "Grab 25 treasure goblins",
-          "have": 1,
+          "have": 2,
           "need": 25
         }
       ],
@@ -226,27 +226,27 @@
       "wait": ""
     },
     "moon": {
-      "pct": 6.2,
+      "pct": 56.2,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 1,
+          "have": 3,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 0,
+          "have": 3,
           "need": 4
         }
       ],
       "wait": "only during a Moon Night"
     },
     "bestiary": {
-      "pct": 66.7,
+      "pct": 73.3,
       "parts": [
         {
           "label": "Banish 15 different kinds of Being",
-          "have": 10,
+          "have": 11,
           "need": 15
         }
       ],
@@ -450,16 +450,16 @@
       "wait": ""
     },
     "hand": {
-      "pct": 4.8,
+      "pct": 4.9,
       "parts": [
         {
           "label": "Signatures",
-          "have": 47,
+          "have": 49,
           "need": 2500
         },
         {
           "label": "Banishments",
-          "have": 36,
+          "have": 39,
           "need": 500
         },
         {
