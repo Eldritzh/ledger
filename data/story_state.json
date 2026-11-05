@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05T19:50:56.3086321Z",
+  "updated": "2026-11-05T20:45:29.9364334Z",
   "unlocked": [
     "toad",
     "margins",
@@ -10,7 +10,7 @@
     "fed": 988717,
     "tsath_fills": 9,
     "messages": 375,
-    "banishes": 39,
+    "banishes": 40,
     "delve_bottoms": 1,
     "chants": 0,
     "deaths": 0,
@@ -29,8 +29,8 @@
     "count:streams_attended": 20,
     "stream:messages": 0,
     "sum:circle_top": 0,
-    "stream:banishes": 3,
-    "@moon": 56,
+    "stream:banishes": 4,
+    "@moon": 68,
     "kinds:beings_seen": 11,
     "pacts": 0,
     "sunwait_candles": 0,
@@ -226,7 +226,7 @@
       "wait": ""
     },
     "moon": {
-      "pct": 56.2,
+      "pct": 68.8,
       "parts": [
         {
           "label": "Souls signed tonight",
@@ -235,7 +235,7 @@
         },
         {
           "label": "Beings banished tonight",
-          "have": 3,
+          "have": 4,
           "need": 4
         }
       ],
@@ -450,7 +450,7 @@
       "wait": ""
     },
     "hand": {
-      "pct": 4.9,
+      "pct": 5.0,
       "parts": [
         {
           "label": "Signatures",
@@ -459,7 +459,7 @@
         },
         {
           "label": "Banishments",
-          "have": 39,
+          "have": 40,
           "need": 500
         },
         {
