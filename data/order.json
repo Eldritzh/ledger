@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-05T05:27:18Z",
+  "updated": "2026-11-05T19:37:07Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -233,5 +233,15 @@
       "monthlyEldritch": 1
     }
   ],
-  "members": []
+  "members": [
+    {
+      "name": "datduckhs",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "astray": false
+    }
+  ]
 }
