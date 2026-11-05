@@ -22,7 +22,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.3.0';
+  var VERSION = '1.3.1';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -224,6 +224,11 @@
     '.eldr-site details .ab{padding:4px 2px 14px}',
     '.eldr-site .eldr-staffbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:rgba(122,42,36,.25);border:1px solid rgba(122,42,36,.8);border-radius:10px;padding:10px 14px;margin:0 0 22px;font-size:14px}',
     '.eldr-site .eldr-staffbar.off{justify-content:center;color:var(--muted)}',
+    '.eldr-site .eldr-signin{margin-top:22px}',
+    '.eldr-site .eldr-keyrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0 0}',
+    '.eldr-site .eldr-keyrow input.eldr-keyin{flex:1 1 220px;margin:0;max-width:420px}',
+    '.eldr-site .eldr-keymsg{color:#e08a7f;font-size:14px;margin:8px 0 0}',
+    '.eldr-site .eldr-keymsg:empty{display:none}',
     '.eldr-site section.eldr-staff{border-top-color:#a8433a;background:linear-gradient(180deg,rgba(122,42,36,.16),var(--panel) 120px)}',
     '.eldr-site section.eldr-staff h2{color:#e08a7f}',
     '@media (max-width:620px){',
@@ -412,7 +417,11 @@
       nodes.push(el('div', { class: 'eldr-jumpbox' }, [nav, jump]), search);
       secs.forEach(function (x) { nodes.push(x.node); });
       nodes.push(foot(ctx.site && ctx.site.files && ctx.site.files['commands.md']));
-      return staffSections(ctx).then(function (staff) { if (staff.length) nodes.splice(1, 0, staff[0]); if (staff.length > 1) nodes.splice(4, 0, el('div', null, staff.slice(1))); return nodes; });
+      return staffSections(ctx).then(function (staff) {
+        if (staff.length) nodes.splice(1, 0, staff[0]); if (staff.length > 1) nodes.splice(4, 0, el('div', null, staff.slice(1)));
+        if (!stored(STAFF_KEY) && ctx.site && ctx.site.staffApi) nodes.push(staffSignIn());
+        return nodes;
+      });
     });
   }
 
@@ -717,6 +726,24 @@
       try { history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + h); } catch (e) {}
     }
     try { sessionStorage.removeItem('eldr_mod_key'); } catch (e) {}   // the old unchecked key
+  }
+  function staffSignIn() {
+    // paste box for a /modkey key (or the whole link from Discord); shown only when this browser has no key
+    var input = el('input', { class: 'eldr-search eldr-keyin', type: 'password', autocomplete: 'off', spellcheck: 'false',
+      placeholder: 'eldr_… or the link from Discord', 'aria-label': 'Staff key' });
+    var msg = el('p', { class: 'eldr-keymsg' });
+    function go(ev) {
+      if (ev) ev.preventDefault();
+      var v = (input.value || '').trim(), m = v.match(/eldr_[A-Za-z0-9_\-]+/);
+      if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a staff key. It starts with eldr_.'; return; }
+      store(STAFF_KEY, m[0]); location.reload();
+    }
+    return el('details', { class: 'eldr-about eldr-signin' }, [
+      el('summary', null, el('span', { class: 't', text: 'Staff sign-in' })),
+      el('form', { class: 'ab', onsubmit: go }, [
+        el('p', { text: 'Staff: run /modkey get in Discord and paste the key here. This browser remembers it until you sign out.' }),
+        el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Sign in' })]),
+        msg])]);
   }
   function staffSections(ctx) {
     var key = stored(STAFF_KEY), api = ctx.site && ctx.site.staffApi;
