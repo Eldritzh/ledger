@@ -6,7 +6,7 @@
      <div data-eldr-page="story"></div>
      <script src="https://ledger.eldritzh.com/embed.js" defer></script>
 
-   Pages: story · commands · pacts · circles · codex · partners · sounds · bestiary · congregation
+   Pages: story · commands · pacts · circles · codex · partners · sounds · bestiary · congregation · order (or esorder) · remembrance
    Options on the div:
      data-eldr-game="hunt-showdown"   pacts: open on this game (default: the game on the wheel now)
      data-eldr-refresh="5"            minutes between quiet re-checks while the page is open (0 = off)
@@ -22,7 +22,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.2.0';
+  var VERSION = '1.3.0';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -1018,7 +1018,100 @@
     });
   }
 
-  var PAGES = { story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation };
+  // ================================================================== THE ESOTERIC ORDER (order.json, 5 Nov)
+  function order(ctx) {
+    return load('order.json').then(function (d) {
+      d = d || {};
+      var name = d.name || 'The Esoteric Order of the Tentacle';
+      var out = [head(ctx.opts, name, 'Embrace the Tentacle',
+        'Show up and the Order remembers. Every stream day you are here counts toward your rank: 25 ranks in five circles, the Oath at rank 13.')];
+      var circles = d.circles || [], ranks = d.ranks || [], members = d.members || [];
+      var ru = d.rules || {};
+      out.push(el('section', { class: 'eldr-card' }, [
+        el('h2', { text: 'How it works' }),
+        el('p', { html: 'Chat on a stream day and it counts. <code>!order</code> shows your rank and what the next one needs. Your own sub adds ' +
+          num(ru.subBonusDays || 0) + ' extra day a month.' }),
+        ru.standingFromRank ? el('p', { html: 'From rank ' + ru.standingFromRank + ' you keep your <strong>good standing</strong> by being here ' +
+          num(ru.standingDays) + ' days in every ' + num(ru.standingWindow) + '. Out of standing you are <em>astray</em>: the rank stays, the perks wait until you return.' }) : null
+      ]));
+      // the circles and their ranks
+      if (circles.length) {
+        var grid = el('div', { class: 'eldr-grid' });
+        circles.forEach(function (c) {
+          var rs = ranks.filter(function (r) { return r.circle === c.n; });
+          var n = members.filter(function (m) { return m.circle === c.n; }).length;
+          var t = el('table', { class: 'cx-top' }), tb = el('tbody');
+          rs.forEach(function (r) {
+            var perk = [r.weeklyPacts ? r.weeklyPacts + ' Pact' + (r.weeklyPacts === 1 ? '' : 's') + ' a week' : '', r.monthlyEldritch ? r.monthlyEldritch + ' Eldritch a month' : ''].filter(Boolean).join(', ');
+            tb.appendChild(el('tr', null, [el('td', { text: r.n }), el('td', { text: r.name }), el('td', { class: 'num', title: perk, text: num(r.days) + ' d' })]));
+          });
+          t.appendChild(tb);
+          grid.appendChild(el('article', { class: 'ci' }, [
+            el('div', { class: 'eldr-row' }, [el('h3', { text: c.name }), el('span', { class: 'eldr-badge', text: n + (n === 1 ? ' soul' : ' souls') })]), t]));
+        });
+        out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'The five circles' }), grid,
+          el('p', { class: 'eldr-muted eldr-small', text: 'Days are stream days you were here. Hover a rank for its perks.' })]));
+      }
+      // the members, highest first
+      if (members.length) {
+        var t2 = el('table', { class: 'stack' }), tb2 = el('tbody');
+        t2.appendChild(el('thead', null, el('tr', null, [el('th', { text: '' }), el('th', { text: 'Name' }), el('th', { text: 'Rank' }), el('th', { text: 'Days' })])));
+        members.forEach(function (m, i) {
+          tb2.appendChild(el('tr', null, [el('td', { text: '#' + (i + 1) }),
+            el('td', null, [m.name, m.astray ? el('span', { class: 'eldr-badge red', style: { marginLeft: '6px' }, text: 'astray' }) : null]),
+            el('td', { text: m.rank + ' · ' + m.rankName }), el('td', { class: 'num', text: num(m.days) })]));
+        });
+        t2.appendChild(tb2);
+        out.push(el('section', { class: 'eldr-card' }, [el('div', { class: 'eldr-row' }, [el('h2', { text: 'The faithful' }), el('span', { class: 'eldr-badge', text: members.length + ' members' })]), t2]));
+      } else out.push(empty('Nobody has been counted yet. Chat on a stream day to be the first.'));
+      out.push(foot(d.updated));
+      return out;
+    });
+  }
+
+  // ================================================================== THE REMEMBRANCE (remembrance.json, 5 Nov)
+  function remembrance(ctx) {
+    return load('remembrance.json').then(function (d) {
+      d = d || {};
+      var ru = d.rules || {};
+      var out = [head(ctx.opts, 'The Remembrance', 'Every month, the faithful are remembered',
+        'At the start of each month the dark looks back at who kept it company. The most devoted become Heralds; a few more are drawn at random. Everyone gets something.')];
+      out.push(el('section', { class: 'eldr-card' }, [
+        el('div', { class: 'eldr-row' }, [el('h2', { text: d.monthName || 'Last month' }), el('span', { class: 'eldr-badge', text: num(d.devoted) + ' devoted' })]),
+        el('p', { html: 'Be here at least <strong>' + num(ru.minDays) + '</strong> stream days in a month to be counted. Days, subs, gifts, bits, raids and tips give extra entries (up to ' +
+          num(ru.maxEntries) + '). The top ' + num(ru.heralds) + ' become <strong>Heralds</strong>, about ' + num(ru.winnerPct) + '% more win a gift, and every devoted soul gets ' +
+          num(ru.allMadness) + ' Madness.' })
+      ]));
+      var list = function (title, rows, cls) {
+        if (!rows || !rows.length) return null;
+        var t = el('table', { class: 'stack' }), tb = el('tbody');
+        rows.forEach(function (r) {
+          tb.appendChild(el('tr', null, [el('td', { text: r.name }), el('td', { class: 'eldr-muted', text: r.days ? r.days + ' days' : '' }),
+            el('td', null, [r.gift || '', r.rare ? el('span', { class: 'eldr-badge gold', style: { marginLeft: '6px' }, text: 'rare' }) : null])]));
+        });
+        t.appendChild(tb);
+        return el('section', { class: 'eldr-card' }, [el('h2', { text: title }), t]);
+      };
+      var h = list('Heralds', d.heralds), w = list('Remembered', d.winners);
+      if (h) out.push(h);
+      if (w) out.push(w);
+      if (!h && !w) out.push(empty('No Remembrance has been drawn yet.'));
+      if ((d.gifts || []).length) {
+        var t3 = el('table', { class: 'stack' }), tb3 = el('tbody');
+        t3.appendChild(el('thead', null, el('tr', null, [el('th', { text: 'Gift' }), el('th', { text: 'What it does' }), el('th', { text: 'Chance' })])));
+        d.gifts.forEach(function (g) {
+          tb3.appendChild(el('tr', null, [el('td', null, [g.name, g.tier === 'rare' ? el('span', { class: 'eldr-badge gold', style: { marginLeft: '6px' }, text: 'rare' }) : null]),
+            el('td', { class: 'eldr-small', text: g.what || '' }), el('td', { class: 'num', text: g.chancePct + '%' })]));
+        });
+        t3.appendChild(tb3);
+        out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'What can be given' }), t3]));
+      }
+      out.push(foot(d.updated));
+      return out;
+    });
+  }
+
+  var PAGES = { story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance };
 
   // ------------------------------------------------------------------ mount
   function render(root, quiet) {
