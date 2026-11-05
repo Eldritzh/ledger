@@ -129,7 +129,7 @@
     '.eldr-site .eldr-upd{font-size:12px;color:var(--gold-dim);margin-top:10px;letter-spacing:.05em}',
     '.eldr-site h2{font-family:Cinzel,Georgia,serif;font-weight:700;color:var(--gold);font-size:21px;line-height:1.3;margin:0 0 14px;letter-spacing:.04em}',
     '.eldr-site h3{font-family:Cinzel,Georgia,serif;font-weight:700;color:var(--text);font-size:16px;margin:18px 0 8px;letter-spacing:.04em}',
-    '.eldr-site section.eldr-card{background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold-dim);border-radius:10px;padding:22px 22px 16px;margin:0 0 22px;scroll-margin-top:24px}',
+    '.eldr-site section.eldr-card{background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold-dim);border-radius:10px;padding:22px 22px 16px;margin:0 0 22px;scroll-margin-top:90px}',
     '.eldr-site section.eldr-card.mod-card{border-top:2px solid var(--seal);background:rgba(122,42,36,.08);}',
     '.eldr-site table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}',
     '.eldr-site th{text-align:left;font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);padding:0 10px 10px;border-bottom:1px solid var(--line)}',
@@ -148,6 +148,7 @@
     '.eldr-site .eldr-chip:hover,.eldr-site .eldr-chip:focus-visible{border-color:var(--gold);color:var(--gold);outline:none}',
     '.eldr-site .eldr-chip[aria-pressed="true"]{border-color:var(--gold);color:#111;background:var(--gold);font-weight:600}',
     '.eldr-site input.eldr-search,.eldr-site select.eldr-select{font:inherit;font-size:15px;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;min-width:0}',
+    '.eldr-site select.eldr-jump{display:none;width:100%;max-width:420px;margin:0 auto 12px;cursor:pointer}',
     '.eldr-site input.eldr-search{display:block;width:100%;max-width:420px;margin:0 auto 18px}',
     '.eldr-site input.eldr-search:focus,.eldr-site select.eldr-select:focus{outline:2px solid var(--green);outline-offset:1px}',
     '.eldr-site .eldr-bar{height:8px;border-radius:4px;background:rgba(230,220,195,.08);overflow:hidden;margin:6px 0}',
@@ -236,8 +237,8 @@
     '  .eldr-site table.stack td{display:block;width:100% !important;border:none;padding:2px 0}',
     '  .eldr-site table.stack td:first-child{margin-bottom:4px}',
     '  .eldr-site code{white-space:normal}',
-    '  .eldr-site nav.eldr-chips{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;margin:0 -12px 22px;padding:0 12px 6px;scrollbar-width:thin}',
-    '  .eldr-site nav.eldr-chips .eldr-chip{flex:0 0 auto}',
+    '  .eldr-site nav.eldr-chips{display:none}',
+    '  .eldr-site select.eldr-jump{display:block}',
     '  .eldr-site .st-entry{grid-template-columns:1fr;gap:.4rem}',
     '  .eldr-site .st-num{text-align:left}',
     '}',
@@ -405,8 +406,18 @@
       var search = el('input', { class: 'eldr-search', type: 'search', placeholder: 'Find a command…', 'aria-label': 'Find a command' });
       var nav = el('nav', { class: 'eldr-chips', 'aria-label': 'Sections' }, secs.map(function (x) {
         return el('a', { class: 'eldr-chip', href: '#' + x.id, text: x.s.title.replace(/^[^\w]+/, '').trim(),
-          onclick: function (e) { e.preventDefault(); x.node.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
+          onclick: function (e) { e.preventDefault(); goTo(x); } });
       }));
+      // Phones: the sideways chip strip was unreachable on eldritzh.com, so show a picker instead.
+      var jump = el('select', { class: 'eldr-select eldr-jump', 'aria-label': 'Jump to a section',
+        onchange: function () { var x = secs[+jump.value]; jump.selectedIndex = 0; if (x) goTo(x); } },
+        [el('option', { value: '', text: 'Jump to a section…' })].concat(secs.map(function (x, i) {
+          return el('option', { value: String(i), text: x.s.title.replace(/^[^\w]+/, '').replace(/\*/g, '').trim() });
+        })));
+      function goTo(x) {
+        if (search.value) { search.value = ''; search.dispatchEvent(new Event('input')); }
+        x.node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
       search.addEventListener('input', function () {
         var q = search.value.trim().toLowerCase();
         secs.forEach(function (x) {
@@ -417,7 +428,7 @@
           x.node.style.display = (!q || any || title) ? '' : 'none';
         });
       });
-      nodes.push(nav, search);
+      nodes.push(el('div', { class: 'eldr-jumpbox' }, [nav, jump]), search);
       secs.forEach(function (x) { nodes.push(x.node); });
       nodes.push(foot(ctx.site && ctx.site.files && ctx.site.files['commands.md']));
       return nodes;
