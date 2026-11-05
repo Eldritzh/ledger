@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05T18:48:32Z",
+  "updated": "2026-11-05T19:03:32Z",
   "version": "1.1.0",
   "reason": "routine",
   "files": {
@@ -12,8 +12,9 @@
     "commands.md": "2026-11-04T19:52:27Z",
     "guide.md": "2026-11-04T19:52:27Z",
     "sounds.json": "2026-11-04T19:52:27Z",
-    "bestiary.json": "2026-11-04T19:52:27Z",
-    "congregation.json": "2026-11-04T19:52:27Z"
+    "bestiary.json": "2026-11-05T19:03:32Z",
+    "congregation.json": "2026-11-04T19:52:27Z",
+    "order.json": "2026-11-05T19:03:32Z"
   },
   "staffApi": "https://forge-web.eldritzh.com"
 }

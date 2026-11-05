@@ -1,0 +1,237 @@
+{
+  "type": "order",
+  "version": 1,
+  "updated": "2026-11-05T05:27:18Z",
+  "name": "The Esoteric Order of the Tentacle",
+  "rules": {
+    "standingDays": 3,
+    "standingWindow": 30,
+    "standingFromRank": 6,
+    "subBonusDays": 1
+  },
+  "circles": [
+    {
+      "n": 1,
+      "name": "The Threshold"
+    },
+    {
+      "n": 2,
+      "name": "The Lantern Circle"
+    },
+    {
+      "n": 3,
+      "name": "The Inner Sanctum"
+    },
+    {
+      "n": 4,
+      "name": "The Drowned Choir"
+    },
+    {
+      "n": 5,
+      "name": "The Throne Beyond the Stars"
+    }
+  ],
+  "ranks": [
+    {
+      "n": 1,
+      "days": 1,
+      "name": "Seeker",
+      "circle": 1,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 2,
+      "days": 3,
+      "name": "Listener",
+      "circle": 1,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 3,
+      "days": 6,
+      "name": "Dreamer",
+      "circle": 1,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 4,
+      "days": 10,
+      "name": "Initiate",
+      "circle": 1,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 5,
+      "days": 15,
+      "name": "Novice of the Veil",
+      "circle": 1,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 6,
+      "days": 20,
+      "name": "Acolyte",
+      "circle": 2,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 7,
+      "days": 26,
+      "name": "Candle-Bearer",
+      "circle": 2,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 8,
+      "days": 33,
+      "name": "Whisperer",
+      "circle": 2,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 9,
+      "days": 40,
+      "name": "Adept",
+      "circle": 2,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 10,
+      "days": 48,
+      "name": "Scribe of the Forbidden",
+      "circle": 2,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 11,
+      "days": 57,
+      "name": "Reader of the Pnakotic",
+      "circle": 3,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 12,
+      "days": 66,
+      "name": "Sigil-Warden",
+      "circle": 3,
+      "weeklyPacts": 0,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 13,
+      "days": 76,
+      "name": "Oathsworn",
+      "circle": 3,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 14,
+      "days": 88,
+      "name": "Magus",
+      "circle": 3,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 15,
+      "days": 100,
+      "name": "Hierophant",
+      "circle": 3,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 16,
+      "days": 115,
+      "name": "Chanter of R'lyeh",
+      "circle": 4,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 17,
+      "days": 130,
+      "name": "Tide-Caller",
+      "circle": 4,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 18,
+      "days": 150,
+      "name": "Priest of Dagon",
+      "circle": 4,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 19,
+      "days": 170,
+      "name": "Speaker Beneath the Waves",
+      "circle": 4,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 20,
+      "days": 195,
+      "name": "Archon of the Deep",
+      "circle": 4,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 0
+    },
+    {
+      "n": 21,
+      "days": 220,
+      "name": "The Unbound",
+      "circle": 5,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 1
+    },
+    {
+      "n": 22,
+      "days": 250,
+      "name": "Thrice-Dreamt",
+      "circle": 5,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 1
+    },
+    {
+      "n": 23,
+      "days": 285,
+      "name": "Exarch of the Void",
+      "circle": 5,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 1
+    },
+    {
+      "n": 24,
+      "days": 325,
+      "name": "Hand of the Crawling Chaos",
+      "circle": 5,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 1
+    },
+    {
+      "n": 25,
+      "days": 365,
+      "name": "Hierarch of the Esoteric Order",
+      "circle": 5,
+      "weeklyPacts": 1,
+      "monthlyEldritch": 1
+    }
+  ],
+  "members": []
+}
