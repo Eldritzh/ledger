@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-02T18:24:46Z",
+  "updated": "2026-11-05T22:14:49Z",
   "partners": [
     {
       "id": "g-portal",
@@ -7,7 +7,7 @@
       "label": "Ad",
       "blurb": "",
       "link": "",
-      "logo": "logos/g-portal.png",
+      "logo": "logos/g-portal-435e9c9c.png",
       "codes": [],
       "commands": [],
       "circles": []
@@ -18,7 +18,7 @@
       "label": "Ad",
       "blurb": "",
       "link": "",
-      "logo": "logos/wehype.png",
+      "logo": "logos/wehype-668b263b.png",
       "codes": [],
       "commands": [],
       "circles": []
