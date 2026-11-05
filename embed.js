@@ -22,7 +22,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.3.1';
+  var VERSION = '1.3.2';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -324,7 +324,11 @@
     out = out.replace(/Eldritch Pacts?/g, function (m) { return '<span class="ep">' + m + '</span>'; });
     return out;
   }
-  function cells(line) { return line.trim().replace(/^\||\|$/g, '').split('|').map(function (c) { return c.trim(); }); }
+  function cells(line) {
+    // split on | but not on \| (an escaped pipe inside a cell, e.g. `on\|off`)
+    return line.trim().replace(/^\|/, '').replace(/([^\\])\|$/, '$1').replace(/\\\|/g, '\u0000').split('|')
+      .map(function (c) { return c.replace(/\u0000/g, '|').trim(); });
+  }
   function parseMd(md) {
     var lines = String(md || '').replace(/\r/g, '').split('\n');
     var doc = { title: '', intro: [], sections: [] }, cur = null, para = [];
