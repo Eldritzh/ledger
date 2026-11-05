@@ -29,11 +29,13 @@ Your first message each stream signs the ledger automatically. You get a check-i
 | `!boons` | The boon table and the duel curses (`!boons leech` shows one) | 
 | `!infuse golden` / `!infuse eldritch` | During a duel: spend a forge Infusion to turn your weapon Golden (+4%) or Eldritch (+5%) | 
 | `!descend 500 deep` | Descend alone into the dark: `shallow`, `deep` or `abyss`. Deeper is deadlier and richer. Add `boon` for 1 Pact: a random boon with its own twist (Steady, Greed, Glimpse, Second Wind or Twin Shadows) | 
+| (descents) | Now and then a descent happens under an **omen**: a Blood Moon, an Eclipse, Fog, or a kind of creature that sleeps or stirs. More of them after midnight, in the Witching Hour |
 | `!descend boons` | The descend boon table (`!descend boons glimpse` shows one) | 
 | `!descend 500 deep lure:grave` | Use a lure: that enemy type is guaranteed, -3% odds, +50% on its materials | 
 | `!descend 500 deep charm` | Use a forge Charm instead of a Pact for a boon you name (`charm:thirsting`) | 
 | `!vault grave 2000` | Spend a Gate Key on a boss fight against that type's lord. `!vault hoard` opens the Treasure Realm | 
 | `!oath 500` / `!rally` | Swear into a raid against a horror the streamer summons | 
+| (raids) | Every summoning comes under an **aura**: a Feast, a Famine, a Blood Tide, Martyrdom, the Sacrifice … read the summon line before you swear. A boon on your oath is a Banner for the whole raid, a Vanguard (+15% of your share if it wins) or a Shieldbearer (keep 15% if it falls) |
 | `!offer grave 3` / `!offer chitin` | Offer lure fragments or legend lures to the next raid. The most-offered type decides the horror | 
 | `!offering` | The current raid offering | 
 | `!craze @user 250` | Gift Madness to someone | 
@@ -59,6 +61,12 @@ A run into the dark that lasts: push deeper five depths at a time, carry your ha
 | `!delve deep 2000 from 40` | Start at a waystone you've reached (one every 10 depths, yours forever) | 
 | `!delve shallow 500 lure:grave` | Bring a lure: mostly that enemy type, more of its materials, and its lord waits at the bottom | 
 | `!deepest` | The deepest delvers, and who has broken the Bottom | 
+| `!delve rank` | Your **Delver Rank**: XP, the next rank, your fight edge and perks |
+| `!delve perk` / `!delve perk lamplighter` | List the perks, or pick one (a pick every 5 ranks, each perk once). `!delve respec` gives them all back for 1 Eldritch Pact |
+| `!delve feed 500` | Feed your XP to Tsathoggua (only progress toward your next rank; your rank never drops). 100 XP fills him by 1 Madness |
+| `!delve gear` / `!delve equip harpoon` / `!delve repair` | Your **gear**: a weapon, garb and trinket you forge in Discord (`/forge craft`, Delve Gear). A crafted weapon is +2% in every fight (+3% against its kind), garb and trinkets dodge traps, spare wounds, turn dead ends aside and more. Gear wears out over runs; a broken piece is mended with half its commons, never lost. Each cult has its own piece |
+| `!delve around` | At depth 50 every ladder has a **Gatekeeper**. Beat it for a Gatekeeper's Sigil (for Gatekeeper gear) and a lot of XP, or pay 1 oil to sneak past it with nothing |
+| `!dreamquest atal ulthar seek 500` | Send a dreamer into the **Dreamlands** (yourself, Atal, Kuranes, Pickman or Randolph Carter) to Gather, Seek or Deliver. It takes hours of real time; halfway, a choice waits in the Discord forge channel. `!dreamquest` shows where they are, `!dreamquest help` and `!dreamquest regions` the rest |
 | `!cast hand @user` | Cast a spell on someone in the Delve. `!spells` lists them: the Hand takes a wound (never the last), Dim the Lantern steals oil, the Yellow Sign darkens their next push, Tsathoggua's Slumber heals one of their wounds, the Veil spares their next lost fight. Costs Pacts and Void Dust. If they're not in the Delve, nothing is spent | 
 | `!cast @user` | A wild cast: a random spell for 1 Pact. It might help them. It might hit you | 
 
@@ -175,7 +183,7 @@ Want Dave to play a certain game? Feed its **summoning circle**. When a circle i
 | `!circle history` | The circles kept and broken so far | 
 | `!circle propose <game>` | Propose a new circle for 1 Pact (you get it back if it's turned down) | 
 
-Real money counts most: put `circle3` in the message of a cheer, Super Chat, KICKs, Ko-fi or Fourthwall tip and it feeds circle 3. The first time Dave plays a bound circle's game in a stream, a **Summoning Hour** happy hour begins. When a circle is fulfilled, its biggest summoner gets a Pact and picks the first Pact Wheel challenge.
+Real money counts most: put `circle3` in the message of a cheer, Super Chat, KICKs, Ko-fi or Fourthwall tip of at least 1 EUR (70 bits / 70 KICKs) and it feeds circle 3. The first time Dave plays a bound circle's game in a stream, a **Summoning Hour** happy hour begins. When a circle is fulfilled, its biggest summoner gets a Pact and picks the first Pact Wheel challenge.
 
 ## ⏳ Yog-Sothoth's Hourglass *(new)*
 
@@ -223,7 +231,7 @@ Every stream day you chat on climbs you through **25 ranks in 5 circles**, from 
 
 | Command | What it does | 
 | ----- | ----- | 
-| `!season` | The season upon us and when it ends, or the next one | 
+| `!season` | The season upon us and when it ends, or the next one. Also any **Lingering Omen**: now and then a boon or a curse settles over the channel for a few days (real time, live or not), like *The Stars Are Right* or *The Hungry Dark* | 
 | `!sunwait` | The Sunwait candles before Yule: how many are lit and which rune is awake this week | 
 
 Some nights are different. On a **Moon Night** (around every full moon) the omens run wild, Beings stir sooner and Madness flows a little thicker; during **the Sunwait**, the six weeks before the winter solstice, the first stream of each week lights a candle whose rune blesses everyone for two hours. Some pages of the Ledger only open in these seasons.
@@ -305,6 +313,7 @@ Everything you do earns glory for your cult: chatting, check-ins, banishes, feed
 | ----- | ----- | 
 | `1` / `2` … | While a prophecy takes bets, typing the number bets 100 Madness on it. During a free vote, it's your (free) vote | 
 | `!foresee 1 500` | Bet any amount on a prophecy's outcome. Winners split the losers' stakes | 
+| `!foresee 1 vision` | Spend a vision from a Dreamland Seek: a free bet (300 Madness) that wins a share if you're right | 
 | `!vote` | The running vote and its count. `!vote 2` also votes | 
 | `!prophecy` | The open prophecy and its pools | 
 | `!bounty 1000 <challenge>` | Post a bounty on a challenge for Dave. If he pulls it off, every backer gets 150% back | 
@@ -341,7 +350,7 @@ On Twitch, prophecies also appear as a **Twitch prediction** (bet Sanity there) 
 
 In **#gibbering-forge**: `/forge satchel`, `/forge recipes`, `/forge craft <recipe>`, `/forge salvage <item>`, `/forge link`. Crafted Wards, Elder Signs and Candles arrive in your stream relics within a minute.
 
-In **#descent**: `!descend`, `!delve`, `!push`, `!surface`, `!cast`, or `/delve`, `/push`, `/surface`, `/deepest`, `/cast`, `/spells`. Your run card has Push, Surface and Salve buttons.
+In **#descent**: `!descend`, `!delve`, `!push`, `!surface`, `!cast`, or `/delve` (also `/delve rank`, `/delve perk`, `/delve feed`, `/delve respec`), `/push`, `/surface`, `/deepest`, `/cast`, `/spells`. Your run card has Push, Surface and Salve buttons.
 
 
 *Happy hours multiply all Madness earned and discount Madness costs. Hype trains, completed rituals, Pact Wheel jackpots, votes, Summoning Hours and an awakened Tsathoggua all open them, and they stack: a ritual completed during a hype train counts both. (New:) the higher a hype train climbs, the bigger its multiplier, and Golden Kappa and treasure trains pay extra.*

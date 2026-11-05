@@ -1,0 +1,118 @@
+{
+  "type": "remembrance",
+  "version": 1,
+  "updated": "2026-11-05T19:10:16Z",
+  "month": "",
+  "monthName": "The first Remembrance",
+  "devoted": 0,
+  "rules": {
+    "minDays": 3,
+    "recentDays": 21,
+    "heralds": 3,
+    "winnerPct": 25,
+    "allMadness": 250,
+    "maxEntries": 10
+  },
+  "heralds": [],
+  "winners": [],
+  "gifts": [
+    {
+      "id": "favoured",
+      "name": "Favoured of N'kai",
+      "tier": "common",
+      "what": "+25% Madness for a stream (3 h), wakes when you next chat",
+      "chancePct": 14.6
+    },
+    {
+      "id": "ichortouched",
+      "name": "Ichor-Touched",
+      "tier": "common",
+      "what": "double Ichor drops for a stream (3 h), wakes when you next chat",
+      "chancePct": 11.4
+    },
+    {
+      "id": "toadluck",
+      "name": "Toad-Luck",
+      "tier": "common",
+      "what": "no natural 1 on your gambles for 3 h, wakes when you next chat",
+      "chancePct": 8.1
+    },
+    {
+      "id": "candlelit",
+      "name": "Candle-Lit",
+      "tier": "common",
+      "what": "a Ritual Candle, and +15% candle chance for 3 h",
+      "chancePct": 8.1
+    },
+    {
+      "id": "pact",
+      "name": "A Pact Without Price",
+      "tier": "common",
+      "what": "a free Pact",
+      "chancePct": 9.8
+    },
+    {
+      "id": "warded",
+      "name": "Warded by the Elder Sign",
+      "tier": "common",
+      "what": "a Ward",
+      "chancePct": 8.1
+    },
+    {
+      "id": "ichor",
+      "name": "A Phial of Ichor",
+      "tier": "common",
+      "what": "5 Ichor",
+      "chancePct": 8.1
+    },
+    {
+      "id": "dreams",
+      "name": "Dreams of Plenty",
+      "tier": "common",
+      "what": "1,500 Madness",
+      "chancePct": 11.4
+    },
+    {
+      "id": "forgegift",
+      "name": "Gift of the Forge",
+      "tier": "common",
+      "what": "3 Void Dust for your !satchel",
+      "chancePct": 4.9
+    },
+    {
+      "id": "shard",
+      "name": "Shard of the Month",
+      "tier": "common",
+      "what": "the month's Shard for your !satchel (collect all twelve) and 500 Madness",
+      "chancePct": 6.5
+    },
+    {
+      "id": "elderbargain",
+      "name": "The Elder Bargain",
+      "tier": "rare",
+      "what": "an Eldritch Pact",
+      "chancePct": 1.6
+    },
+    {
+      "id": "silverkey",
+      "name": "The Silver Key",
+      "tier": "rare",
+      "what": "a Silver Key and 1,000 Madness",
+      "chancePct": 2.4
+    },
+    {
+      "id": "page",
+      "name": "A Page Torn Loose",
+      "tier": "rare",
+      "what": "a Necronomicon Page and a Pact",
+      "chancePct": 2.4
+    },
+    {
+      "id": "feast",
+      "name": "The Toad's Feast",
+      "tier": "rare",
+      "what": "2,000 Madness, then +50% Madness and double Ichor for 4 h",
+      "chancePct": 2.4
+    }
+  ]
+}
