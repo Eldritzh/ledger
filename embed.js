@@ -1,12 +1,12 @@
 /* =====================================================================================
-   THE ELDRITCH LEDGER — embed.js
+   ⛧ THE ELDRITCH LEDGER — embed.js
    Draws the Eldritzh community pages inside any page (Fourthwall Custom HTML sections).
 
    Fourthwall section (paste once, never again):
      <div data-eldr-page="story"></div>
      <script src="https://ledger.eldritzh.com/embed.js" defer></script>
 
-   Pages: story · commands · pacts · circles · codex · partners
+   Pages: story · commands · pacts · circles · codex · partners · sounds · bestiary · congregation
    Options on the div:
      data-eldr-game="hunt-showdown"   pacts: open on this game (default: the game on the wheel now)
      data-eldr-refresh="5"            minutes between quiet re-checks while the page is open (0 = off)
@@ -22,22 +22,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.1.0';
-
-  // ------------------------------------------------------------------ auth helper
-  function checkAuthKey() {
-    try {
-      var params = new URLSearchParams(window.location.search);
-      var key = params.get('key');
-      if (key) {
-        sessionStorage.setItem('eldr_mod_key', key);
-        return key;
-      }
-      return sessionStorage.getItem('eldr_mod_key');
-    } catch (e) {
-      return null;
-    }
-  }
+  var VERSION = '1.2.0';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -130,7 +115,6 @@
     '.eldr-site h2{font-family:Cinzel,Georgia,serif;font-weight:700;color:var(--gold);font-size:21px;line-height:1.3;margin:0 0 14px;letter-spacing:.04em}',
     '.eldr-site h3{font-family:Cinzel,Georgia,serif;font-weight:700;color:var(--text);font-size:16px;margin:18px 0 8px;letter-spacing:.04em}',
     '.eldr-site section.eldr-card{background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold-dim);border-radius:10px;padding:22px 22px 16px;margin:0 0 22px;scroll-margin-top:90px}',
-    '.eldr-site section.eldr-card.mod-card{border-top:2px solid var(--seal);background:rgba(122,42,36,.08);}',
     '.eldr-site table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}',
     '.eldr-site th{text-align:left;font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);padding:0 10px 10px;border-bottom:1px solid var(--line)}',
     '.eldr-site td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}',
@@ -192,6 +176,9 @@
     '.eldr-site .st-goal{padding:.9rem 1rem;background:var(--panel2);border:1px solid rgba(122,42,36,.55);border-radius:6px}',
     '.eldr-site .st-goal .h::before{content:"\\2726";color:var(--seal);margin-right:.45rem}',
     '.eldr-site .st-goal .n{font:700 .82rem/1 Cinzel,Georgia,serif;color:var(--muted);letter-spacing:.06em;font-variant-numeric:tabular-nums}',
+    '.eldr-site .st-goal .st-part{margin-top:.35rem;font-size:.95rem;color:var(--muted)}',
+    '.eldr-site .st-goal .st-part.done{color:var(--green,#52B788)}',
+    '.eldr-site .st-goal .st-wait{margin-top:.5rem;font-style:italic;font-size:.95rem;color:var(--gold,#D4AF37)}',
     '.eldr-site .st-count{font:700 .82rem/1 Cinzel,Georgia,serif;letter-spacing:.2em;text-transform:uppercase;margin:18px 0 0}',
     '.eldr-site .st-count b{color:var(--gold)}',
     /* pacts */
@@ -228,6 +215,17 @@
     '.eldr-site .pt img{max-width:160px;max-height:64px;object-fit:contain;align-self:flex-start}',
     '.eldr-site .pt h3{margin:0;font-size:18px;color:#f0ead6}',
     '.eldr-site .pt .cd{display:flex;flex-wrap:wrap;gap:6px;align-items:center}',
+    '.eldr-site details.eldr-about{border:1px solid rgba(82,183,136,.25);border-radius:8px;background:rgba(82,183,136,.04);margin:0 0 14px;padding:0 12px}',
+    '.eldr-site details.eldr-about summary{font-family:Montserrat,system-ui,sans-serif;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);padding:10px 0}',
+    '.eldr-site details.eldr-about .ab{padding:0 0 10px;font-size:15px}',
+    '.eldr-site details.eldr-about .ab p{margin:0 0 .7em}',
+    '.eldr-site .eldr-intro p{margin:0 0 .6em}',
+    '.eldr-site .eldr-intro p:last-child{margin:0}',
+    '.eldr-site details .ab{padding:4px 2px 14px}',
+    '.eldr-site .eldr-staffbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:rgba(122,42,36,.25);border:1px solid rgba(122,42,36,.8);border-radius:10px;padding:10px 14px;margin:0 0 22px;font-size:14px}',
+    '.eldr-site .eldr-staffbar.off{justify-content:center;color:var(--muted)}',
+    '.eldr-site section.eldr-staff{border-top-color:#a8433a;background:linear-gradient(180deg,rgba(122,42,36,.16),var(--panel) 120px)}',
+    '.eldr-site section.eldr-staff h2{color:#e08a7f}',
     '@media (max-width:620px){',
     '  .eldr-site{padding:30px 12px 44px;border-radius:0}',
     '  .eldr-site section.eldr-card{padding:16px 14px 10px}',
@@ -250,7 +248,7 @@
     if (opts.noTitle) return null;
     return el('header', { class: 'eldr-head' }, [
       el('p', { class: 'eldr-tag', text: tag || 'Embrace the Tentacle' }),
-      el('h1', { text: '' + title + '' }),
+      el('h1', { text: title }),
       intro ? el('p', { class: 'eldr-intro', text: intro }) : null
     ]);
   }
@@ -265,7 +263,7 @@
   function failed() { return empty('The Ledger could not be read just now. Try again in a moment.'); }
 
   // ================================================================== STORY
-  var ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV', 'XXV'];
+  function roman(n) { var v = [[50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']], r = ''; v.forEach(function (p) { while (n >= p[0]) { r += p[1]; n -= p[0]; } }); return r; }
   function story(ctx) {
     return Promise.all([load('story_chapters.json'), loadOpt('story_state.json')]).then(function (r) {
       var chapters = Array.isArray(r[0]) ? r[0] : (r[0] && r[0].chapters) || [];
@@ -288,15 +286,21 @@
           [96, 88, 92, 61].forEach(function (w) { g.appendChild(el('span', { style: { width: w + '%' } })); });
           body.appendChild(g);
           var have = Number(counters[ch.unlock.counter] || 0), need = Number(ch.unlock.value || 1);
-          body.appendChild(el('div', { class: 'st-goal' }, [
-            el('div', { class: 'eldr-row' }, [
-              el('span', { class: 'h', text: ch.unlock.hint || ('Reach ' + num(need) + ' ' + ch.unlock.counter) }),
-              el('span', { class: 'n', text: num(Math.min(have, need)) + ' / ' + num(need) })
-            ]),
-            bar(pct(have, need))
-          ]));
+          var pr = (state.progress || {})[ch.id], parts = pr && pr.parts && pr.parts.length ? pr.parts : null;
+          if (parts && parts.length === 1) { have = Number(parts[0].have); need = Number(parts[0].need); }
+          var p100 = pr && pr.pct != null ? Math.min(100, Number(pr.pct)) : pct(have, need);
+          var goalKids = [el('div', { class: 'eldr-row' }, [
+            el('span', { class: 'h', text: ch.unlock.hint || ('Reach ' + num(need) + ' ' + ch.unlock.counter) }),
+            el('span', { class: 'n', text: parts && parts.length > 1 ? Math.floor(p100) + '%' : num(Math.min(have, need)) + ' / ' + num(need) })
+          ])];
+          if (parts && parts.length > 1) parts.forEach(function (p) {
+            goalKids.push(el('div', { class: 'eldr-row st-part' + (p.have >= p.need ? ' done' : '') }, [el('span', { text: p.label }), el('span', { class: 'n', text: num(p.have) + ' / ' + num(p.need) })]));
+          });
+          goalKids.push(bar(p100));
+          if (pr && pr.wait) goalKids.push(el('div', { class: 'st-wait', text: pr.wait.charAt(0).toUpperCase() + pr.wait.slice(1) }));
+          body.appendChild(el('div', { class: 'st-goal' }, goalKids));
         }
-        list.appendChild(el('li', { class: 'st-entry' + (isOpen ? '' : ' sealed') }, [el('div', { class: 'st-num', text: ROMAN[i] || String(i + 1) }), body]));
+        list.appendChild(el('li', { class: 'st-entry' + (isOpen ? '' : ' sealed') }, [el('div', { class: 'st-num', text: roman(i + 1) }), body]));
       });
       var h = head(ctx.opts, 'The Eldritch Ledger', "The congregation's story",
         'Every soul who speaks on stream signs the Ledger. As the congregation banishes, feeds, chants and dies together, new pages are revealed.');
@@ -319,34 +323,16 @@
   function parseMd(md) {
     var lines = String(md || '').replace(/\r/g, '').split('\n');
     var doc = { title: '', intro: [], sections: [] }, cur = null, para = [];
-    var inModBlock = false;
-
     function flush() {
       if (!para.length) return;
       var t = para.join(' ').trim(); para = [];
       if (!t || /^\(Master copy/i.test(t)) return;
       (cur ? cur.blocks : doc.intro).push({ type: 'p', text: t });
     }
-
     for (var i = 0; i < lines.length; i++) {
       var ln = lines[i];
-
-      // Detect HTML mod block comments or containers
-      if (/<div[^>]*data-eldr-auth=["']staff["']/i.test(ln) || /<!--\s*MOD\s*START/i.test(ln)) {
-        inModBlock = true;
-      }
-      if (/<\/div>/i.test(ln) && inModBlock || /<!--\s*MOD\s*END/i.test(ln)) {
-        inModBlock = false;
-        continue;
-      }
-
-      if (/^#\s+/.test(ln)) { flush(); doc.title = ln.replace(/^#\s+/, '').replace(/⛧/g, '').trim(); continue; }
-      if (/^##\s+/.test(ln)) {
-        flush();
-        cur = { title: ln.replace(/^##\s+/, '').trim(), isMod: inModBlock, blocks: [] };
-        doc.sections.push(cur);
-        continue;
-      }
+      if (/^#\s+/.test(ln)) { flush(); doc.title = ln.replace(/^#\s+/, '').replace(/[⛧✦☩✠]/g, '').trim(); continue; }
+      if (/^##\s+/.test(ln)) { flush(); cur = { title: ln.replace(/^##\s+/, '').trim(), blocks: [] }; doc.sections.push(cur); continue; }
       if (/^###\s+/.test(ln)) { flush(); (cur ? cur.blocks : doc.intro).push({ type: 'h3', text: ln.replace(/^###\s+/, '') }); continue; }
       if (/^\s*(-{3,}|\*{3,})\s*$/.test(ln)) { flush(); continue; }
       if (/^\s*\|/.test(ln)) {
@@ -366,7 +352,7 @@
         (cur ? cur.blocks : doc.intro).push({ type: 'ul', items: items });
         continue;
       }
-      if (!ln.trim() || ln.trim().indexOf('<') === 0) { flush(); continue; }
+      if (!ln.trim()) { flush(); continue; }
       para.push(ln.trim());
     }
     flush();
@@ -384,7 +370,6 @@
     return t;
   }
   function commands(ctx) {
-    var hasModKey = !!checkAuthKey();
     return load('commands.md', true).then(function (md) {
       var doc = parseMd(md);
       var nodes = [];
@@ -394,21 +379,17 @@
         doc.intro.forEach(function (b) { if (b.type === 'p' && !introP) h.appendChild(introP = el('p', { class: 'eldr-intro', html: inline(b.text.replace(/^\*|\*$/g, '')) })); });
       }
       nodes.push(h);
-
-      var secs = [];
-      doc.sections.forEach(function (s) {
-        if (s.isMod && !hasModKey) return; // Hide mod sections unless valid key exists
+      var secs = doc.sections.map(function (s) {
         var id = 'eldr-' + slug(s.title.replace(/^[^\w]+/, ''));
-        var node = el('section', { class: 'eldr-card' + (s.isMod ? ' mod-card' : ''), id: id }, [el('h2', { html: inline(s.title) })].concat(s.blocks.map(blockNode)));
-        secs.push({ s: s, id: id, node: node });
+        var node = el('section', { class: 'eldr-card', id: id }, [el('h2', { html: inline(s.title) }), aboutBox(guideFor(ctx, s.title))].concat(s.blocks.map(blockNode)));
+        return { s: s, id: id, node: node };
       });
-
       var search = el('input', { class: 'eldr-search', type: 'search', placeholder: 'Find a command…', 'aria-label': 'Find a command' });
       var nav = el('nav', { class: 'eldr-chips', 'aria-label': 'Sections' }, secs.map(function (x) {
         return el('a', { class: 'eldr-chip', href: '#' + x.id, text: x.s.title.replace(/^[^\w]+/, '').trim(),
           onclick: function (e) { e.preventDefault(); goTo(x); } });
       }));
-      // Phones: the sideways chip strip was unreachable on eldritzh.com, so show a picker instead.
+      // Phones: 29 chips in a sideways strip were unreachable (the swipe gets eaten by the shop page), so show a picker instead.
       var jump = el('select', { class: 'eldr-select eldr-jump', 'aria-label': 'Jump to a section',
         onchange: function () { var x = secs[+jump.value]; jump.selectedIndex = 0; if (x) goTo(x); } },
         [el('option', { value: '', text: 'Jump to a section…' })].concat(secs.map(function (x, i) {
@@ -431,7 +412,7 @@
       nodes.push(el('div', { class: 'eldr-jumpbox' }, [nav, jump]), search);
       secs.forEach(function (x) { nodes.push(x.node); });
       nodes.push(foot(ctx.site && ctx.site.files && ctx.site.files['commands.md']));
-      return nodes;
+      return staffSections(ctx).then(function (staff) { if (staff.length) nodes.splice(1, 0, staff[0]); if (staff.length > 1) nodes.splice(4, 0, el('div', null, staff.slice(1))); return nodes; });
     });
   }
 
@@ -697,7 +678,347 @@
     });
   }
 
-  var PAGES = { story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners };
+  // ================================================================== GUIDE (guide.md: "## Title" -> what it is)
+  function gkey(s) { return String(s || '').toLowerCase().replace(/^page:\s*/, 'page:').replace(/[^a-z0-9:]+/g, ''); }
+  function parseGuide(md) {
+    var map = {}, cur = null, buf = [];
+    function done() { if (cur) map[gkey(cur)] = buf.join('\n').trim(); }
+    String(md || '').replace(/\r/g, '').split('\n').forEach(function (ln) {
+      if (/^##\s+/.test(ln)) { done(); cur = ln.replace(/^##\s+/, '').trim(); buf = []; }
+      else if (cur) buf.push(ln);
+    });
+    done();
+    return map;
+  }
+  function guideNodes(md) {
+    var doc = parseMd('## x\n' + md);
+    var blocks = doc.sections.length ? doc.sections[0].blocks : [];
+    return blocks.map(function (b) { return b.type === 'p' ? el('p', { html: inline(b.text) }) : blockNode(b); });
+  }
+  function guideFor(ctx, title) { var g = ctx.guide || {}; return g[gkey(title)] || g[gkey(String(title).replace(/^[^\w]+/, ''))] || ''; }
+  function aboutBox(md, open) {
+    if (!md) return null;
+    return el('details', { class: 'eldr-about', open: !!open }, [el('summary', null, el('span', { class: 't', text: 'What is this?' })), el('div', { class: 'ab' }, guideNodes(md))]);
+  }
+
+  // ================================================================== STAFF VIEW (key from /modkey, checked by the forge)
+  var STAFF_KEY = 'eldr_staff_key';
+  function store(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { try { if (v == null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e2) {} } }
+  function stored(k) { try { var v = localStorage.getItem(k); if (v) return v; } catch (e) {} try { return sessionStorage.getItem(k); } catch (e2) { return null; } }
+  function takeKeyFromUrl() {
+    // #eldr-key=... (never sent to any server) or the old ?key=...; either way it is removed from the address bar
+    var key = null, h = location.hash || '', m = h.match(/(?:^#|&)eldr-key=([A-Za-z0-9_\-]+)/);
+    if (m) { key = m[1]; h = h.replace(m[0], '').replace(/^#&/, '#'); if (h === '#') h = ''; }
+    var q = new URLSearchParams(location.search);
+    if (!key && q.get('key') && /^eldr_/.test(q.get('key'))) key = q.get('key');
+    if (q.has('key')) q.delete('key');
+    if (key) {
+      store(STAFF_KEY, key);
+      try { history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + h); } catch (e) {}
+    }
+    try { sessionStorage.removeItem('eldr_mod_key'); } catch (e) {}   // the old unchecked key
+  }
+  function staffSections(ctx) {
+    var key = stored(STAFF_KEY), api = ctx.site && ctx.site.staffApi;
+    if (!key || !api) return Promise.resolve([]);
+    return fetch(api.replace(/\/+$/, '') + '/web/staff', { headers: { 'X-Staff-Key': key }, cache: 'no-store', credentials: 'omit' })
+      .then(function (r) { return r.json().then(function (j) { return { status: r.status, j: j }; }); })
+      .then(function (res) {
+        if (res.status === 401) { store(STAFF_KEY, null); return [el('div', { class: 'eldr-staffbar off', text: 'Your staff key has expired or was revoked. Get a new one in Discord with /modkey get.' })]; }
+        if (!res.j || !res.j.ok) return [el('div', { class: 'eldr-staffbar off', text: (res.j && res.j.error) || 'The staff view could not be loaded.' })];
+        var out = [el('div', { class: 'eldr-staffbar' }, [
+          el('span', { text: 'Staff view · ' + (res.j.name || 'staff') + ' · key valid until ' + day(res.j.expires) }),
+          el('button', { class: 'eldr-chip', type: 'button', text: 'Sign out', onclick: function () { store(STAFF_KEY, null); location.reload(); } })])];
+        var doc = parseMd(res.j.markdown || '');
+        if (doc.intro.length) out.push(el('section', { class: 'eldr-card eldr-staff' }, [el('h2', { text: 'For staff' })].concat(doc.intro.map(blockNode))));
+        doc.sections.forEach(function (s) { out.push(el('section', { class: 'eldr-card eldr-staff' }, [el('h2', { html: inline(s.title) })].concat(s.blocks.map(blockNode)))); });
+        return out;
+      })
+      .catch(function () { return [el('div', { class: 'eldr-staffbar off', text: 'The staff view is out of reach right now (the forge may be offline).' })]; });
+  }
+
+  // ================================================================== SOUNDS (sounds.txt)
+  var WHO = { viewer: 'Everyone', sub: 'Subscribers & members', special: 'Special folks', vip: 'VIPs', mod: 'Mods' };
+  function priceText(p) {
+    p = String(p || '').trim().toLowerCase();
+    if (p === '' ) return '';
+    if (p === 'free' || p === '0') return 'Free';
+    var m = p.match(/^(\d+)\s*(p|e)$/);
+    if (m) { var n = +m[1]; return m[2] === 'p' ? n + (n === 1 ? ' Pact' : ' Pacts') : n + (n === 1 ? ' Eldritch Pact' : ' Eldritch Pacts'); }
+    if (/^\d+$/.test(p)) return num(+p) + ' Madness';
+    return p;
+  }
+  function secsText(s) { s = +s || 0; return s <= 0 ? 'none' : s < 120 ? s + ' s' : Math.round(s / 60) + ' min'; }
+  function sounds(ctx) {
+    return load('sounds.json').then(function (d) {
+      var list = d.sounds || [], st = ctx.state;
+      var out = [head(ctx.opts, 'Sounds', 'Make the stream scream',
+        'Type a sound\'s name in chat to play it on stream. Each one has its own price, cooldown and audience.')];
+      if (d.enabled === false) out.push(el('p', { class: 'eldr-note', text: 'The sound engine is switched off right now. The list below is what plays when it is back.' }));
+      var notes = [];
+      if (d.happyHour) notes.push('Happy hour makes Madness prices cheaper (Pacts are never discounted).');
+      if (list.some(function (s) { return s.bits > 0; })) notes.push('Cheer bits, send a Super Chat or KICKs with the sound\'s name in the message (like <code>!steven</code>) to play it with money' + (d.moneyAnyTier ? ', whoever you are.' : '.'));
+      if (list.some(function (s) { return s.others; })) notes.push('<strong>Unlock</strong> means anyone outside that audience can still play it, for that price.');
+      if (d.userCooldown > 0) notes.push('You can play one sound every ' + secsText(d.userCooldown) + '.');
+      if (notes.length) out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'How it works' }), el('ul', null, notes.map(function (n) { return el('li', { html: n }); })), el('p', { class: 'eldr-muted eldr-small', html: '<code>!sounds</code> in chat lists the sounds open to you with your price. <code>!sound info &lt;name&gt;</code> tells you everything about one.' })]));
+      if (!list.length) { out.push(empty('No sounds yet.')); return out.concat(foot(d.updated)); }
+      if (!st.who) st.who = 'all';
+      var tools = el('div', { class: 'pa-tools' });
+      var filters = [['all', 'All'], ['viewer', 'Everyone'], ['sub', 'Subscribers'], ['special', 'Special folks'], ['bits', 'With bits']];
+      var chips = el('div', { class: 'eldr-chips', style: { margin: '0' } });
+      var search = el('input', { class: 'eldr-search', type: 'search', placeholder: 'Find a sound…', 'aria-label': 'Find a sound', value: st.q || '' });
+      tools.appendChild(chips); tools.appendChild(search);
+      var box = el('div');
+      function draw() {
+        chips.innerHTML = '';
+        filters.forEach(function (f) { chips.appendChild(el('button', { class: 'eldr-chip', type: 'button', 'aria-pressed': String(st.who === f[0]), text: f[1], onclick: function () { st.who = f[0]; draw(); } })); });
+        box.innerHTML = '';
+        var q = (st.q || '').toLowerCase().replace(/^!/, '');
+        var groups = {}, order = [];
+        list.forEach(function (s) {
+          if (st.who === 'bits' ? !(s.bits > 0) : st.who !== 'all' && (s.who || []).indexOf(st.who) < 0) return;
+          var hay = (s.id + ' ' + (s.label || '') + ' ' + (s.aliases || []).join(' ')).toLowerCase();
+          if (q && hay.indexOf(q) < 0) return;
+          var g = s.group || 'Sounds';
+          if (!groups[g]) { groups[g] = []; order.push(g); }
+          groups[g].push(s);
+        });
+        if (!order.length) { box.appendChild(empty('No sound matches that.')); return; }
+        order.forEach(function (g) {
+          var t = el('table', { class: 'stack' });
+          t.appendChild(el('thead', null, el('tr', null, ['Command', 'Who', 'Price', 'Cooldown'].map(function (x) { return el('th', { text: x }); }))));
+          var tb = el('tbody');
+          groups[g].forEach(function (s) {
+            var pr = s.price || {}, parts = [];
+            if (pr.base) parts.push(priceText(pr.base));
+            Object.keys(pr).forEach(function (k) { if (k !== 'base') parts.push((WHO[k] || k) + ': ' + priceText(pr[k])); });
+            var who = (s.who || []).map(function (w) { return WHO[w] || w; }).join(' or ');
+            tb.appendChild(el('tr', { style: s.off ? { opacity: '.55' } : null }, [
+              el('td', null, [el('code', { text: '!' + s.id }), ' ', el('strong', { text: s.label || '' }),
+                (s.aliases || []).length ? el('div', { class: 'eldr-small eldr-muted', text: 'also ' + s.aliases.map(function (a) { return '!' + a; }).join(', ') }) : null,
+                s.off ? el('span', { class: 'eldr-badge red', text: 'silenced' }) : null]),
+              el('td', null, [who, s.others ? el('div', { class: 'eldr-small eldr-muted', text: 'Others: unlock for ' + priceText(s.others) }) : null]),
+              el('td', null, [parts.join(' · '), s.bits > 0 ? el('div', { class: 'eldr-small eldr-muted', text: 'or cheer ' + num(s.bits) + ' bits' }) : null]),
+              el('td', { text: secsText(s.cooldown) })
+            ]));
+          });
+          t.appendChild(tb);
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: g.charAt(0).toUpperCase() + g.slice(1) }), t]));
+        });
+      }
+      search.addEventListener('input', function () { st.q = search.value; draw(); });
+      draw();
+      out.push(tools, box, foot(ctx.site && ctx.site.files && ctx.site.files['sounds.json']));
+      return out;
+    });
+  }
+
+  // ================================================================== BESTIARY (beings, families, every enemy, legends)
+  var GROUPS = { mythos: 'The Mythos', otherworld: 'The Otherworld', legend: 'Legends' };
+  var DEPTH = { shallow: 'Shallows', deep: 'Deep', abyss: 'Abyss' };
+  var WHERE = { deep: 'the Deep', abyss: 'the Abyss', any: 'any depth', raid: 'raid boss', shallow: 'the Shallows' };
+  function bestiary(ctx) {
+    return load('bestiary.json').then(function (d) {
+      var st = ctx.state, fams = d.families || [], beings = d.beings || [], horrors = d.horrors || [], weapons = d.weapons || [];
+      var famById = {}; fams.forEach(function (f) { famById[f.id] = f; });
+      var foeCount = fams.reduce(function (a, f) { return a + (f.foes || []).length; }, 0);
+      var out = [head(ctx.opts, 'The Bestiary', 'What waits beneath the stream', '')];
+      out.push(el('div', { class: 'eldr-stats' }, [
+        el('div', { class: 'eldr-stat' }, [el('b', { text: num(beings.length) }), el('span', { text: 'Beings' })]),
+        el('div', { class: 'eldr-stat' }, [el('b', { text: num(fams.length) }), el('span', { text: 'Families' })]),
+        el('div', { class: 'eldr-stat' }, [el('b', { text: num(foeCount) }), el('span', { text: 'Enemies of the deep' })]),
+        el('div', { class: 'eldr-stat' }, [el('b', { text: num(horrors.length) }), el('span', { text: 'Legendary horrors' })])
+      ]));
+      var search = el('input', { class: 'eldr-search', type: 'search', placeholder: 'Find a creature…', 'aria-label': 'Find a creature', value: st.q || '' });
+      out.push(search);
+      var searchables = [];   // {node, hay, parent?}
+
+      // Beings
+      if (beings.length) {
+        var grid = el('div', { class: 'eldr-grid' });
+        beings.forEach(function (b) {
+          var card = el('article', { class: 'ci' }, [
+            el('div', { class: 'eldr-row' }, [el('h3', { text: b.name }), b.typeLabel ? el('span', { class: 'eldr-badge green', text: b.typeLabel }) : null]),
+            b.hint ? el('p', { class: 'eldr-small', style: { fontStyle: 'italic', margin: '6px 0' }, text: b.hint }) : null,
+            el('div', { class: 'eldr-small eldr-muted', text: num(b.madness[0]) + '–' + num(b.madness[1]) + ' Madness' + (b.ichor ? ' · ' + b.ichor + ' Ichor' : '') + (b.seconds ? ' · gone after ' + secsText(b.seconds) : '') }),
+            (b.aliases || []).length ? el('div', { class: 'eldr-small eldr-muted', text: 'Also answers to: ' + b.aliases.join(', ') }) : null
+          ]);
+          grid.appendChild(card);
+          searchables.push({ node: card, hay: (b.name + ' ' + (b.aliases || []).join(' ') + ' ' + (b.typeLabel || '')).toLowerCase() });
+        });
+        out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Beings' }),
+          el('p', { class: 'eldr-muted eldr-small', html: 'They break through onto the stream itself. Before one appears, chat gets a hint of what kind of thing is coming. Type its name to banish it; <code>!pour</code> Ichor into the tear for a bigger reward.' }), grid]));
+      }
+
+      // Families, by group
+      ['mythos', 'otherworld', 'legend'].concat(Object.keys(fams.reduce(function (a, f) { if (!GROUPS[f.group]) a[f.group] = 1; return a; }, {}))).forEach(function (g) {
+        var list = fams.filter(function (f) { return f.group === g; });
+        if (!list.length) return;
+        var sec = el('section', { class: 'eldr-card' }, [el('h2', { text: GROUPS[g] || g })]);
+        if (g === 'legend') sec.appendChild(el('p', { class: 'eldr-muted eldr-small', text: 'Legend families have no lord and no Gate Key; their horrors only turn up rarely, and their materials come from them.' }));
+        list.forEach(function (f) {
+          var foes = (f.foes || []).slice().sort(function (a, b) { var o = { shallow: 1, deep: 2, abyss: 3 }; return (o[a.depth] || 0) - (o[b.depth] || 0); });
+          var legends = horrors.filter(function (h) { return h.family === f.id; });
+          var det = el('details', null, [el('summary', null, [el('span', { class: 't', text: f.label }),
+            el('span', { class: 'eldr-small eldr-muted', style: { fontFamily: 'inherit', fontWeight: '400' }, text: (foes.length ? foes.length + (foes.length === 1 ? ' enemy' : ' enemies') : legends.length + (legends.length === 1 ? ' horror' : ' horrors')) + (f.lord ? ' · lord: ' + f.lord : '') })])]);
+          var body = el('div', { class: 'ab' });
+          if (f.lord) body.appendChild(el('p', null, [el('strong', { text: 'Lord: ' + f.lord + '. ' }), el('em', { text: f.lordLine || '' })]));
+          var mats = f.materials || {};
+          body.appendChild(el('p', { class: 'eldr-small' }, [el('strong', { text: 'Drops: ' }),
+            (mats.common || []).join(', '), (mats.rare || []).length ? ' · rare: ' + mats.rare.join(', ') : '', (mats.boss || []).length ? ' · from the lord: ' + mats.boss.join(', ') : '',
+            f.lure ? ' · lure: ' + f.lure : '']));
+          if ((f.beings || []).length) body.appendChild(el('p', { class: 'eldr-small' }, [el('strong', { text: 'Beings of this kind: ' }), f.beings.join(', ')]));
+          if (foes.length) {
+            var t = el('table', { class: 'stack' });
+            t.appendChild(el('thead', null, el('tr', null, [el('th', { text: 'Enemy' }), el('th', { text: 'Where' }), el('th', { text: 'Encounter' })])));
+            var tb = el('tbody');
+            foes.forEach(function (x) {
+              var tr = el('tr', null, [el('td', null, el('strong', { text: x.name })), el('td', { text: x.depth ? DEPTH[x.depth] || x.depth : 'Descend' }),
+                el('td', { class: 'eldr-small', style: { fontStyle: x.line ? 'italic' : 'normal' }, text: x.line || '' })]);
+              tb.appendChild(tr);
+              searchables.push({ node: tr, hay: (x.name + ' ' + f.label).toLowerCase(), det: det });
+            });
+            t.appendChild(tb); body.appendChild(t);
+          }
+          if (legends.length) body.appendChild(el('p', { class: 'eldr-small' }, [el('strong', { text: 'Legendary horrors: ' }), legends.map(function (h) { return h.name + ' (' + (WHERE[h.where] || h.where) + ')'; }).join(', ')]));
+          det.appendChild(body); sec.appendChild(det);
+          searchables.push({ node: det, hay: (f.label + ' ' + (f.lord || '') + ' ' + (f.beings || []).join(' ')).toLowerCase(), isDet: true });
+        });
+        out.push(sec);
+      });
+
+      // legendary horrors and weapons
+      if (horrors.length) {
+        var t2 = el('table', { class: 'stack' }), tb2 = el('tbody');
+        t2.appendChild(el('thead', null, el('tr', null, [el('th', { text: 'Horror' }), el('th', { text: 'Where' }), el('th', { text: 'It appears' })])));
+        horrors.forEach(function (h) {
+          var tr = el('tr', null, [el('td', null, el('strong', { text: h.name })), el('td', { text: WHERE[h.where] || h.where }), el('td', { class: 'eldr-small', style: { fontStyle: 'italic' }, text: h.line || '' })]);
+          tb2.appendChild(tr); searchables.push({ node: tr, hay: h.name.toLowerCase() });
+        });
+        t2.appendChild(tb2);
+        out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Legendary horrors' }),
+          el('p', { class: 'eldr-muted eldr-small', text: 'Rare in the deep and the abyss, harder to beat and better paid. The raid bosses answer when the streamer summons a raid.' }), t2]));
+      }
+      if (weapons.length) {
+        var t3 = el('table', { class: 'stack' }), tb3 = el('tbody');
+        t3.appendChild(el('thead', null, el('tr', null, [el('th', { text: 'Weapon' }), el('th', { text: 'Kind' }), el('th', { text: 'Wielder' })])));
+        weapons.forEach(function (w) {
+          var tr = el('tr', null, [el('td', null, el('strong', { text: w.name })), el('td', { text: w.type }), el('td', { text: w.wielder })]);
+          tb3.appendChild(tr); searchables.push({ node: tr, hay: (w.name + ' ' + w.wielder).toLowerCase() });
+        });
+        t3.appendChild(tb3);
+        out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Legendary weapons' }),
+          el('p', { class: 'eldr-muted eldr-small', text: 'Fate hands one out now and then in duels and descents, and sealing a boon makes it likelier. Sometimes the wielder steps out of legend to fight beside you.' }), t3]));
+      }
+      function filter() {
+        var q = (st.q || '').trim().toLowerCase();
+        searchables.forEach(function (s) { if (!s.isDet) s.node.style.display = !q || s.hay.indexOf(q) >= 0 ? '' : 'none'; });
+        searchables.forEach(function (s) {
+          if (!s.isDet) return;
+          var any = !q || s.hay.indexOf(q) >= 0 || Array.prototype.some.call(s.node.querySelectorAll('tbody tr'), function (tr) { return tr.style.display !== 'none'; });
+          if (s.hay.indexOf(q) >= 0 && q) s.node.querySelectorAll('tbody tr').forEach(function (tr) { tr.style.display = ''; });
+          s.node.style.display = any ? '' : 'none';
+          if (q) s.node.open = any;
+        });
+      }
+      search.addEventListener('input', function () { st.q = search.value; filter(); });
+      if (st.q) filter();
+      out.push(foot(ctx.site && ctx.site.files && ctx.site.files['bestiary.json']));
+      return out;
+    });
+  }
+
+  // ================================================================== CONGREGATION (cults, Tsathoggua, nemeses, depths, clips)
+  function congregation(ctx) {
+    return Promise.all([load('congregation.json'), loadOpt('codex.json')]).then(function (r) {
+      var d = r[0] || {}, cx = r[1] || {};
+      var out = [head(ctx.opts, 'The Congregation', 'The state of the dark', '')];
+      // cults
+      var cu = d.cults;
+      if (cu && cu.list) {
+        var max = Math.max.apply(null, cu.list.map(function (c) { return c.glory || 0; }).concat([1]));
+        var reign = cu.list.filter(function (c) { return c.id === cu.reigning; })[0];
+        var grid = el('div', { class: 'eldr-grid' });
+        cu.list.forEach(function (c, i) {
+          grid.appendChild(el('article', { class: 'ci' + (c.id === cu.reigning ? ' bound' : '') }, [
+            el('div', { class: 'eldr-row' }, [el('h3', null, [el('span', { class: 'id', text: '#' + (i + 1) }), c.deity]), c.id === cu.reigning ? el('span', { class: 'eldr-badge gold', text: 'Reigning' }) : null]),
+            el('div', { class: 'eldr-small eldr-muted', text: c.name }),
+            bar(pct(c.glory, max), c.id === cu.reigning ? 'gold' : ''),
+            el('div', { class: 'eldr-row eldr-small' }, [el('span', { text: num(c.glory) + ' glory' }), el('span', { class: 'eldr-muted', text: c.members + ' faithful' })]),
+            el('div', { class: 'eldr-small', text: 'Boon: ' + c.boon })
+          ]));
+        });
+        out.push(el('section', { class: 'eldr-card' }, [el('div', { class: 'eldr-row' }, [el('h2', { text: 'The cults' }), el('span', { class: 'eldr-badge', text: 'Glory in ' + (function (m) { var x = new Date((m || '') + '-01T12:00:00Z'); return isNaN(x) ? 'this month' : x.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }); })(cu.month) })]),
+          reign ? el('p', { html: '<strong>' + esc(reign.deity) + '</strong> reigns, crowned last month.' }) : null,
+          grid, el('p', { class: 'eldr-muted eldr-small', html: 'Join with <code>!cult join &lt;name&gt;</code>. Everything you do earns your cult glory; the winners of the month are rewarded.' })]));
+      }
+      // Tsathoggua
+      var ts = d.tsathoggua;
+      if (ts) {
+        var rows = function (l) { var t = el('table', { class: 'cx-top' }), tb = el('tbody'); l.forEach(function (x, i) { tb.appendChild(el('tr', null, [el('td', { text: '#' + (i + 1) }), el('td', { text: x.name }), el('td', { class: 'num', text: num(x.fed) })])); }); t.appendChild(tb); return t; };
+        out.push(el('section', { class: 'eldr-card' }, [
+          el('div', { class: 'eldr-row' }, [el('h2', { text: 'Tsathoggua' }), el('span', { class: 'eldr-badge ' + (ts.asleep ? 'teal' : 'green'), text: ts.sealed ? 'Sealed' : ts.asleep ? 'Full and asleep' : 'Hungry' })]),
+          bar(ts.pct, 'gold'),
+          el('div', { class: 'eldr-row eldr-small' }, [el('span', { text: ts.pct + '% full' }), el('span', { class: 'eldr-muted', text: num(ts.full) + ' / ' + num(ts.target) })]),
+          (ts.now || []).length ? el('h3', { text: 'Feeding him now' }) : null, (ts.now || []).length ? rows(ts.now) : null,
+          (ts.allTime || []).length ? el('h3', { text: 'His most devoted, all time' }) : null, (ts.allTime || []).length ? rows(ts.allTime) : null,
+          el('p', { class: 'eldr-muted eldr-small', html: '<code>!feed 500</code>, <code>!feed pact</code> or Sanity on Twitch. Fill him and he sleeps, and blessings spill over the chat.' })]));
+      }
+      // nemeses
+      var nm = d.nemeses;
+      if (nm) {
+        var card = function (n) {
+          return el('article', { class: 'ci' + (n.warchief ? ' bound' : '') }, [
+            el('div', { class: 'eldr-row' }, [el('h3', { text: n.name + (n.epithet ? (/^(the|of|from|who) /i.test(n.epithet) ? ' ' : ', ') + n.epithet : '') }),
+              n.warchief ? el('span', { class: 'eldr-badge gold', text: 'Warchief' }) : n.ended ? el('span', { class: 'eldr-badge red', text: 'Slain ' + day(n.ended) }) : el('span', { class: 'eldr-badge', text: 'Level ' + n.level })]),
+            el('div', { class: 'eldr-small eldr-muted', text: [n.kind, n.family, n.home ? DEPTH[n.home] || n.home : ''].filter(Boolean).join(' · ') }),
+            el('div', { class: 'eldr-small', text: num(n.victims) + (n.victims === 1 ? ' victim' : ' victims') + (n.scars ? ' · ' + n.scars + (n.scars === 1 ? ' scar' : ' scars') : '') }),
+            (n.traits || []).length ? el('div', { class: 'cd', style: { display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '6px' } },
+              n.traits.map(function (t) { return el('span', { class: 'eldr-badge ' + (t.kind === 'w' ? 'green' : 'red'), title: t.flavor || '', text: t.name }); })) : null
+          ]);
+        };
+        var cap = el('div', { class: 'eldr-grid' }); (nm.captains || []).forEach(function (n) { cap.appendChild(card(n)); });
+        var sec = el('section', { class: 'eldr-card' }, [el('div', { class: 'eldr-row' }, [el('h2', { text: 'The nemeses' }), el('span', { class: 'eldr-badge', text: nm.alive + ' alive · ' + nm.dead + ' slain' })]),
+          (nm.captains || []).length ? cap : empty('No nemesis walks the dark right now.'),
+          el('p', { class: 'eldr-muted eldr-small', html: 'Red traits make it stronger, green ones are its weaknesses (hover for what they do). <code>!nemesis board</code> in chat shows the same.' })]);
+        if ((nm.slain || []).length) { var sl = el('div', { class: 'eldr-grid' }); nm.slain.forEach(function (n) { sl.appendChild(card(n)); }); sec.appendChild(el('h3', { text: 'Lately slain' })); sec.appendChild(sl); }
+        out.push(sec);
+      }
+      // the depths (from the Codex boards)
+      var want = [['delve_deepest_shallow', 'Deepest in the Shallows'], ['delve_deepest_deep', 'Deepest in the Deep'], ['delve_deepest_abyss', 'Deepest in the Abyss'], ['delve_bottoms', 'Bottoms broken'], ['nemeses_slain', 'Nemeses slain'], ['warchiefs_slain', 'Warchiefs slain']];
+      var boards = (cx.leaderboards || []);
+      var tiles = el('div', { class: 'eldr-grid' }), anyB = false;
+      want.forEach(function (w) {
+        var b = boards.filter(function (x) { return x.stat === w[0]; })[0];
+        var rowsB = b && (b.allTime || []).slice(0, 5);
+        if (!rowsB || !rowsB.length) return;
+        anyB = true;
+        var t = el('table', { class: 'cx-top' }), tb = el('tbody');
+        rowsB.forEach(function (x) { tb.appendChild(el('tr', null, [el('td', { text: '#' + x.rank }), el('td', { text: x.name }), el('td', { class: 'num', text: num(x.value) })])); });
+        t.appendChild(tb);
+        tiles.appendChild(el('article', { class: 'ci' }, [el('h3', { text: w[1] }), t]));
+      });
+      if (anyB) out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Hunters of the deep' }), tiles]));
+      // clipomania
+      if ((d.clipomania || []).length) {
+        var t4 = el('table', { class: 'stack' }), tb4 = el('tbody');
+        t4.appendChild(el('thead', null, el('tr', null, [el('th', { text: 'Month' }), el('th', { text: 'Champions' })])));
+        d.clipomania.forEach(function (m) {
+          var dt = new Date(m.month + '-01T12:00:00Z');
+          tb4.appendChild(el('tr', null, [el('td', { text: isNaN(dt) ? m.month : dt.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) }),
+            el('td', { text: m.top.map(function (x, i) { return (i + 1) + '. ' + x.name + ' (' + x.clips + ')'; }).join('   ') })]));
+        });
+        t4.appendChild(tb4);
+        out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Clipomania champions' }),
+          el('p', { class: 'eldr-muted eldr-small', text: 'Clip the stream on Twitch and post it in the Discord clips channel. Every month the top clippers win Pacts.' }), t4]));
+      }
+      if (out.length === 1) out.push(empty('The congregation has nothing to show yet.'));
+      out.push(foot(d.updated));
+      return out;
+    });
+  }
+
+  var PAGES = { story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation };
 
   // ------------------------------------------------------------------ mount
   function render(root, quiet) {
@@ -713,6 +1034,8 @@
     if (!quiet) { root.innerHTML = ''; root.appendChild(el('div', { class: 'eldr-loading', text: 'Opening the Ledger…' })); }
     return loadOpt('site.json').then(function (site) {
       ctx.site = site || {};
+      return loadOpt('guide.md', true).then(function (g) { ctx.guide = parseGuide(g || ''); return site; });
+    }).then(function (site) {
       var sig = site ? JSON.stringify(site.files || site.updated || '') : String(Math.random());
       if (quiet && sig === ctx.sig) return;          // nothing new since the last look
       ctx.sig = sig;
@@ -720,6 +1043,12 @@
         var y = window.scrollY;
         var wrap = el('div', { class: 'eldr-wrap' });
         nodes.forEach(function (n) { if (n) wrap.appendChild(n); });
+        var pg = (ctx.guide || {})[gkey('page:' + page)], hd = wrap.querySelector('header.eldr-head');
+        if (pg && hd) {
+          var old = hd.querySelector('.eldr-intro'); if (old) old.remove();
+          var intro = el('div', { class: 'eldr-intro' }, guideNodes(pg));
+          var count = hd.querySelector('.st-count'); if (count) hd.insertBefore(intro, count); else hd.appendChild(intro);
+        }
         root.innerHTML = '';
         root.appendChild(wrap);
         if (quiet) window.scrollTo(0, y);
@@ -753,6 +1082,7 @@
 
   // Fourthwall may add sections after load (page builder, client-side navigation): watch for them.
   function start() {
+    takeKeyFromUrl();
     scan();
     if (window.MutationObserver) {
       var pending = false;
