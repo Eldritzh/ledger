@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-07T19:17:31.3188288Z",
+  "updated": "2026-11-07T19:30:08.7532614Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 50,
-    "fed": 988717,
-    "tsath_fills": 9,
+    "checkins": 51,
+    "fed": 1183588,
+    "tsath_fills": 10,
     "messages": 400,
-    "banishes": 40,
+    "banishes": 42,
     "delve_bottoms": 1,
     "chants": 0,
     "deaths": 0,
@@ -20,7 +20,7 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 1,
+    "stream:checkins": 2,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
@@ -29,8 +29,8 @@
     "count:streams_attended": 20,
     "stream:messages": 0,
     "sum:circle_top": 0,
-    "stream:banishes": 0,
-    "@moon": 6,
+    "stream:banishes": 2,
+    "@moon": 37,
     "kinds:beings_seen": 11,
     "pacts": 0,
     "sunwait_candles": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 33.3,
+      "pct": 34.0,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 50,
+          "have": 51,
           "need": 150
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 6.7,
+      "pct": 13.3,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 1,
+          "have": 2,
           "need": 15
         }
       ],
@@ -226,16 +226,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 6.2,
+      "pct": 37.5,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 1,
+          "have": 2,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 0,
+          "have": 2,
           "need": 4
         }
       ],
@@ -313,11 +313,11 @@
       "wait": ""
     },
     "dreams": {
-      "pct": 36.0,
+      "pct": 40.0,
       "parts": [
         {
           "label": "Fill Tsathoggua to sleeping 25 times",
-          "have": 9,
+          "have": 10,
           "need": 25
         }
       ],
@@ -450,16 +450,16 @@
       "wait": ""
     },
     "hand": {
-      "pct": 5.0,
+      "pct": 5.1,
       "parts": [
         {
           "label": "Signatures",
-          "have": 50,
+          "have": 51,
           "need": 2500
         },
         {
           "label": "Banishments",
-          "have": 40,
+          "have": 42,
           "need": 500
         },
         {

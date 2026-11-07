@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-07T19:17:32Z",
+  "updated": "2026-11-07T19:32:42Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -240,7 +240,7 @@
       "rank": 1,
       "rankName": "Seeker",
       "circle": 1,
-      "days": 1,
+      "days": 2,
       "astray": false
     },
     {
@@ -263,6 +263,15 @@
     },
     {
       "name": "PithyPlinth",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "astray": false
+    },
+    {
+      "name": "burnov",
       "platform": "twitch",
       "rank": 1,
       "rankName": "Seeker",
