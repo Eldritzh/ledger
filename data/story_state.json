@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-07T19:40:02.9961945Z",
+  "updated": "2026-11-07T20:19:04.5210555Z",
   "unlocked": [
     "toad",
     "margins",
@@ -10,7 +10,7 @@
     "fed": 1183588,
     "tsath_fills": 10,
     "messages": 425,
-    "banishes": 43,
+    "banishes": 44,
     "delve_bottoms": 1,
     "chants": 0,
     "deaths": 0,
@@ -24,14 +24,14 @@
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
-    "sum:goblins_grabbed": 2,
+    "sum:goblins_grabbed": 3,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 21,
     "stream:messages": 25,
     "sum:circle_top": 0,
-    "stream:banishes": 3,
-    "@moon": 62,
-    "kinds:beings_seen": 11,
+    "stream:banishes": 4,
+    "@moon": 75,
+    "kinds:beings_seen": 12,
     "pacts": 0,
     "sunwait_candles": 0,
     "sunwait_unseen": 0,
@@ -171,11 +171,11 @@
       "wait": ""
     },
     "goblins": {
-      "pct": 8.0,
+      "pct": 12.0,
       "parts": [
         {
           "label": "Grab 25 treasure goblins",
-          "have": 2,
+          "have": 3,
           "need": 25
         }
       ],
@@ -226,7 +226,7 @@
       "wait": ""
     },
     "moon": {
-      "pct": 62.5,
+      "pct": 75.0,
       "parts": [
         {
           "label": "Souls signed tonight",
@@ -235,18 +235,18 @@
         },
         {
           "label": "Beings banished tonight",
-          "have": 3,
+          "have": 4,
           "need": 4
         }
       ],
       "wait": "only during a Moon Night"
     },
     "bestiary": {
-      "pct": 73.3,
+      "pct": 80.0,
       "parts": [
         {
           "label": "Banish 15 different kinds of Being",
-          "have": 11,
+          "have": 12,
           "need": 15
         }
       ],
@@ -450,7 +450,7 @@
       "wait": ""
     },
     "hand": {
-      "pct": 5.3,
+      "pct": 5.4,
       "parts": [
         {
           "label": "Signatures",
@@ -459,7 +459,7 @@
         },
         {
           "label": "Banishments",
-          "have": 43,
+          "have": 44,
           "need": 500
         },
         {
