@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-07T21:07:53Z",
+  "updated": "2026-11-07T21:22:55Z",
   "version": "1.2.0",
   "reason": "routine",
   "files": {
@@ -7,7 +7,7 @@
     "story_state.json": "2026-11-07T20:32:51Z",
     "pacts.json": "2026-11-07T19:17:45Z",
     "circles.json": "2026-11-07T19:17:45Z",
-    "codex.json": "2026-11-07T21:07:53Z",
+    "codex.json": "2026-11-07T21:22:55Z",
     "partners.json": "2026-11-05T22:18:47Z",
     "commands.md": "2026-11-05T21:41:16Z",
     "guide.md": "2026-11-04T19:52:27Z",
