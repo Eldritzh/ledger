@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-07T19:30:08.7532614Z",
+  "updated": "2026-11-07T19:40:02.9961945Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 51,
+    "checkins": 53,
     "fed": 1183588,
     "tsath_fills": 10,
-    "messages": 400,
-    "banishes": 42,
+    "messages": 425,
+    "banishes": 43,
     "delve_bottoms": 1,
     "chants": 0,
     "deaths": 0,
@@ -20,17 +20,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 2,
+    "stream:checkins": 4,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
     "sum:goblins_grabbed": 2,
     "sum:hg_challenges_held": 0,
-    "count:streams_attended": 20,
-    "stream:messages": 0,
+    "count:streams_attended": 21,
+    "stream:messages": 25,
     "sum:circle_top": 0,
-    "stream:banishes": 2,
-    "@moon": 37,
+    "stream:banishes": 3,
+    "@moon": 62,
     "kinds:beings_seen": 11,
     "pacts": 0,
     "sunwait_candles": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 34.0,
+      "pct": 35.3,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 51,
+          "have": 53,
           "need": 150
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 13.3,
+      "pct": 26.7,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 2,
+          "have": 4,
           "need": 15
         }
       ],
@@ -193,22 +193,22 @@
       "wait": ""
     },
     "census": {
-      "pct": 20.0,
+      "pct": 21.0,
       "parts": [
         {
           "label": "One hundred different souls sign the Ledger",
-          "have": 20,
+          "have": 21,
           "need": 100
         }
       ],
       "wait": ""
     },
     "vigil": {
-      "pct": 0.0,
+      "pct": 10.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 0,
+          "have": 25,
           "need": 250
         }
       ],
@@ -226,16 +226,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 37.5,
+      "pct": 62.5,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 2,
+          "have": 4,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 2,
+          "have": 3,
           "need": 4
         }
       ],
@@ -450,16 +450,16 @@
       "wait": ""
     },
     "hand": {
-      "pct": 5.1,
+      "pct": 5.3,
       "parts": [
         {
           "label": "Signatures",
-          "have": 51,
+          "have": 53,
           "need": 2500
         },
         {
           "label": "Banishments",
-          "have": 42,
+          "have": 43,
           "need": 500
         },
         {
@@ -469,7 +469,7 @@
         },
         {
           "label": "Souls",
-          "have": 20,
+          "have": 21,
           "need": 200
         }
       ],
