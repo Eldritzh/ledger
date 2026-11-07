@@ -1,20 +1,20 @@
 {
-  "updated": "2026-11-05T22:27:06Z",
+  "updated": "2026-11-07T19:17:45Z",
   "version": "1.2.0",
-  "reason": "!web push",
+  "reason": "routine",
   "files": {
     "story_chapters.json": "2026-11-04T19:52:27Z",
-    "story_state.json": "2026-11-05T21:18:59Z",
-    "pacts.json": "2026-11-05T18:48:32Z",
-    "circles.json": "2026-11-05T21:18:59Z",
+    "story_state.json": "2026-11-07T19:17:45Z",
+    "pacts.json": "2026-11-07T19:17:45Z",
+    "circles.json": "2026-11-07T19:17:45Z",
     "codex.json": "2026-11-05T21:18:59Z",
     "partners.json": "2026-11-05T22:18:47Z",
     "commands.md": "2026-11-05T21:41:16Z",
     "guide.md": "2026-11-04T19:52:27Z",
     "sounds.json": "2026-11-04T19:52:27Z",
     "bestiary.json": "2026-11-05T19:03:32Z",
-    "congregation.json": "2026-11-05T19:38:35Z",
-    "order.json": "2026-11-05T19:53:36Z",
+    "congregation.json": "2026-11-07T19:17:45Z",
+    "order.json": "2026-11-07T19:17:45Z",
     "remembrance.json": "2026-11-05T19:10:46Z"
   },
   "staffApi": "https://forge-web.warden.se"
