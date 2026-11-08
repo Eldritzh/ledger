@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-07T22:42:48Z",
+  "updated": "2026-11-08T20:40:24Z",
   "version": "1.2.0",
-  "reason": "stream end",
+  "reason": "routine",
   "files": {
     "story_chapters.json": "2026-11-04T19:52:27Z",
-    "story_state.json": "2026-11-07T22:22:59Z",
+    "story_state.json": "2026-11-08T20:40:24Z",
     "pacts.json": "2026-11-07T19:17:45Z",
     "circles.json": "2026-11-07T22:42:48Z",
     "codex.json": "2026-11-07T22:42:48Z",
