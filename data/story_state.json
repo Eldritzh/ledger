@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-09T20:15:52.3191329Z",
+  "updated": "2026-11-09T20:54:56.4427074Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 59,
+    "checkins": 60,
     "fed": 1257612,
     "tsath_fills": 10,
     "messages": 450,
@@ -20,17 +20,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 6,
+    "stream:checkins": 7,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
     "sum:goblins_grabbed": 3,
     "sum:hg_challenges_held": 0,
-    "count:streams_attended": 21,
+    "count:streams_attended": 22,
     "stream:messages": 0,
     "sum:circle_top": 0,
     "stream:banishes": 0,
-    "@moon": 37,
+    "@moon": 43,
     "kinds:beings_seen": 12,
     "pacts": 0,
     "sunwait_candles": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 39.3,
+      "pct": 40.0,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 59,
+          "have": 60,
           "need": 150
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 40.0,
+      "pct": 46.7,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 6,
+          "have": 7,
           "need": 15
         }
       ],
@@ -193,11 +193,11 @@
       "wait": ""
     },
     "census": {
-      "pct": 21.0,
+      "pct": 22.0,
       "parts": [
         {
           "label": "One hundred different souls sign the Ledger",
-          "have": 21,
+          "have": 22,
           "need": 100
         }
       ],
@@ -226,11 +226,11 @@
       "wait": ""
     },
     "moon": {
-      "pct": 37.5,
+      "pct": 43.8,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 6,
+          "have": 7,
           "need": 8
         },
         {
@@ -450,11 +450,11 @@
       "wait": ""
     },
     "hand": {
-      "pct": 5.5,
+      "pct": 5.6,
       "parts": [
         {
           "label": "Signatures",
-          "have": 59,
+          "have": 60,
           "need": 2500
         },
         {
@@ -469,7 +469,7 @@
         },
         {
           "label": "Souls",
-          "have": 21,
+          "have": 22,
           "need": 200
         }
       ],
