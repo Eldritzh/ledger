@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T11:04:27Z",
+  "updated": "2026-11-09T11:14:30Z",
   "partners": [
     {
       "id": "dreadmoor",
@@ -19,11 +19,14 @@
       "id": "g-portal",
       "name": "G-Portal",
       "label": "Ad",
-      "blurb": "",
-      "link": "",
+      "blurb": "Save 10% on game servers and support the stream!",
+      "link": "https://www.g-portal.com/?ref=Eldritzh",
       "logo": "logos/g-portal-435e9c9c.png",
       "codes": [],
-      "commands": [],
+      "commands": [
+        "!gportal",
+        "!g-portal"
+      ],
       "circles": []
     },
     {
