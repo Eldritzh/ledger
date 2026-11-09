@@ -1,6 +1,20 @@
 {
-  "updated": "2026-11-05T22:14:49Z",
+  "updated": "2026-11-09T11:04:27Z",
   "partners": [
+    {
+      "id": "dreadmoor",
+      "name": "DREADMOOR",
+      "label": "Ad",
+      "blurb": "Dark first-person fishing adventure set in a submerged world.",
+      "link": "https://store.steampowered.com/app/3629430/DREADMOOR/",
+      "logo": "logos/dreadmoor-bc702a5d.png",
+      "codes": [],
+      "commands": [
+        "!dreadmoor",
+        "!dread"
+      ],
+      "circles": []
+    },
     {
       "id": "g-portal",
       "name": "G-Portal",
