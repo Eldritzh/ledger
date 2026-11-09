@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T11:24:33Z",
+  "updated": "2026-11-09T11:34:36Z",
   "partners": [
     {
       "id": "dreadmoor",
@@ -31,13 +31,17 @@
     },
     {
       "id": "wehype",
-      "name": "WeHype",
+      "name": "Wehype",
       "label": "Ad",
-      "blurb": "",
-      "link": "",
-      "logo": "",
+      "blurb": "Buy games and DLCs at great prices while supporting the stream!",
+      "link": "https://eldritzh.wehype.app",
+      "logo": "logos/wehype-668b263b.png",
       "codes": [],
-      "commands": [],
+      "commands": [
+        "!wehype",
+        "!store",
+        "!games"
+      ],
       "circles": []
     }
   ]
