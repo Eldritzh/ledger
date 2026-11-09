@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T20:54:56.4427074Z",
+  "updated": "2026-11-09T21:30:42.0409877Z",
   "unlocked": [
     "toad",
     "margins",
@@ -9,7 +9,7 @@
     "checkins": 60,
     "fed": 1257612,
     "tsath_fills": 10,
-    "messages": 450,
+    "messages": 475,
     "banishes": 46,
     "delve_bottoms": 2,
     "chants": 0,
@@ -26,8 +26,8 @@
     "@leng": 5,
     "sum:goblins_grabbed": 3,
     "sum:hg_challenges_held": 0,
-    "count:streams_attended": 22,
-    "stream:messages": 0,
+    "count:streams_attended": 23,
+    "stream:messages": 25,
     "sum:circle_top": 0,
     "stream:banishes": 0,
     "@moon": 43,
@@ -193,22 +193,22 @@
       "wait": ""
     },
     "census": {
-      "pct": 22.0,
+      "pct": 23.0,
       "parts": [
         {
           "label": "One hundred different souls sign the Ledger",
-          "have": 22,
+          "have": 23,
           "need": 100
         }
       ],
       "wait": ""
     },
     "vigil": {
-      "pct": 0.0,
+      "pct": 10.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 0,
+          "have": 25,
           "need": 250
         }
       ],
@@ -450,7 +450,7 @@
       "wait": ""
     },
     "hand": {
-      "pct": 5.6,
+      "pct": 5.8,
       "parts": [
         {
           "label": "Signatures",
@@ -469,7 +469,7 @@
         },
         {
           "label": "Souls",
-          "have": 22,
+          "have": 23,
           "need": 200
         }
       ],
