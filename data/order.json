@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-07T19:43:45Z",
+  "updated": "2026-11-09T19:44:27Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -244,6 +244,15 @@
       "astray": false
     },
     {
+      "name": "revenantmessiah",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 2,
+      "astray": false
+    },
+    {
       "name": "s1tv",
       "platform": "twitch",
       "rank": 1,
@@ -253,21 +262,12 @@
       "astray": false
     },
     {
-      "name": "revenantmessiah",
-      "platform": "twitch",
-      "rank": 1,
-      "rankName": "Seeker",
-      "circle": 1,
-      "days": 1,
-      "astray": false
-    },
-    {
       "name": "PithyPlinth",
       "platform": "twitch",
       "rank": 1,
       "rankName": "Seeker",
       "circle": 1,
-      "days": 1,
+      "days": 2,
       "astray": false
     },
     {
@@ -281,6 +281,24 @@
     },
     {
       "name": "DurinBjornsson",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "astray": false
+    },
+    {
+      "name": "Dampmus",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "astray": false
+    },
+    {
+      "name": "First_NaPaLm",
       "platform": "twitch",
       "rank": 1,
       "rankName": "Seeker",

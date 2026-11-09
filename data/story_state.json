@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-08T20:35:47.5601705Z",
+  "updated": "2026-11-09T19:43:37.4141683Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 53,
-    "fed": 1183588,
+    "checkins": 57,
+    "fed": 1257612,
     "tsath_fills": 10,
     "messages": 450,
     "banishes": 46,
@@ -27,10 +27,10 @@
     "sum:goblins_grabbed": 3,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 21,
-    "stream:messages": 50,
+    "stream:messages": 0,
     "sum:circle_top": 0,
-    "stream:banishes": 6,
-    "@moon": 75,
+    "stream:banishes": 0,
+    "@moon": 25,
     "kinds:beings_seen": 12,
     "pacts": 0,
     "sunwait_candles": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 35.3,
+      "pct": 38.0,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 53,
+          "have": 57,
           "need": 150
         }
       ],
@@ -204,11 +204,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 20.0,
+      "pct": 0.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 50,
+          "have": 0,
           "need": 250
         }
       ],
@@ -226,7 +226,7 @@
       "wait": ""
     },
     "moon": {
-      "pct": 75.0,
+      "pct": 25.0,
       "parts": [
         {
           "label": "Souls signed tonight",
@@ -235,7 +235,7 @@
         },
         {
           "label": "Beings banished tonight",
-          "have": 4,
+          "have": 0,
           "need": 4
         }
       ],
@@ -454,7 +454,7 @@
       "parts": [
         {
           "label": "Signatures",
-          "have": 53,
+          "have": 57,
           "need": 2500
         },
         {
