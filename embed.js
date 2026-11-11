@@ -22,7 +22,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.3.3';
+  var VERSION = '1.3.4';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -1180,7 +1180,64 @@
     });
   }
 
-  var PAGES = { story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance };
+  // ================================================================== RIFT SHARDS (11 Nov): live from the forge's /web/rift
+  // Read only: what each shard is, how likely it is, who holds what. Nothing here can spend. Needs web_staffApi (site.staffApi).
+  function rift(ctx) {
+    var api = ctx.site && ctx.site.staffApi;
+    var top = [head(ctx.opts, 'Rift Shards', 'Hold the tear in your hand',
+      'Shards are effects you keep for later: get one now, fire it on stream whenever you like with !fx and its name.')];
+    var how = el('section', { class: 'eldr-card' }, [el('h2', { text: 'How it works' }), el('ul', null, [
+      'You gain <strong>sealed shards</strong> from bits, subs, gifted subs, memberships, Super Chats, KICKs, Ko-fi and the shop (one per ~2.50 €), from hype trains, the Merchant and some achievements.',
+      '<code>!shard open</code> cracks them and tells you which effect each one holds. In Discord: <code>/shard open</code>.',
+      '<code>!fx &lt;name&gt;</code> fires a shard you hold instead of costing a Pact. Cooldowns, Elder Sign seals and the line still apply when you use it; if chat seals it, you get the shard back.',
+      '<code>!shard</code> buys one for a Pact. <code>!shard eldritch</code> pours an Eldritch Pact in for three from a darker pool, or choose: <code>!shard eldritch eclipse</code> (one Eldritch shard) or <code>!shard eldritch eye croak</code> (two Pact shards).',
+      '<code>!shard give &lt;name&gt; &lt;effect&gt;</code> hands one to someone else. <code>!shards</code> shows what you hold.'
+    ].map(function (h) { return el('li', { html: h }); }))]);
+    top.push(how);
+    if (!api) { top.push(el('p', { class: 'eldr-note', text: 'The live shard list appears here once the forge address is set.' })); return top; }
+    return fetch(api.replace(/\/+$/, '') + '/web/rift', { cache: 'no-store', credentials: 'omit' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d || !d.ok) throw new Error('no data');
+        var out = top.slice(), st = ctx.state;
+        if (d.sealed && d.sealed.total) {
+          out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Still sealed' }),
+            el('p', { text: num(d.sealed.total) + ' sealed shard' + (d.sealed.total === 1 ? '' : 's') + ' wait to be opened.' }),
+            d.sealed.holders.length ? el('p', { class: 'eldr-muted eldr-small', text: d.sealed.holders.map(function (h) { return h.name + ' ' + h.qty; }).join(' · ') }) : null]));
+        }
+        if (!st.tier) st.tier = 'all';
+        var chips = el('div', { class: 'eldr-chips' }), box = el('div');
+        var list = (d.effects || []).filter(function (e) { return e.drawable || e.held > 0; });
+        function draw() {
+          chips.innerHTML = '';
+          [['all', 'All'], ['pact', 'Pact'], ['eldritch', 'Eldritch'], ['held', 'Held by someone']].forEach(function (f) {
+            chips.appendChild(el('button', { class: 'eldr-chip', type: 'button', 'aria-pressed': String(st.tier === f[0]), text: f[1], onclick: function () { st.tier = f[0]; draw(); } }));
+          });
+          box.innerHTML = '';
+          var rows = list.filter(function (e) { return st.tier === 'all' || (st.tier === 'held' ? e.held > 0 : e.tier === st.tier); });
+          if (!rows.length) { box.appendChild(empty('No shard matches that.')); return; }
+          rows.sort(function (a, b) { return (a.tier === b.tier ? 0 : a.tier === 'eldritch' ? -1 : 1) || (b.held - a.held) || String(a.label).localeCompare(b.label); });
+          var t = el('table', { class: 'stack' });
+          t.appendChild(el('thead', null, el('tr', null, ['Shard', 'Tier', 'Chance', 'Held', 'Holders'].map(function (x) { return el('th', { text: x }); }))));
+          var tb = el('tbody');
+          rows.forEach(function (e) {
+            tb.appendChild(el('tr', null, [
+              el('td', { 'data-l': 'Shard' }, [el('strong', { text: e.label }), el('div', { class: 'eldr-muted eldr-small' }, el('code', { text: '!fx ' + e.id }))]),
+              el('td', { 'data-l': 'Tier', text: e.tier === 'eldritch' ? 'Eldritch' : 'Pact' }),
+              el('td', { 'data-l': 'Chance', text: e.drawable ? e.pct + '%' + (e.tier === 'eldritch' && e.pctEldritchPact ? ' (' + e.pctEldritchPact + '% with an Eldritch Pact)' : '') : 'not drawn' }),
+              el('td', { 'data-l': 'Held', text: num(e.held) }),
+              el('td', { 'data-l': 'Holders', text: (e.holders || []).map(function (h) { return h.name + (h.qty > 1 ? ' ×' + h.qty : ''); }).join(', ') || '—' })]));
+          });
+          t.appendChild(tb); box.appendChild(t);
+        }
+        draw();
+        out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Every shard' }), chips, box]));
+        return out.concat(foot(d.updated));
+      })
+      .catch(function () { return top.concat([el('p', { class: 'eldr-note', text: 'The rift is quiet right now (the forge may be offline). The list comes back by itself.' })]); });
+  }
+
+  var PAGES = { rift: rift, story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance };
 
   // ------------------------------------------------------------------ mount
   function render(root, quiet) {
@@ -1199,7 +1256,7 @@
       return loadOpt('guide.md', true).then(function (g) { ctx.guide = parseGuide(g || ''); return site; });
     }).then(function (site) {
       var sig = site ? JSON.stringify(site.files || site.updated || '') : String(Math.random());
-      if (quiet && sig === ctx.sig) return;          // nothing new since the last look
+      if (quiet && sig === ctx.sig && page !== 'rift') return;          // nothing new since the last look (the Rift page is live from the forge)
       ctx.sig = sig;
       return Promise.resolve(fn(ctx)).then(function (nodes) {
         var y = window.scrollY;
