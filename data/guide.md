@@ -15,7 +15,7 @@ Pacts are challenges you put on Dave. `!pact` spends a Pact to spin the wheel ov
 Summoning circles let chat choose what Dave plays. Pledge Madness, Pacts or real offerings to a game's circle. When it reaches its target the circle is **bound**: Dave owes it that much stream time in that game before the deadline. If he misses it, every offering comes back with extra Madness on top.
 
 ## Page: codex
-The Codex is the achievement book: hundreds of Revelations for chatting, banishing, duelling, delving, feeding and more, in ten tiers from Whisper to the Court of Azathoth. Higher tiers pay Madness, Pacts and Eldritch Pacts, and some give a title that chat greets you with. Linked accounts count together. `!codex hide` keeps you off this page.
+The Codex is the achievement book: hundreds of Revelations for chatting, banishing, duelling, delving, feeding and more, in ten tiers from Whisper to the Court of Azathoth. Higher tiers pay Madness, Pacts and Eldritch Pacts, and some give a title that chat greets you with. Linked accounts count together. `!forget` (or `!codex hide`) takes you off this page and every other page here.
 
 ## Page: partners
 The stream's paid partners. Their links and codes support the channel, and their chat commands are listed with them.
@@ -28,6 +28,24 @@ Everything that lives in the dark beneath the stream. **Beings** break through o
 
 ## Page: congregation
 The state of the congregation right now: which cult rules this month, how full Tsathoggua is and who feeds him most, the nemeses hunting the dark, and the Clipomania champions. Updated from the stream as it happens.
+
+## Page: hub
+Everything the stream keeps, written down. Pick a page.
+
+## Page: investigator
+Everything you do on stream earns XP: turning up, playing the games, supporting. XP becomes levels, levels bring titles, talent points and a frame for your name. Look anyone up by chat name in the box below; `!forget` in chat takes you off every page here.
+
+## Page: covenant
+All the XP everyone earns wakes Eldritzh, level by level. Every Awakening level gives the congregation one point, and chat votes on what it buys: a talent that then counts for everyone, for good.
+
+## Page: fishing
+Cast a line with `!fish` or the *Go Fishing* reward. There are waters from Innsmouth Harbour to the Sea of Stars, each with its own fish and one legendary. Nothing is written in the journal below until somebody catches it.
+
+## Page: rift
+Rift Shards are effects you keep for later: get one now and fire it on stream when you like.
+
+## Page: patchnotes
+What's new on the stream, in Discord and on this site. Newest first.
 
 ## Your Ledger
 Your account on the stream. You earn **Madness** by chatting, checking in, banishing Beings and playing the games; it is the everyday currency. **Pacts** are rarer and buy the big things (wheel spins, boons, unlocks). **Eldritch Pacts** are the rarest: five Pacts bind into one with `!ascend`. Your first message each stream checks you in automatically. `!link` joins your Twitch, Kick and YouTube accounts into one ledger, and `!forge` links Discord for crafting.
@@ -112,3 +130,9 @@ See the Sounds page for every sound, who can play it and what it costs.
 
 ## Summoning Circles
 See the Circles page for the circles burning now and the record of every one.
+
+## Pickman, Ghoul for Hire
+Richard Upton Pickman, a ghoul in a tattered Hawaiian shirt, fetches forge materials for you. Send him on a job and he comes back by himself hours later, even when the stream is off, having eaten a little of the haul. Feed him and trade him spare curios and his **Favour** grows: he eats less, works faster and takes bigger orders. Now and then he paints you instead.
+
+## Night Fishing
+Fishing is a skill of its own. `!fish` casts a line (so does the *Go Fishing* channel point reward), the bite comes a little later, and the catch goes in your creel and your journal. Skill opens deeper waters, which also want better **bait**. Fish come Fine, Choice or Prime, and now and then one comes up **aberrant**. When the **Wreckage** drifts in, every cast hauls up something extra. Sell the catch to the Merchant from Leng or tip it into Tsathoggua. The Night Fishing page shows the waters and everything found so far.
