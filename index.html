@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Eldritch Ledger</title>
-<meta name="description" content="The Eldritzh community pages: the story, chat commands, the Pact Wheel, summoning circles, the Codex, partners, sounds, the bestiary, the congregation, the Esoteric Order and the Remembrance.">
+<meta name="description" content="The Eldritzh community pages: the story, chat commands, the Pact Wheel, summoning circles, the Codex, partners, sounds, the bestiary, the congregation, the Esoteric Order, the Remembrance, the Investigator, the Covenant, Night Fishing and the patch notes.">
 <meta name="robots" content="noindex">
 <style>
   :root { color-scheme: dark; }
@@ -28,7 +28,7 @@
 </main>
 <script>
   (function () {
-    var pages = [['story', 'The Story'], ['commands', 'Commands'], ['pacts', 'Pact Wheel'], ['circles', 'Circles'], ['codex', 'Codex'], ['partners', 'Partners'], ['sounds', 'Sounds'], ['bestiary', 'Bestiary'], ['congregation', 'Congregation'], ['order', 'The Order'], ['remembrance', 'Remembrance']];
+    var pages = [['hub', 'Hub'], ['story', 'The Story'], ['commands', 'Commands'], ['patchnotes', 'Patch Notes'], ['pacts', 'Pact Wheel'], ['circles', 'Circles'], ['sounds', 'Sounds'], ['rift', 'Rift Shards'], ['investigator', 'Investigator'], ['codex', 'Codex'], ['order', 'The Order'], ['fishing', 'Night Fishing'], ['covenant', 'Covenant'], ['congregation', 'Congregation'], ['bestiary', 'Bestiary'], ['remembrance', 'Remembrance'], ['partners', 'Partners'], ['about', 'About']];
     var q = new URLSearchParams(location.search), cur = (q.get('page') || 'story').toLowerCase();
     var nav = document.getElementById('nav');
     pages.forEach(function (p) {
@@ -40,6 +40,7 @@
     document.getElementById('pg').textContent = cur;
     var d = document.getElementById('mount');
     d.setAttribute('data-eldr-page', cur);
+    d.setAttribute('data-eldr-nav', '0');   // this preview has its own menu above; on eldritzh.com embed.js draws one from data/nav.json
     if (q.get('game')) d.setAttribute('data-eldr-game', q.get('game'));
     var s = document.createElement('script');
     s.src = 'embed.js'; s.defer = true;

@@ -6,11 +6,13 @@
      <div data-eldr-page="story"></div>
      <script src="https://ledger.eldritzh.com/embed.js" defer></script>
 
-   Pages: story · commands · pacts · circles · codex · partners · sounds · bestiary · congregation · order (or esorder) · remembrance
+   Pages: hub · story · commands · pacts · circles · codex · partners · sounds · bestiary · congregation · order (or esorder) ·
+          remembrance · rift · investigator (or talents) · covenant · fishing · patchnotes · about
    Options on the div:
      data-eldr-game="hunt-showdown"   pacts: open on this game (default: the game on the wheel now)
      data-eldr-refresh="5"            minutes between quiet re-checks while the page is open (0 = off)
      data-eldr-title="0"              hide the page's own header
+     data-eldr-nav="0"                hide the row of links to the other pages (nav.json, from website\nav.txt)
 
    Data comes from ./data/ next to this file. Streamer.bot's "Website :: Publish" action
    commits it to GitHub; GitHub Pages serves it. Nothing here needs editing for new data.
@@ -22,7 +24,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.3.4';
+  var VERSION = '1.4.0';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -241,6 +243,25 @@
     '.eldr-site .eldr-keymsg:empty{display:none}',
     '.eldr-site section.eldr-staff{border-top-color:#a8433a;background:linear-gradient(180deg,rgba(122,42,36,.16),var(--panel) 120px)}',
     '.eldr-site section.eldr-staff h2{color:#e08a7f}',
+    /* 11 Nov: the menu, the hub, dots for ranks, the look-up card */
+    '.eldr-site nav.eldr-nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:-18px 0 30px;padding:0 0 16px;border-bottom:1px solid var(--line)}',
+    '.eldr-site nav.eldr-nav .eldr-chip{font-size:11px;padding:5px 11px}',
+    '.eldr-site nav.eldr-nav .eldr-chip.hub{color:var(--gold);border-color:rgba(212,175,55,.45)}',
+    '.eldr-site nav.eldr-nav .eldr-chip[aria-current="page"]{border-color:var(--gold);color:#111;background:var(--gold);font-weight:600}',
+    '.eldr-site nav.eldr-nav select.eldr-select{font-size:12px;padding:5px 8px;border-radius:999px;cursor:pointer;max-width:170px}',
+    '.eldr-site a.hub-card{display:block;color:var(--text);text-decoration:none;transition:border-color .2s,transform .2s}',
+    '.eldr-site a.hub-card h3{margin:0 0 6px;color:var(--gold)}',
+    '.eldr-site a.hub-card:hover,.eldr-site a.hub-card:focus-visible{border-color:var(--gold);color:var(--text);outline:none;transform:translateY(-2px)}',
+    '.eldr-site .eldr-pips{display:inline-flex;gap:4px;align-items:center;vertical-align:middle;white-space:nowrap}',
+    '.eldr-site .eldr-pips i{display:block;width:9px;height:9px;border-radius:50%;border:1px solid var(--gold-dim);background:none}',
+    '.eldr-site .eldr-pips i.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 6px rgba(212,175,55,.5)}',
+    '.eldr-site .lk-card{max-width:620px;margin:6px auto 8px}',
+    '.eldr-site .lk-card h3{margin:14px 0 6px}',
+    '.eldr-site .lk-card .eldr-row h3{margin:0;font-size:19px}',
+    '.eldr-site .lk-tal{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px}',
+    '.eldr-site .lk-t{white-space:nowrap}',
+    '.eldr-site ol.cg-stars{margin:0 0 1em;padding-left:1.6em;columns:2;column-gap:28px}',
+    '.eldr-site ol.cg-stars li{break-inside:avoid;margin:0 0 .3em}',
     '@media (max-width:620px){',
     '  .eldr-site{padding:30px 12px 44px;border-radius:0}',
     '  .eldr-site section.eldr-card{padding:16px 14px 10px}',
@@ -251,6 +272,9 @@
     '  .eldr-site table.stack td:first-child{margin-bottom:4px}',
     '  .eldr-site code{white-space:normal}',
     '  .eldr-site nav.eldr-chips{display:none}',
+    '  .eldr-site nav.eldr-nav .eldr-chip.near{display:none}',
+    '  .eldr-site nav.eldr-nav{margin-top:-8px}',
+    '  .eldr-site ol.cg-stars{columns:1}',
     '  .eldr-site select.eldr-jump{display:block}',
     '  .eldr-site .st-entry{grid-template-columns:1fr;gap:.4rem}',
     '  .eldr-site .st-num{text-align:left}',
@@ -919,6 +943,18 @@
           el('p', { class: 'eldr-muted eldr-small', html: 'They break through onto the stream itself. Before one appears, chat gets a hint of what kind of thing is coming. Type its name to banish it; <code>!pour</code> Ichor into the tear for a bigger reward.' }), grid]));
       }
 
+      // Elite Beings (11 Nov): the ones the congregation has driven back; the others stay unnamed
+      var eli = d.elites;
+      if (eli) {
+        var seen = eli.banished || [];
+        out.push(el('section', { class: 'eldr-card' }, [
+          el('div', { class: 'eldr-row' }, [el('h2', { text: 'Elite Beings' }), eli.beings ? el('span', { class: 'eldr-badge', text: seen.length + ' of ' + eli.beings + ' driven back' }) : null]),
+          el('p', { class: 'eldr-muted eldr-small', html: 'Now and then a Being comes through as an Elite. Its name does not banish it: every message in chat is a blow, and everyone who fought is rewarded when it falls. <code>!banished</code> shows the ones you helped drive back.' }),
+          seen.length ? el('div', { class: 'eldr-grid' }, seen.map(function (b) {
+            return el('article', { class: 'ci bound' }, [el('h3', { text: b.name }), el('div', { class: 'eldr-small eldr-muted', text: 'Driven back by ' + num(b.souls) + (b.souls === 1 ? ' soul' : ' souls') })]);
+          })) : el('p', { class: 'eldr-muted', text: 'No Elite has been driven back yet.' })]));
+      }
+
       // Families, by group
       ['mythos', 'otherworld', 'legend'].concat(Object.keys(fams.reduce(function (a, f) { if (!GROUPS[f.group]) a[f.group] = 1; return a; }, {}))).forEach(function (g) {
         var list = fams.filter(function (f) { return f.group === g; });
@@ -1032,6 +1068,21 @@
           (ts.now || []).length ? el('h3', { text: 'Feeding him now' }) : null, (ts.now || []).length ? rows(ts.now) : null,
           (ts.allTime || []).length ? el('h3', { text: 'His most devoted, all time' }) : null, (ts.allTime || []).length ? rows(ts.allTime) : null,
           el('p', { class: 'eldr-muted eldr-small', html: '<code>!feed 500</code>, <code>!feed pact</code> or Sanity on Twitch. Fill him and he sleeps, and blessings spill over the chat.' })]));
+      }
+      // the Stars (11 Nov): the Old Ones that fell, and the one in the sky now. Those still to come are a count.
+      var sr = d.stars;
+      if (sr) {
+        var fallen = sr.fallen || [], now = sr.fallenNow || 0;
+        out.push(el('section', { class: 'eldr-card' }, [
+          el('div', { class: 'eldr-row' }, [el('h2', { text: 'The Stars Are Right' }), el('span', { class: 'eldr-badge' + (now ? ' gold' : ''), text: now + ' of ' + sr.total + ' Old Ones driven back' })]),
+          sr.risen ? el('div', null, [
+            el('div', { class: 'eldr-row' }, [el('strong', { text: sr.risen.name + ' is in the sky' }), sr.risen.hype ? el('span', { class: 'eldr-badge teal', text: 'Raised by a hype train' }) : null]),
+            bar(Number(sr.risen.pct || 0), 'gold'),
+            el('div', { class: 'eldr-small eldr-muted', text: 'Its might, as it stands. Strike it in chat before it fades.' })]) : null,
+          sr.cycle > 0 ? el('p', { class: 'eldr-small', text: 'The whole roster has fallen ' + (sr.cycle === 1 ? 'once' : sr.cycle + ' times') + ' already, and risen again.' }) : null,
+          fallen.length ? el('h3', { text: 'Driven back' }) : null,
+          fallen.length ? el('ol', { class: 'cg-stars' }, fallen.map(function (n, i) { return el('li', { class: sr.cycle > 0 && i >= now ? 'eldr-muted' : '', text: n }); })) : el('p', { class: 'eldr-muted', text: 'None has fallen yet.' }),
+          el('p', { class: 'eldr-muted eldr-small', html: 'A hype train raises the next Old One, each mightier than the last. Nobody knows who comes next until it rises. <code>!stars</code> in chat.' })]));
       }
       // nemeses
       var nm = d.nemeses;
@@ -1167,10 +1218,10 @@
       if (!h && !w) out.push(empty('No Remembrance has been drawn yet.'));
       if ((d.gifts || []).length) {
         var t3 = el('table', { class: 'stack' }), tb3 = el('tbody');
-        t3.appendChild(el('thead', null, el('tr', null, [el('th', { text: 'Gift' }), el('th', { text: 'What it does' }), el('th', { text: 'Chance' })])));
+        t3.appendChild(el('thead', null, el('tr', null, [el('th', { text: 'Gift' }), el('th', { text: 'What it does' })])));
         d.gifts.forEach(function (g) {
           tb3.appendChild(el('tr', null, [el('td', null, [g.name, g.tier === 'rare' ? el('span', { class: 'eldr-badge gold', style: { marginLeft: '6px' }, text: 'rare' }) : null]),
-            el('td', { class: 'eldr-small', text: g.what || '' }), el('td', { class: 'num', text: g.chancePct + '%' })]));
+            el('td', { class: 'eldr-small', text: g.what || '' })]));
         });
         t3.appendChild(tb3);
         out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'What can be given' }), t3]));
@@ -1181,7 +1232,7 @@
   }
 
   // ================================================================== RIFT SHARDS (11 Nov): live from the forge's /web/rift
-  // Read only: what each shard is, how likely it is, who holds what. Nothing here can spend. Needs web_staffApi (site.staffApi).
+  // Read only: what each shard is and who holds what (no odds: the public feed carries none since 11 Nov). Nothing here can spend. Needs web_staffApi (site.staffApi).
   function rift(ctx) {
     var api = ctx.site && ctx.site.staffApi;
     var top = [head(ctx.opts, 'Rift Shards', 'Hold the tear in your hand',
@@ -1218,13 +1269,12 @@
           if (!rows.length) { box.appendChild(empty('No shard matches that.')); return; }
           rows.sort(function (a, b) { return (a.tier === b.tier ? 0 : a.tier === 'eldritch' ? -1 : 1) || (b.held - a.held) || String(a.label).localeCompare(b.label); });
           var t = el('table', { class: 'stack' });
-          t.appendChild(el('thead', null, el('tr', null, ['Shard', 'Tier', 'Chance', 'Held', 'Holders'].map(function (x) { return el('th', { text: x }); }))));
+          t.appendChild(el('thead', null, el('tr', null, ['Shard', 'Tier', 'Held', 'Holders'].map(function (x) { return el('th', { text: x }); }))));
           var tb = el('tbody');
           rows.forEach(function (e) {
             tb.appendChild(el('tr', null, [
               el('td', { 'data-l': 'Shard' }, [el('strong', { text: e.label }), el('div', { class: 'eldr-muted eldr-small' }, el('code', { text: '!fx ' + e.id }))]),
-              el('td', { 'data-l': 'Tier', text: e.tier === 'eldritch' ? 'Eldritch' : 'Pact' }),
-              el('td', { 'data-l': 'Chance', text: e.drawable ? e.pct + '%' + (e.tier === 'eldritch' && e.pctEldritchPact ? ' (' + e.pctEldritchPact + '% with an Eldritch Pact)' : '') : 'not drawn' }),
+              el('td', { 'data-l': 'Tier' }, [e.tier === 'eldritch' ? 'Eldritch' : 'Pact', e.drawable ? null : el('div', { class: 'eldr-small eldr-muted', text: 'not drawn' })]),
               el('td', { 'data-l': 'Held', text: num(e.held) }),
               el('td', { 'data-l': 'Holders', text: (e.holders || []).map(function (h) { return h.name + (h.qty > 1 ? ' ×' + h.qty : ''); }).join(', ') || '—' })]));
           });
@@ -1237,7 +1287,378 @@
       .catch(function () { return top.concat([el('p', { class: 'eldr-note', text: 'The rift is quiet right now (the forge may be offline). The list comes back by itself.' })]); });
   }
 
-  var PAGES = { rift: rift, story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance };
+  // ================================================================== 11 Nov: the menu, the hub, look-up by name
+  // nav.json (website\nav.txt): [{page, label, url, group, text}]. On the preview (index.html next to this file) the
+  // links are ?page=…; on eldritzh.com they are the Fourthwall addresses from nav.txt.
+  var PREVIEW = (function () { try { return new URL(BASE, location.href).origin === location.origin; } catch (e) { return false; } })();
+  function navPages(ctx) {
+    return ((ctx.nav && ctx.nav.pages) || []).filter(function (p) { return p && p.page && p.label && (PREVIEW ? PAGES[p.page] : p.url); });
+  }
+  function navHref(p) {
+    if (PREVIEW) return '?page=' + encodeURIComponent(p.page);
+    return /^(\/(?!\/)|https:\/\/)/.test(p.url || '') ? p.url : '#';
+  }
+  function navBar(ctx, page) {
+    var list = navPages(ctx);
+    if (list.length < 2 || page === 'hub') return null;
+    var here = list.filter(function (p) { return p.page === page || (page === 'esorder' && p.page === 'order'); })[0];
+    var hub = list.filter(function (p) { return p.page === 'hub'; })[0];
+    var near = here && here.group ? list.filter(function (p) { return p.group === here.group; }) : [];
+    var kids = [];
+    if (hub) kids.push(el('a', { class: 'eldr-chip hub', href: navHref(hub), text: '← ' + hub.label }));
+    near.forEach(function (p) {
+      kids.push(el('a', { class: 'eldr-chip near', href: navHref(p), text: p.label, 'aria-current': p === here ? 'page' : null }));
+    });
+    var groups = [], by = {};
+    list.forEach(function (p) { if (p.page === 'hub') return; var g = p.group || ''; if (!by[g]) { by[g] = []; groups.push(g); } by[g].push(p); });
+    var sel = el('select', { class: 'eldr-select', 'aria-label': 'Go to another page',
+      onchange: function () { var v = sel.value; sel.selectedIndex = 0; if (v) location.href = v; } },
+      [el('option', { value: '', text: 'All pages…' })].concat(groups.map(function (g) {
+        var opts = by[g].map(function (p) { return el('option', { value: navHref(p), text: p.label }); });
+        return g ? el('optgroup', { label: g }, opts) : opts[0];
+      })));
+    kids.push(sel);
+    return el('nav', { class: 'eldr-nav', 'aria-label': 'The Ledger’s pages' }, kids);
+  }
+  function hub(ctx) {
+    var list = navPages(ctx).filter(function (p) { return p.page !== 'hub'; });
+    var out = [head(ctx.opts, 'The Ledger', 'Embrace the Tentacle', 'Everything the stream keeps, written down. Pick a page.')];
+    if (!list.length) { out.push(empty('The pages are not listed yet.')); return out; }
+    var groups = [], by = {};
+    list.forEach(function (p) { var g = p.group || 'Pages'; if (!by[g]) { by[g] = []; groups.push(g); } by[g].push(p); });
+    groups.forEach(function (g) {
+      var grid = el('div', { class: 'eldr-grid' });
+      by[g].forEach(function (p) {
+        grid.appendChild(el('a', { class: 'ci hub-card', href: navHref(p) }, [el('h3', { text: p.label }), p.text ? el('div', { class: 'eldr-small eldr-muted', text: p.text }) : null]));
+      });
+      out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: g }), grid]));
+    });
+    out.push(foot(ctx.site && ctx.site.files && ctx.site.files['nav.json']));
+    return out;
+  }
+
+  function weight(g) { g = Number(g || 0); return g >= 1000 ? (g / 1000).toFixed(g >= 10000 ? 0 : 1).replace(/\.0$/, '') + ' kg' : num(g) + ' g'; }
+  function pips(rank, ranks) {
+    var n = el('span', { class: 'eldr-pips', role: 'img', 'aria-label': rank + ' of ' + ranks });
+    for (var i = 0; i < ranks; i++) n.appendChild(el('i', { class: i < rank ? 'on' : '' }));
+    return n;
+  }
+  function mark(n) { return n > 0 ? '✦' + (n > 1 ? n : '') + ' ' : ''; }
+  function tabs(st, list, draw) {
+    var row = el('div', { class: 'eldr-chips', role: 'group' });
+    function paint() {
+      row.innerHTML = '';
+      list.forEach(function (t) {
+        row.appendChild(el('button', { class: 'eldr-chip', type: 'button', 'aria-pressed': String(st.tab === t[0]), text: t[1], onclick: function () { st.tab = t[0]; paint(); draw(); } }));
+      });
+    }
+    paint();
+    return row;
+  }
+
+  // The look-up box: people.json is only fetched when someone uses it. Everything in it is already said in chat.
+  function personCard(p) {
+    var kids = [el('div', { class: 'eldr-row' }, [
+      el('h3', { text: mark(p.rebirths) + p.name }),
+      el('span', { class: 'eldr-badge gold', text: 'Level ' + p.level })])];
+    var line = [p.title, p.frame ? p.frame + ' frame' : '', p.occupation].filter(Boolean).join(' · ');
+    if (line) kids.push(el('div', { class: 'eldr-small eldr-muted', text: line }));
+    if ((p.aka || []).length) kids.push(el('div', { class: 'eldr-small eldr-muted', text: 'Also known as ' + p.aka.join(', ') }));
+    if (p.rebirths > 0) kids.push(el('div', { class: 'eldr-small', text: 'Born again ' + (p.rebirths === 1 ? 'once' : p.rebirths + ' times') + '.' }));
+    if ((p.talents || []).length) {
+      kids.push(el('h3', { text: 'Talents' }));
+      kids.push(el('div', { class: 'lk-tal' }, p.talents.map(function (t) { return el('span', { class: 'lk-t' }, [t.name + ' ', pips(t.rank, t.ranks)]); })));
+    }
+    if ((p.banished || []).length) {
+      kids.push(el('h3', { text: 'Elites banished' }));
+      kids.push(el('div', { class: 'eldr-small', text: p.banished.join(', ') }));
+    }
+    var f = p.fishing;
+    if (f) {
+      kids.push(el('h3', { text: 'Night Fishing' }));
+      kids.push(el('div', { class: 'eldr-small', text: ['Fishing skill ' + num(f.skill), num(f.species) + (f.species === 1 ? ' kind of fish' : ' kinds of fish') + ' in the journal', f.water ? 'fishing ' + f.water : ''].filter(Boolean).join(' · ') }));
+      if (f.best) kids.push(el('div', { class: 'eldr-small', text: 'Best catch: ' + f.best.fish + ' (' + weight(f.best.grams) + ')' }));
+      if ((f.legendaries || []).length) kids.push(el('div', { class: 'eldr-small' }, [el('span', { class: 'eldr-badge gold', text: 'Legendary' }), ' ' + f.legendaries.join(', ')]));
+    }
+    return el('article', { class: 'ci bound lk-card' }, kids);
+  }
+  function lookup(ctx) {
+    var st = ctx.state, people = null, busy = null;
+    var input = el('input', { class: 'eldr-search', type: 'search', placeholder: 'A chat name…', 'aria-label': 'Look someone up by chat name', autocomplete: 'off', spellcheck: 'false', value: st.who || '' });
+    var box = el('div', { 'aria-live': 'polite' });
+    function get() {
+      if (people) return Promise.resolve(people);
+      if (!busy) busy = loadOpt('people.json').then(function (d) { people = (d && d.people) || []; busy = null; return people; });
+      return busy;
+    }
+    function norm(s) { return String(s || '').toLowerCase().replace(/^@/, '').trim(); }
+    function show(q) {
+      st.who = q;
+      q = norm(q);
+      box.innerHTML = '';
+      if (q.length < 2) return;
+      get().then(function (list) {
+        if (norm(input.value) !== q) return;
+        box.innerHTML = '';
+        if (!list.length) { box.appendChild(empty('Nobody is written down yet.')); return; }
+        var exact = list.filter(function (p) { return norm(p.name) === q || (p.aka || []).some(function (a) { return norm(a) === q; }); })[0];
+        if (exact) { box.appendChild(personCard(exact)); return; }
+        var near = list.filter(function (p) { return norm(p.name).indexOf(q) >= 0 || (p.aka || []).some(function (a) { return norm(a).indexOf(q) >= 0; }); });
+        near.sort(function (a, b) { return (norm(a.name).indexOf(q) === 0 ? 0 : 1) - (norm(b.name).indexOf(q) === 0 ? 0 : 1) || b.level - a.level; });
+        if (near.length === 1) { box.appendChild(personCard(near[0])); return; }
+        if (!near.length) { box.appendChild(el('p', { class: 'eldr-muted eldr-small', style: { textAlign: 'center' }, html: 'Nobody by that name is on the public pages. A name appears after its first XP on stream, and <code>!forget</code> takes it off again.' })); return; }
+        box.appendChild(el('div', { class: 'eldr-chips', style: { margin: '0' } }, near.slice(0, 12).map(function (p) {
+          return el('button', { class: 'eldr-chip', type: 'button', text: p.name, onclick: function () { input.value = p.name; show(p.name); } });
+        })));
+        if (near.length > 12) box.appendChild(el('p', { class: 'eldr-muted eldr-small', style: { textAlign: 'center', marginTop: '8px' }, text: 'and ' + (near.length - 12) + ' more: keep typing.' }));
+      });
+    }
+    var timer = null;
+    input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { show(input.value); }, 180); });
+    if (st.who == null) { try { var w = new URLSearchParams(location.search).get('who'); if (w) { st.who = w.slice(0, 40); input.value = st.who; } } catch (e) {} }
+    if (st.who) show(st.who);
+    return el('section', { class: 'eldr-card' }, [el('h2', { text: 'Look someone up' }),
+      el('p', { class: 'eldr-muted eldr-small', html: 'Type a chat name to see that investigator: the same things <code>!level</code>, <code>!talent</code>, <code>!banished</code> and <code>!fishing</code> say in chat. <code>!forget</code> in chat takes you off every page here.' }),
+      input, box]);
+  }
+
+  // ================================================================== THE INVESTIGATOR (investigator.json, 11 Nov)
+  // What things are and what they do, never the figures behind them: the feed carries no weights, odds or prices.
+  var CROWN = { gold: 'The gold crown', silver: 'The silver crown', copper: 'The copper crown' };
+  function investigator(ctx) {
+    return load('investigator.json').then(function (d) {
+      d = d || {};
+      var st = ctx.state, trees = d.trees || [], occs = d.occupations || [], board = d.board || [];
+      if (!st.tab) st.tab = ctx.page === 'talents' && trees.length ? 'talents' : 'levels';
+      var out = [head(ctx.opts, 'The Investigator', 'Everything you do is written down',
+        'Turn up, play and support, and your investigator climbs: levels, titles, talents and an occupation of your own.')];
+      var aw = d.awakening;
+      out.push(el('div', { class: 'eldr-stats' }, [
+        el('div', { class: 'eldr-stat' }, [el('b', { text: num(d.investigators) }), el('span', { text: 'Investigators' })]),
+        d.maxLevel ? el('div', { class: 'eldr-stat' }, [el('b', { text: num(d.maxLevel) }), el('span', { text: 'Top level' })]) : null,
+        aw ? el('div', { class: 'eldr-stat' }, [el('b', { text: num(aw.level) }), el('span', { text: 'Eldritzh’s Awakening' })]) : null,
+        trees.length ? el('div', { class: 'eldr-stat' }, [el('b', { text: num(trees.reduce(function (a, t) { return a + (t.talents || []).length; }, 0)) }), el('span', { text: 'Talents' })]) : null
+      ]));
+      out.push(lookup(ctx));
+      var box = el('div');
+      var list = [['levels', 'Levels']];
+      if (trees.length) list.push(['talents', 'Talents']);
+      if (occs.length) list.push(['occupations', 'Occupations']);
+      list.push(['board', 'Leaderboard']);
+      function ladder(rows, what) {
+        var t = el('table', { class: 'cx-top' }), tb = el('tbody');
+        rows.forEach(function (r) { tb.appendChild(el('tr', null, [el('td', { text: r.level }), el('td', { text: r.name })])); });
+        t.appendChild(tb);
+        return el('article', { class: 'ci' }, [el('h3', { text: what }), t]);
+      }
+      function draw() {
+        box.innerHTML = '';
+        if (st.tab === 'talents') {
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Talents' }),
+            el('p', { html: 'Talent points come with your levels. Spend them in any tree with <code>!talent &lt;name&gt;</code> (in Discord: <code>/talent</code>); <code>!talent</code> shows what you have. The dots are how many ranks a talent has. A capstone is the last thing a tree teaches.' }),
+            el('p', { class: 'eldr-muted eldr-small', html: 'Changed your mind? <em>A Stay at Arkham Sanitarium</em> (channel points) or <code>!talent reset</code> hands every point back.' })]));
+          trees.forEach(function (tr) {
+            var sec = el('section', { class: 'eldr-card' }, [el('h2', { text: tr.name })]);
+            (tr.talents || []).forEach(function (t) {
+              sec.appendChild(el('div', { class: 'cx-ach' }, [
+                el('span', { class: 'nm' }, [t.name, t.capstone ? el('span', { class: 'eldr-badge gold', style: { marginLeft: '8px' }, text: 'Capstone' }) : null,
+                  t.soon ? el('span', { class: 'eldr-badge', style: { marginLeft: '8px' }, text: 'Coming soon' }) : null]),
+                pips(0, t.ranks),
+                el('span', { class: 'ds', text: String(t.text || '').replace(/^Capstone:\s*/i, '').replace(/^./, function (c) { return c.toUpperCase(); }) })]));
+            });
+            box.appendChild(sec);
+          });
+        } else if (st.tab === 'occupations') {
+          var grid = el('div', { class: 'eldr-grid' });
+          occs.forEach(function (o) { grid.appendChild(el('article', { class: 'ci' }, [el('h3', { text: o.name }), el('div', { class: 'eldr-small', text: o.text })])); });
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Occupations' }),
+            el('p', { html: 'What your investigator did before the dark found them. One at a time, a small gift that is always on: <code>!occupation &lt;name&gt;</code> (in Discord: <code>/occupation</code>).' }), grid]));
+        } else if (st.tab === 'board') {
+          if (!board.length) { box.appendChild(empty('Nobody has earned XP yet.')); return; }
+          var t = el('table', { class: 'stack cx-top' }), tb = el('tbody');
+          t.appendChild(el('thead', null, el('tr', null, ['', 'Investigator', 'Level', 'Title'].map(function (x) { return el('th', { text: x }); }))));
+          board.forEach(function (r) {
+            tb.appendChild(el('tr', null, [el('td', { text: '#' + r.rank }), el('td', null, [el('strong', { text: mark(r.rebirths) + r.name })]),
+              el('td', { text: 'Level ' + r.level }), el('td', { class: 'eldr-muted', text: r.title || '' })]));
+          });
+          t.appendChild(tb);
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('div', { class: 'eldr-row' }, [el('h2', { text: 'The highest investigators' }),
+            el('span', { class: 'eldr-badge', text: num(d.investigators) + ' in all' })]), t,
+            el('p', { class: 'eldr-muted eldr-small', text: '✦ marks someone who was born again. Anyone further down is in the look-up box above.' })]));
+        } else {
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'How you level' }),
+            el('p', { html: 'Everything you do on stream earns XP, and XP becomes levels. <code>!level</code> shows where you stand and <code>!level &lt;name&gt;</code> where someone else does. Linked accounts level together.' }),
+            el('ul', null, [
+              '<strong>Turning up:</strong> being here for a stream, chatting, watching, your first message of the night.',
+              '<strong>Playing:</strong> banishing Beings and fighting Elites, duels and gambles, descents and the Delve, fishing, riddles, prophecies and bounties, goblins, rituals and chants, dreams and expeditions, the Stars, the forge, the Pact Wheel and more. Unlocking achievements counts too.',
+              '<strong>Supporting:</strong> bits, subs and gifted subs, memberships, tips and the shop.'
+            ].map(function (h) { return el('li', { html: h }); })),
+            el('p', { class: 'eldr-muted eldr-small', text: 'Some things only count so many times a stream, so nobody levels by repeating one command.' })]));
+          var g = el('div', { class: 'eldr-grid' });
+          if ((d.titles || []).length) g.appendChild(ladder(d.titles, 'Titles, from level'));
+          if ((d.frames || []).length) g.appendChild(ladder(d.frames, 'Frames, from level'));
+          if (g.childNodes.length) box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Titles and frames' }),
+            el('p', { class: 'eldr-muted eldr-small', text: 'Your level gives you a title, and a frame around your name on the stream’s overlays.' }), g]));
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Rebirth' }),
+            el('p', { html: 'At the top level you can be born again with <code>!rebirth</code>: back to level 1 with a ✦ beside your name. You keep your occupation, your crowns and achievements, your rank in the Order and your skills and journals. Your talents are reset and earned again as you level, with one extra point for the Rebirth.' })]));
+          var crowns = d.crowns || [];
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'The three crowns' }),
+            el('p', { html: 'All the XP the congregation earns also wakes Eldritzh (see the Covenant page). The three investigators who have given the Awakening the most wear the gold, silver and copper crowns.' }),
+            crowns.length ? el('div', { class: 'eldr-grid' }, crowns.map(function (c) {
+              return el('article', { class: 'ci' + (c.crown === 'gold' ? ' bound' : '') }, [el('div', { class: 'eldr-small eldr-muted', text: CROWN[c.crown] || c.crown }), el('h3', { text: c.name })]);
+            })) : el('p', { class: 'eldr-muted eldr-small', text: 'Nobody wears a crown yet.' })]));
+        }
+      }
+      out.push(tabs(st, list, draw));
+      draw();
+      out.push(box, foot(d.updated, el('div', { text: 'Type !level in chat to see your own.' })));
+      return out;
+    });
+  }
+
+  // ================================================================== THE COVENANT (covenant.json, 11 Nov)
+  function covenant(ctx) {
+    return load('covenant.json').then(function (d) {
+      d = d || {};
+      var aw = d.awakening || {}, list = d.talents || [];
+      var out = [head(ctx.opts, 'The Covenant', 'What the congregation woke together',
+        'All the XP everyone earns wakes Eldritzh, level by level. Every level gives the congregation one point, and chat votes on what it buys: a talent for everyone, for good.')];
+      var taken = list.reduce(function (a, t) { return a + (t.rank || 0); }, 0);
+      out.push(el('section', { class: 'eldr-card' }, [
+        el('div', { class: 'eldr-row' }, [el('h2', { text: 'Eldritzh’s Awakening' }),
+          d.voteOpen ? el('span', { class: 'eldr-badge green', text: 'Vote open in chat' }) : d.waiting > 0 ? el('span', { class: 'eldr-badge gold', text: d.waiting + (d.waiting === 1 ? ' point' : ' points') + ' waiting' }) : null]),
+        el('div', { class: 'eldr-row eldr-small' }, [el('span', { text: 'Level ' + num(aw.level) }), el('span', { class: 'eldr-muted', text: 'on the way to level ' + num((aw.level || 0) + 1) })]),
+        bar(Number(aw.pct || 0), 'gold'),
+        el('p', { class: 'eldr-small', html: d.voteOpen ? 'A vote is running in chat right now: go and choose.'
+          : d.waiting > 0 ? 'The next vote opens in chat a little way into the next stream.'
+          : 'The next point comes with the next Awakening level. <code>!covenant</code> in chat shows the same.' })]));
+      if (!list.length) { out.push(empty('Nothing has been written into the Covenant yet.')); return out.concat(foot(d.updated)); }
+      var have = list.filter(function (t) { return t.rank > 0; }), open = list.filter(function (t) { return t.rank < t.ranks; });
+      function card(t) {
+        return el('article', { class: 'ci' + (t.rank > 0 ? ' bound' : '') }, [
+          el('div', { class: 'eldr-row' }, [el('h3', { text: t.name }), pips(t.rank, t.ranks)]),
+          el('div', { class: 'eldr-small', text: t.text }),
+          t.rank >= t.ranks ? el('div', { class: 'eldr-small eldr-muted', text: 'Taken as far as it goes.' }) : null]);
+      }
+      out.push(el('section', { class: 'eldr-card' }, [el('div', { class: 'eldr-row' }, [el('h2', { text: 'Taken so far' }), el('span', { class: 'eldr-badge', text: taken + (taken === 1 ? ' rank' : ' ranks') })]),
+        have.length ? el('div', { class: 'eldr-grid' }, have.map(card)) : el('p', { class: 'eldr-muted', text: 'Nothing yet. The first vote decides.' }),
+        el('p', { class: 'eldr-muted eldr-small', text: 'These count for everyone, all the time. A lit dot is a rank the congregation has taken.' })]));
+      var fresh = open.filter(function (t) { return !(t.rank > 0); });
+      if (open.length) out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Still to be voted on' }),
+        el('p', { class: 'eldr-muted eldr-small', text: 'Each vote offers a few of these. The one chat picks gains a rank.' }),
+        el('div', { class: 'eldr-grid' }, (fresh.length ? fresh : open).map(card)),
+        fresh.length && fresh.length < open.length ? el('p', { class: 'eldr-muted eldr-small', text: 'The ones above with dots still dark can be taken further too.' }) : null]));
+      out.push(foot(d.updated));
+      return out;
+    });
+  }
+
+  // ================================================================== NIGHT FISHING (fishing.json, 11 Nov)
+  // Only fish somebody has caught are in the feed at all; the rest are a count.
+  var RARITY = [['legendary', 'Legendary'], ['rare', 'Rare'], ['uncommon', 'Uncommon'], ['common', 'Common']];
+  function fishing(ctx) {
+    return load('fishing.json').then(function (d) {
+      d = d || {};
+      var st = ctx.state, tot = d.totals || {}, waters = d.waters || [], fish = d.fish || [], anglers = d.anglers || [];
+      if (!st.tab) st.tab = 'waters';
+      var out = [head(ctx.opts, 'Night Fishing', 'Something is on the line',
+        'Cast into waters from Innsmouth Harbour to the Sea of Stars and fill the journal. Nobody knows what is down there until somebody pulls it up.')];
+      out.push(el('div', { class: 'eldr-stats' }, [
+        el('div', { class: 'eldr-stat' }, [el('b', { text: num(waters.length) }), el('span', { text: 'Waters' })]),
+        el('div', { class: 'eldr-stat' }, [el('b', { text: num(tot.found) + ' / ' + num(tot.species) }), el('span', { text: 'Fish found' })]),
+        el('div', { class: 'eldr-stat' }, [el('b', { text: num(tot.legendariesFound) + ' / ' + num(tot.legendaries) }), el('span', { text: 'Legendaries' })])
+      ]));
+      out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'How it works' }), el('ul', null, [
+        '<code>!fish</code> casts a line, and so does the <em>Go Fishing</em> channel point reward. The bite comes a little later and the catch reels itself in. In Discord: <code>/fish</code>.',
+        'Your <strong>Fishing skill</strong> grows as you catch. Deeper waters need more skill and better <strong>bait</strong>: <code>!water</code> shows where you can fish, <code>!bait</code> what is in your tackle box.',
+        'Every fish comes <strong>Fine</strong>, <strong>Choice</strong> or <strong>Prime</strong>, and now and then one comes up <strong>aberrant</strong>: wrong, and worth more. Each is its own line in your journal (<code>!fishing</code>).',
+        '<strong>The Wreckage:</strong> now and then the wreck of the <em>Alert</em> drifts in for a short while. Chat is told, and every cast while it is here hauls up something extra.',
+        'Sell the catch to the Merchant from Leng, or tip it into Tsathoggua: <code>!fish sell</code>, <code>!fish feed</code>.'
+      ].map(function (h) { return el('li', { html: h }); }))]));
+      out.push(lookup(ctx));
+      var box = el('div');
+      function draw() {
+        box.innerHTML = '';
+        if (st.tab === 'journal') {
+          if (!fish.length) { box.appendChild(empty('Nothing has been pulled up yet. Be the first: !fish.')); return; }
+          RARITY.forEach(function (r) {
+            var rows = fish.filter(function (f) { return f.rarity === r[0]; });
+            if (!rows.length) return;
+            var grid = el('div', { class: 'eldr-grid' });
+            rows.forEach(function (f) {
+              grid.appendChild(el('article', { class: 'ci' + (r[0] === 'legendary' ? ' bound' : '') }, [
+                el('div', { class: 'eldr-row' }, [el('h3', { text: f.name }), f.aberrant ? el('span', { class: 'eldr-badge teal', title: 'Somebody has pulled up an aberrant one', text: 'Aberrant seen' }) : null]),
+                f.flavour ? el('p', { class: 'eldr-small', style: { fontStyle: 'italic', margin: '6px 0' }, text: f.flavour }) : null,
+                el('div', { class: 'eldr-small eldr-muted', text: [f.size ? f.size.charAt(0).toUpperCase() + f.size.slice(1) : '', (f.waters || []).join(', ')].filter(Boolean).join(' · ') }),
+                f.record ? el('div', { class: 'eldr-small', text: 'Heaviest: ' + weight(f.record.grams) + ', ' + f.record.name }) : null,
+                (f.caughtBy || []).length ? el('div', { class: 'eldr-small', text: 'Caught by ' + f.caughtBy.join(', ') }) : null]));
+            });
+            box.appendChild(el('section', { class: 'eldr-card' }, [el('div', { class: 'eldr-row' }, [el('h2', { text: r[1] }), el('span', { class: 'eldr-badge', text: rows.length + ' found' })]), grid]));
+          });
+          var hid = (tot.species || 0) - (tot.found || 0);
+          if (hid > 0) box.appendChild(el('p', { class: 'eldr-empty', text: num(hid) + ' more ' + (hid === 1 ? 'thing swims' : 'things swim') + ' down there unseen. They are written here when somebody catches one.' }));
+        } else if (st.tab === 'anglers') {
+          if (!anglers.length) { box.appendChild(empty('Nobody has cast a line yet.')); return; }
+          var t = el('table', { class: 'stack cx-top' }), tb = el('tbody');
+          t.appendChild(el('thead', null, el('tr', null, ['', 'Angler', 'Skill', 'Journal', 'Best catch'].map(function (x) { return el('th', { text: x }); }))));
+          anglers.forEach(function (a) {
+            tb.appendChild(el('tr', null, [el('td', { text: '#' + a.rank }), el('td', null, el('strong', { text: a.name })), el('td', { text: 'Skill ' + num(a.skill) }),
+              el('td', { text: num(a.species) + (a.species === 1 ? ' kind' : ' kinds') }),
+              el('td', { class: 'eldr-muted', text: a.best ? a.best.fish + ' (' + weight(a.best.grams) + ')' : '' })]));
+          });
+          t.appendChild(tb);
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'The most skilled anglers' }), t]));
+        } else {
+          if (!waters.length) { box.appendChild(empty('The waters are not charted yet.')); return; }
+          var t2 = el('table', { class: 'stack' }), tb2 = el('tbody');
+          t2.appendChild(el('thead', null, el('tr', null, ['Water', 'Skill needed', 'Bait needed', 'Found'].map(function (x) { return el('th', { text: x }); }))));
+          waters.forEach(function (w) {
+            tb2.appendChild(el('tr', null, [
+              el('td', null, [el('strong', { text: w.name }), w.home ? el('span', { class: 'eldr-badge green', style: { marginLeft: '6px' }, title: 'The game on stream is this water’s own', text: 'Home water' }) : null,
+                el('div', { class: 'eldr-small eldr-muted', text: w.from || '' }),
+                w.line ? el('div', { class: 'eldr-small', style: { fontStyle: 'italic' }, text: w.line }) : null]),
+              el('td', { text: w.skill > 1 ? num(w.skill) : 'None' }),
+              el('td', { text: w.bait || 'Any' }),
+              el('td', { text: num(w.found) + ' of ' + num(w.total) })]));
+          });
+          t2.appendChild(tb2);
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'The waters' }),
+            el('p', { class: 'eldr-muted eldr-small', text: 'Shallowest first. “Found” is how many of a water’s fish somebody has caught so far.' }), t2]));
+        }
+      }
+      out.push(tabs(st, [['waters', 'Waters'], ['journal', 'The journal'], ['anglers', 'Anglers']], draw));
+      draw();
+      out.push(box, foot(d.updated, el('div', { text: 'Type !fishing in chat to see your own journal.' })));
+      return out;
+    });
+  }
+
+  // ================================================================== PATCH NOTES and ABOUT (markdown pages, 11 Nov)
+  function mdBlock(b) { return b.type === 'p' ? el('p', { html: inline(b.text) }) : blockNode(b); }
+  function mdPage(file, title, tag, each) {
+    return function (ctx) {
+      return load(file, true).then(function (md) {
+        var doc = parseMd(md);
+        var intro = doc.intro.filter(function (b) { return b.type === 'p'; }).map(function (b) { return b.text.replace(/^\*|\*$/g, ''); }).join(' ');
+        var out = [head(ctx.opts, doc.title || title, tag, intro)];
+        if (!doc.sections.length) out.push(empty('Nothing has been written here yet.'));
+        doc.sections.forEach(function (s, i) {
+          var sec = el('section', { class: 'eldr-card', id: 'eldr-' + slug(s.title) }, [el('h2', { html: inline(s.title) })].concat(s.blocks.map(mdBlock)));
+          if (each) each(sec, s, i);
+          out.push(sec);
+        });
+        out.push(foot(ctx.site && ctx.site.files && ctx.site.files[file]));
+        return out;
+      });
+    };
+  }
+  var patchnotes = mdPage('patchnotes.md', 'Patch Notes', 'What changed in the dark', function (sec, s, i) {
+    if (i === 0) sec.querySelector('h2').appendChild(el('span', { class: 'eldr-badge green', style: { marginLeft: '10px', verticalAlign: 'middle' }, text: 'Latest' }));
+  });
+  var about = mdPage('about.md', 'About the Ledger', 'Embrace the Tentacle');
+
+  var PAGES = { hub: hub, rift: rift, story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance,
+    investigator: investigator, talents: investigator, covenant: covenant, fishing: fishing, patchnotes: patchnotes, about: about };
 
   // ------------------------------------------------------------------ mount
   function render(root, quiet) {
@@ -1246,14 +1667,16 @@
     var ctx = root.__eldr || (root.__eldr = { root: root, state: {}, sig: '' });
     ctx.opts = {
       game: root.getAttribute('data-eldr-game') || '',
-      noTitle: root.getAttribute('data-eldr-title') === '0'
+      noTitle: root.getAttribute('data-eldr-title') === '0',
+      noNav: root.getAttribute('data-eldr-nav') === '0'
     };
+    ctx.page = page;
     root.classList.add('eldr-site');
     if (!fn) { root.innerHTML = ''; root.appendChild(empty('Unknown page "' + page + '". Use one of: ' + Object.keys(PAGES).join(', ') + '.')); return Promise.resolve(); }
     if (!quiet) { root.innerHTML = ''; root.appendChild(el('div', { class: 'eldr-loading', text: 'Opening the Ledger…' })); }
     return loadOpt('site.json').then(function (site) {
       ctx.site = site || {};
-      return loadOpt('guide.md', true).then(function (g) { ctx.guide = parseGuide(g || ''); return site; });
+      return Promise.all([loadOpt('guide.md', true), loadOpt('nav.json')]).then(function (r) { ctx.guide = parseGuide(r[0] || ''); ctx.nav = r[1] || null; return site; });
     }).then(function (site) {
       var sig = site ? JSON.stringify(site.files || site.updated || '') : String(Math.random());
       if (quiet && sig === ctx.sig && page !== 'rift') return;          // nothing new since the last look (the Rift page is live from the forge)
@@ -1261,6 +1684,8 @@
       return Promise.resolve(fn(ctx)).then(function (nodes) {
         var y = window.scrollY;
         var wrap = el('div', { class: 'eldr-wrap' });
+        var nb = ctx.opts.noNav ? null : navBar(ctx, page);
+        if (nb) wrap.appendChild(nb);
         nodes.forEach(function (n) { if (n) wrap.appendChild(n); });
         var pg = (ctx.guide || {})[gkey('page:' + page)], hd = wrap.querySelector('header.eldr-head');
         if (pg && hd) {
