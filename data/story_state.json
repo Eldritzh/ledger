@@ -1,17 +1,18 @@
 {
-  "updated": "2026-11-09T21:51:50.6888072Z",
+  "updated": "2026-11-12T19:17:14.8578715Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 60,
+    "checkins": 61,
     "fed": 1257612,
     "tsath_fills": 10,
     "messages": 475,
     "banishes": 47,
     "delve_bottoms": 2,
+    "sunwait_candles": 1,
     "chants": 0,
     "deaths": 0,
     "rituals": 0,
@@ -20,20 +21,19 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 7,
+    "stream:checkins": 1,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
     "sum:goblins_grabbed": 3,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 23,
-    "stream:messages": 25,
+    "stream:messages": 0,
     "sum:circle_top": 0,
-    "stream:banishes": 1,
-    "@moon": 56,
+    "stream:banishes": 0,
+    "@moon": 6,
     "kinds:beings_seen": 12,
     "pacts": 0,
-    "sunwait_candles": 0,
     "sunwait_unseen": 0,
     "prophecies": 0,
     "bounties": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 40.0,
+      "pct": 40.7,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 60,
+          "have": 61,
           "need": 150
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 46.7,
+      "pct": 6.7,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 7,
+          "have": 1,
           "need": 15
         }
       ],
@@ -204,11 +204,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 10.0,
+      "pct": 0.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 25,
+          "have": 0,
           "need": 250
         }
       ],
@@ -226,16 +226,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 56.2,
+      "pct": 6.2,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 7,
+          "have": 1,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 1,
+          "have": 0,
           "need": 4
         }
       ],
@@ -264,15 +264,15 @@
       "wait": ""
     },
     "sunwait": {
-      "pct": 0.0,
+      "pct": 50.0,
       "parts": [
         {
           "label": "During the Sunwait, light two of its six candles",
-          "have": 0,
+          "have": 1,
           "need": 2
         }
       ],
-      "wait": "only during the Sunwait"
+      "wait": ""
     },
     "unseen": {
       "pct": 0.0,
@@ -401,11 +401,11 @@
       "wait": ""
     },
     "longnight": {
-      "pct": 0.0,
+      "pct": 16.7,
       "parts": [
         {
           "label": "Light all six candles of the Sunwait (across the years, if it must be)",
-          "have": 0,
+          "have": 1,
           "need": 6
         }
       ],
@@ -454,7 +454,7 @@
       "parts": [
         {
           "label": "Signatures",
-          "have": 60,
+          "have": 61,
           "need": 2500
         },
         {

@@ -1,13 +1,15 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-09T21:13:14Z",
+  "updated": "2026-11-12T19:17:56Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
     "standingWindow": 30,
     "standingFromRank": 6,
-    "subBonusDays": 1
+    "subBonusDays": 1,
+    "reputation": true,
+    "repPerRank": 200
   },
   "circles": [
     {
@@ -35,6 +37,7 @@
     {
       "n": 1,
       "days": 1,
+      "rep": 100,
       "name": "Seeker",
       "circle": 1,
       "weeklyPacts": 0,
@@ -43,6 +46,7 @@
     {
       "n": 2,
       "days": 3,
+      "rep": 600,
       "name": "Listener",
       "circle": 1,
       "weeklyPacts": 0,
@@ -51,6 +55,7 @@
     {
       "n": 3,
       "days": 6,
+      "rep": 1200,
       "name": "Dreamer",
       "circle": 1,
       "weeklyPacts": 0,
@@ -59,6 +64,7 @@
     {
       "n": 4,
       "days": 10,
+      "rep": 2000,
       "name": "Initiate",
       "circle": 1,
       "weeklyPacts": 0,
@@ -67,6 +73,7 @@
     {
       "n": 5,
       "days": 15,
+      "rep": 3000,
       "name": "Novice of the Veil",
       "circle": 1,
       "weeklyPacts": 0,
@@ -75,6 +82,7 @@
     {
       "n": 6,
       "days": 20,
+      "rep": 4000,
       "name": "Acolyte",
       "circle": 2,
       "weeklyPacts": 0,
@@ -83,6 +91,7 @@
     {
       "n": 7,
       "days": 26,
+      "rep": 5200,
       "name": "Candle-Bearer",
       "circle": 2,
       "weeklyPacts": 0,
@@ -91,6 +100,7 @@
     {
       "n": 8,
       "days": 33,
+      "rep": 6600,
       "name": "Whisperer",
       "circle": 2,
       "weeklyPacts": 0,
@@ -99,6 +109,7 @@
     {
       "n": 9,
       "days": 40,
+      "rep": 8000,
       "name": "Adept",
       "circle": 2,
       "weeklyPacts": 0,
@@ -107,6 +118,7 @@
     {
       "n": 10,
       "days": 48,
+      "rep": 9600,
       "name": "Scribe of the Forbidden",
       "circle": 2,
       "weeklyPacts": 0,
@@ -115,6 +127,7 @@
     {
       "n": 11,
       "days": 57,
+      "rep": 11400,
       "name": "Reader of the Pnakotic",
       "circle": 3,
       "weeklyPacts": 0,
@@ -123,6 +136,7 @@
     {
       "n": 12,
       "days": 66,
+      "rep": 13200,
       "name": "Sigil-Warden",
       "circle": 3,
       "weeklyPacts": 0,
@@ -131,6 +145,7 @@
     {
       "n": 13,
       "days": 76,
+      "rep": 15200,
       "name": "Oathsworn",
       "circle": 3,
       "weeklyPacts": 1,
@@ -139,6 +154,7 @@
     {
       "n": 14,
       "days": 88,
+      "rep": 17600,
       "name": "Magus",
       "circle": 3,
       "weeklyPacts": 1,
@@ -147,6 +163,7 @@
     {
       "n": 15,
       "days": 100,
+      "rep": 20000,
       "name": "Hierophant",
       "circle": 3,
       "weeklyPacts": 1,
@@ -155,6 +172,7 @@
     {
       "n": 16,
       "days": 115,
+      "rep": 23000,
       "name": "Chanter of R'lyeh",
       "circle": 4,
       "weeklyPacts": 1,
@@ -163,6 +181,7 @@
     {
       "n": 17,
       "days": 130,
+      "rep": 26000,
       "name": "Tide-Caller",
       "circle": 4,
       "weeklyPacts": 1,
@@ -171,6 +190,7 @@
     {
       "n": 18,
       "days": 150,
+      "rep": 30000,
       "name": "Priest of Dagon",
       "circle": 4,
       "weeklyPacts": 1,
@@ -179,6 +199,7 @@
     {
       "n": 19,
       "days": 170,
+      "rep": 34000,
       "name": "Speaker Beneath the Waves",
       "circle": 4,
       "weeklyPacts": 1,
@@ -187,6 +208,7 @@
     {
       "n": 20,
       "days": 195,
+      "rep": 39000,
       "name": "Archon of the Deep",
       "circle": 4,
       "weeklyPacts": 1,
@@ -195,6 +217,7 @@
     {
       "n": 21,
       "days": 220,
+      "rep": 44000,
       "name": "The Unbound",
       "circle": 5,
       "weeklyPacts": 1,
@@ -203,6 +226,7 @@
     {
       "n": 22,
       "days": 250,
+      "rep": 50000,
       "name": "Thrice-Dreamt",
       "circle": 5,
       "weeklyPacts": 1,
@@ -211,6 +235,7 @@
     {
       "n": 23,
       "days": 285,
+      "rep": 57000,
       "name": "Exarch of the Void",
       "circle": 5,
       "weeklyPacts": 1,
@@ -219,6 +244,7 @@
     {
       "n": 24,
       "days": 325,
+      "rep": 65000,
       "name": "Hand of the Crawling Chaos",
       "circle": 5,
       "weeklyPacts": 1,
@@ -227,6 +253,7 @@
     {
       "n": 25,
       "days": 365,
+      "rep": 73000,
       "name": "Hierarch of the Esoteric Order",
       "circle": 5,
       "weeklyPacts": 1,
@@ -240,7 +267,8 @@
       "rank": 2,
       "rankName": "Listener",
       "circle": 1,
-      "days": 3,
+      "days": 4,
+      "rep": 700,
       "astray": false
     },
     {
@@ -250,6 +278,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 2,
+      "rep": 400,
       "astray": false
     },
     {
@@ -259,6 +288,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 2,
+      "rep": 400,
       "astray": false
     },
     {
@@ -268,6 +298,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 2,
+      "rep": 400,
       "astray": false
     },
     {
@@ -277,6 +308,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
+      "rep": 200,
       "astray": false
     },
     {
@@ -286,6 +318,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
+      "rep": 200,
       "astray": false
     },
     {
@@ -295,6 +328,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
+      "rep": 200,
       "astray": false
     },
     {
@@ -304,6 +338,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
+      "rep": 200,
       "astray": false
     },
     {
@@ -313,6 +348,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
+      "rep": 200,
       "astray": false
     },
     {
@@ -322,6 +358,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
+      "rep": 200,
       "astray": false
     },
     {
@@ -331,6 +368,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
+      "rep": 200,
       "astray": false
     }
   ]
