@@ -7,6 +7,7 @@
 ### New
 - **Boons and banes.** Your occupation and your lineage now matter in a fight. Each one is good at some things and bad at others, the way that trade or that blood would be: a Deep One Hybrid fishes the sea well and Deep Ones go easy on kin, but Flame and Frost dry the gills; a Ghoul knows other ghouls and the restless dead, but fire and holy relics hurt; an Orc hits hard in melee and spells don't come easy. It counts in descents, raids, the Delve, banishing Beings, Elite fights and Night Fishing. `!lineage info <name>` and `!occupation info <name>` (or `info:` on `/lineage` and `/occupation` in Discord) show what each one does.
 - **A free change.** Since the lineages and occupations changed, everyone may switch each of them once for free.
+- **Pick them on this site.** Members can take a lineage or an occupation straight from its card on the Investigator page, with the same key as the talent tree (`/shard key` in Discord).
 
 ### Fixed
 - **`!shard` now buys a sealed shard**, as it always should have: open it with `!shard open` (or in Discord, or on the Rift page) to see what it holds. It used to hand out an opened one straight away.
