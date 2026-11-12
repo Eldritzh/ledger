@@ -24,7 +24,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.4.0';
+  var VERSION = '1.6.0';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -262,6 +262,67 @@
     '.eldr-site .lk-t{white-space:nowrap}',
     '.eldr-site ol.cg-stars{margin:0 0 1em;padding-left:1.6em;columns:2;column-gap:28px}',
     '.eldr-site ol.cg-stars li{break-inside:avoid;margin:0 0 .3em}',
+    /* 11 Nov: the talent tree */
+    '.eldr-site .tt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:0 0 6px}',
+    '.eldr-site .tt-grid section.eldr-card{margin:0;padding:18px 14px 6px;background:radial-gradient(ellipse at 50% 0%,#141a1c 0%,var(--panel) 62%)}',
+    '.eldr-site .tt-tree.has{border-top-color:var(--gold)}',
+    '.eldr-site .tt-stage{position:relative;margin:6px 0 0}',
+    '.eldr-site .tt-lines{position:absolute;inset:0;pointer-events:none}',
+    '.eldr-site .tt-lines svg{display:block;width:100%;height:100%;overflow:visible}',
+    '.eldr-site .tt-lines path{fill:none;stroke:#2b3037;stroke-width:2;stroke-dasharray:3 5;transition:stroke .25s}',
+    '.eldr-site .tt-lines path.on{stroke:var(--gold);stroke-dasharray:none;filter:drop-shadow(0 0 3px rgba(212,175,55,.45))}',
+    '.eldr-site .tt-cell{position:absolute;transform:translateX(-50%);width:104px;display:flex;flex-direction:column;align-items:center;text-align:center}',
+    '.eldr-site .tt-name{display:block;position:relative;z-index:1;margin-top:7px;padding:1px 5px;border-radius:4px;background:rgba(14,16,19,.92);font-size:12px;line-height:1.25;color:var(--muted);max-width:104px}',
+    '.eldr-site .tt-node{z-index:1}',
+    '.eldr-site .tt-gate{position:absolute;top:-42px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-top:1px dashed #2b3037;padding-top:5px;min-width:190px}',
+    '.eldr-site .tt-gate.on{color:var(--gold);border-top-color:var(--gold-dim)}',
+    '.eldr-site button.tt-node{all:unset;box-sizing:border-box;position:relative;width:56px;height:56px;cursor:pointer;display:block;border-radius:50%;-webkit-tap-highlight-color:transparent}',
+    '.eldr-site .tt-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--gold-dim);background:radial-gradient(circle at 50% 35%,#1b2023 0%,#0b0d0f 75%);color:var(--gold-dim);display:flex;align-items:center;justify-content:center;transition:border-color .2s,box-shadow .2s,color .2s,background .2s,transform .15s}',
+    '.eldr-site .tt-ring svg{width:30px;height:30px;display:block}',
+    '.eldr-site .tt-rank{position:absolute;right:-12px;bottom:-5px;font-size:10px;font-weight:600;line-height:1;padding:3px 6px;border-radius:999px;background:#0b0d0f;border:1px solid var(--line);color:var(--muted);white-space:nowrap}',
+    '.eldr-site .tt-node:hover .tt-ring,.eldr-site .tt-node:focus-visible .tt-ring{transform:scale(1.07);box-shadow:0 0 0 3px rgba(212,175,55,.14),0 0 16px rgba(212,175,55,.3)}',
+    '.eldr-site .tt-node:focus-visible .tt-ring{outline:2px solid var(--green);outline-offset:3px}',
+    '.eldr-site .tt-node.open .tt-ring{border-color:var(--gold-dim);color:#b9982f}',
+    '.eldr-site .tt-node.some .tt-ring{border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(212,175,55,.28)}',
+    '.eldr-site .tt-node.some .tt-rank{color:var(--gold);border-color:var(--gold-dim)}',
+    '.eldr-site .tt-node.full .tt-ring{border-color:#f0d36b;color:#15120a;background:radial-gradient(circle at 50% 30%,#f3d977 0%,var(--gold) 55%,#8f7624 100%);box-shadow:0 0 18px rgba(212,175,55,.5)}',
+    '.eldr-site .tt-node.full .tt-rank{color:#15120a;background:var(--gold);border-color:#f0d36b}',
+    '.eldr-site .tt-node.locked{cursor:not-allowed}',
+    '.eldr-site .tt-node.locked .tt-ring{border-color:#2b3037;color:#3a4048;background:#0b0d0f}',
+    '.eldr-site .tt-node.locked:hover .tt-ring{transform:none;box-shadow:none}',
+    '.eldr-site .tt-node.soon{cursor:default}',
+    '.eldr-site .tt-node.soon .tt-ring{border-style:dashed;border-color:#2b3037;color:#3a4048}',
+    '.eldr-site .tt-node.soon:hover .tt-ring{transform:none;box-shadow:none}',
+    '.eldr-site .tt-node.sel .tt-ring{box-shadow:0 0 0 3px rgba(82,183,136,.55),0 0 16px rgba(212,175,55,.25)}',
+    '.eldr-site .tt-node.cap{width:68px;height:68px}',
+    '.eldr-site .tt-node.cap .tt-ring{border-radius:16px;transform:rotate(45deg);border-width:2px;outline:1px solid rgba(212,175,55,.25);outline-offset:4px}',
+    '.eldr-site .tt-node.cap .tt-ring svg{transform:rotate(-45deg);width:34px;height:34px}',
+    '.eldr-site .tt-node.cap:hover .tt-ring,.eldr-site .tt-node.cap:focus-visible .tt-ring{transform:rotate(45deg) scale(1.06)}',
+    '.eldr-site .tt-node.cap.locked:hover .tt-ring{transform:rotate(45deg)}',
+    '.eldr-site .tt-node.cap .tt-rank{right:-16px;bottom:-9px}',
+    '.eldr-site .tt-node.cap + .tt-name{margin-top:16px;color:var(--text)}',
+    '.eldr-site .tt-node.shake{animation:eldr-shake .32s}',
+    '@keyframes eldr-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}',
+    '.eldr-site section.tt-sum{position:sticky;top:8px;z-index:5;padding:10px 16px;margin-bottom:14px;box-shadow:0 10px 24px rgba(0,0,0,.55)}',
+    '.eldr-site .tt-total{font-family:Cinzel,Georgia,serif;font-size:19px;color:var(--gold);font-weight:700}',
+    '.eldr-site .tt-acts{display:flex;gap:8px;flex-wrap:wrap}',
+    '.eldr-site section.tt-cmd{margin-top:22px;border-top-color:var(--gold)}',
+    '.eldr-site .tt-cmdrow{display:flex;gap:10px;align-items:center;margin:6px 0}',
+    '.eldr-site .tt-cmdrow code{flex:1;min-width:0;display:block;padding:9px 12px;font-size:13px;white-space:nowrap;overflow-x:auto;user-select:all}',
+    '.eldr-site button.tt-link{all:unset;cursor:pointer;color:var(--green);text-decoration:underline;text-underline-offset:3px;font-size:inherit}',
+    '.eldr-site section.tt-pick{padding:16px 18px;margin-bottom:22px;min-height:118px}',
+    '.eldr-site .tt-detail h3{margin:0 0 2px;font-size:18px}',
+    '.eldr-site .tt-detail p{margin:10px 0 6px}',
+    '.eldr-site .tt-detail.idle p{margin:8px 0}',
+    '.eldr-site .tt-step{display:flex;align-items:center;gap:12px}',
+    '.eldr-site button.tt-btn{all:unset;box-sizing:border-box;width:34px;height:34px;border-radius:50%;border:1px solid var(--gold-dim);color:var(--gold);font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer}',
+    '.eldr-site button.tt-btn:hover,.eldr-site button.tt-btn:focus-visible{border-color:var(--gold);background:rgba(212,175,55,.12)}',
+    '.eldr-site button.tt-btn[disabled]{opacity:.3;cursor:not-allowed;background:none}',
+    '.eldr-site .tt-need{color:#c98a52}',
+    '.eldr-site .tt-met{color:var(--green)}',
+    '.eldr-site .tt-msg{color:#e0a15f;margin-top:4px}',
+    '@media (max-width:860px){.eldr-site .tt-grid{grid-template-columns:1fr}}',
+    '@media (prefers-reduced-motion:reduce){.eldr-site .tt-node.shake{animation:none}.eldr-site .tt-ring{transition:none}}',
     '@media (max-width:620px){',
     '  .eldr-site{padding:30px 12px 44px;border-radius:0}',
     '  .eldr-site section.eldr-card{padding:16px 14px 10px}',
@@ -274,6 +335,10 @@
     '  .eldr-site nav.eldr-chips{display:none}',
     '  .eldr-site nav.eldr-nav .eldr-chip.near{display:none}',
     '  .eldr-site nav.eldr-nav{margin-top:-8px}',
+    '  .eldr-site .tt-cell{width:84px}',
+    '  .eldr-site .tt-name{font-size:11px;max-width:84px}',
+    '  .eldr-site .tt-cmdrow{flex-wrap:wrap}',
+    '  .eldr-site .tt-cmdrow code{flex-basis:100%}',
     '  .eldr-site ol.cg-stars{columns:1}',
     '  .eldr-site select.eldr-jump{display:block}',
     '  .eldr-site .st-entry{grid-template-columns:1fr;gap:.4rem}',
@@ -1232,20 +1297,22 @@
   }
 
   // ================================================================== RIFT SHARDS (11 Nov): live from the forge's /web/rift
-  // Read only: what each shard is and who holds what (no odds: the public feed carries none since 11 Nov). Nothing here can spend. Needs web_staffApi (site.staffApi).
+  // What each shard is and who holds what (no odds: the public feed carries none since 11 Nov). 12 Nov: with a /shard key a viewer
+  // also sees their own shards and opens their sealed ones (riftMine). Needs web_staffApi (site.staffApi).
   function rift(ctx) {
     var api = ctx.site && ctx.site.staffApi;
     var top = [head(ctx.opts, 'Rift Shards', 'Hold the tear in your hand',
       'Shards are effects you keep for later: get one now, fire it on stream whenever you like with !fx and its name.')];
     var how = el('section', { class: 'eldr-card' }, [el('h2', { text: 'How it works' }), el('ul', null, [
       'You gain <strong>sealed shards</strong> from bits, subs, gifted subs, memberships, Super Chats, KICKs, Ko-fi and the shop (one per ~2.50 €), from hype trains, the Merchant and some achievements.',
-      '<code>!shard open</code> cracks them and tells you which effect each one holds. In Discord: <code>/shard open</code>.',
+      '<code>!shard open</code> cracks them and tells you which effect each one holds. In Discord: <code>/shard open</code>. Or right here, under <strong>Your shards</strong>.',
       '<code>!fx &lt;name&gt;</code> fires a shard you hold instead of costing a Pact. Cooldowns, Elder Sign seals and the line still apply when you use it; if chat seals it, you get the shard back.',
       '<code>!shard</code> buys one for a Pact. <code>!shard eldritch</code> pours an Eldritch Pact in for three from a darker pool, or choose: <code>!shard eldritch eclipse</code> (one Eldritch shard) or <code>!shard eldritch eye croak</code> (two Pact shards).',
       '<code>!shard give &lt;name&gt; &lt;effect&gt;</code> hands one to someone else. <code>!shards</code> shows what you hold.'
     ].map(function (h) { return el('li', { html: h }); }))]);
     top.push(how);
     if (!api) { top.push(el('p', { class: 'eldr-note', text: 'The live shard list appears here once the forge address is set.' })); return top; }
+    top.push(riftMine(ctx, api));
     return fetch(api.replace(/\/+$/, '') + '/web/rift', { cache: 'no-store', credentials: 'omit' })
       .then(function (r) { return r.json(); })
       .then(function (d) {
@@ -1285,6 +1352,104 @@
         return out.concat(foot(d.updated));
       })
       .catch(function () { return top.concat([el('p', { class: 'eldr-note', text: 'The rift is quiet right now (the forge may be offline). The list comes back by itself.' })]); });
+  }
+
+  // ------------------------------------------------------------------ 12 Nov: your own shards, and opening sealed ones
+  // Key from /shard key in Discord (#eldr-rift=... in the link, never sent anywhere but the forge). It can only show
+  // your shards and open your sealed ones; it can't give, buy or fire anything.
+  var RIFT_KEY = 'eldr_rift_key';
+  function takeRiftKey() {
+    var h = location.hash || '', m = h.match(/(?:^#|&)eldr-rift=(rift_[A-Za-z0-9_\-]+)/);
+    if (!m) return;
+    store(RIFT_KEY, m[1]);
+    h = h.replace(m[0], '').replace(/^#&/, '#'); if (h === '#') h = '';
+    try { history.replaceState(null, '', location.pathname + location.search + h); } catch (e) {}
+  }
+  function nonce() {
+    var a = new Uint8Array(12), out = '';
+    try { (window.crypto || window.msCrypto).getRandomValues(a); } catch (e) { for (var i = 0; i < a.length; i++) a[i] = Math.floor(Math.random() * 256); }
+    for (var j = 0; j < a.length; j++) out += ('0' + a[j].toString(16)).slice(-2);
+    return out;
+  }
+  function riftMine(ctx, api) {
+    takeRiftKey();
+    var st = ctx.state, base = api.replace(/\/+$/, ''), box = el('section', { class: 'eldr-card' });
+    function signIn(note) {
+      var input = el('input', { class: 'eldr-search eldr-keyin', type: 'password', autocomplete: 'off', spellcheck: 'false',
+        placeholder: 'rift_… or the link from Discord', 'aria-label': 'Rift key' });
+      var msg = el('p', { class: 'eldr-keymsg', text: note || '' });
+      function go(ev) {
+        if (ev) ev.preventDefault();
+        var m = (input.value || '').trim().match(/rift_[A-Za-z0-9_\-]+/);
+        if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a Rift key. It starts with rift_.'; return; }
+        store(RIFT_KEY, m[0]); fill();
+      }
+      box.innerHTML = '';
+      box.appendChild(el('h2', { text: 'Your shards' }));
+      box.appendChild(el('p', { html: 'Open your sealed shards right here. In Discord, type <code>/shard key</code> and open the link it gives you (or paste the key below). Your Discord has to be linked first: <code>/forge link</code>.' }));
+      box.appendChild(el('form', { onsubmit: go }, [el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Show my shards' })]), msg]));
+    }
+    function call(path, opts) {
+      opts = opts || {};
+      opts.headers = Object.assign({ 'X-Rift-Key': stored(RIFT_KEY) || '' }, opts.headers || {});
+      opts.cache = 'no-store'; opts.credentials = 'omit';
+      return fetch(base + path, opts).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, j: j || {} }; }); });
+    }
+    function show(d) {
+      box.innerHTML = '';
+      var bar = el('div', { class: 'eldr-keyrow', style: { justifyContent: 'space-between', margin: '0 0 6px' } }, [
+        el('h2', { text: 'Your shards' + (d.name ? ' · ' + d.name : ''), style: { margin: '0' } }),
+        el('button', { class: 'eldr-chip', type: 'button', text: 'Sign out', onclick: function () { store(RIFT_KEY, null); st.riftLast = null; signIn(); } })]);
+      box.appendChild(bar);
+      if (st.riftLast) box.appendChild(el('p', { class: 'eldr-note', html: st.riftLast }));
+      var sealed = d.sealed || 0, msg = el('p', { class: 'eldr-keymsg' });
+      function open(count, btn) {
+        btn.disabled = true; msg.textContent = '';
+        call('/web/rift/open', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ count: count, nonce: nonce() }) })
+          .then(function (res) {
+            if (res.status === 401) { store(RIFT_KEY, null); signIn('Your key has expired or was revoked. Get a new one with /shard key.'); return; }
+            if (res.status !== 200) { btn.disabled = false; msg.textContent = res.j.error || 'That didn\'t work. Try again in a moment.'; return; }
+            if (res.j.ok && res.j.opened && res.j.opened.length) {
+              st.riftLast = '🜏 ' + res.j.count + ' shard' + (res.j.count === 1 ? '' : 's') + ' cracked open: ' + res.j.opened.map(function (o) {
+                return '<strong>' + esc(o.label) + '</strong>' + (o.qty > 1 ? ' ×' + o.qty : '') + (o.tier === 'eldritch' ? ' (Eldritch)' : '');
+              }).join(', ') + '. Fire them on stream with <code>!fx</code> and the name.';
+            }
+            show(res.j);
+          })
+          .catch(function () { btn.disabled = false; msg.textContent = 'The forge is out of reach right now. Nothing was opened.'; });
+      }
+      var b1 = el('button', { class: 'eldr-chip', type: 'button', text: 'Open one' }), ba = el('button', { class: 'eldr-chip', type: 'button', text: 'Open all ' + sealed });
+      b1.addEventListener('click', function () { open(1, b1); });
+      ba.addEventListener('click', function () { open('all', ba); });
+      box.appendChild(el('p', { text: sealed ? sealed + ' sealed shard' + (sealed === 1 ? '' : 's') + ' waiting.' : 'No sealed shards right now.' }));
+      if (sealed) box.appendChild(el('div', { class: 'eldr-keyrow' }, sealed > 1 ? [b1, ba] : [b1]));
+      box.appendChild(msg);
+      var list = d.shards || [];
+      if (list.length) {
+        var t = el('table', { class: 'stack' });
+        t.appendChild(el('thead', null, el('tr', null, ['Shard', 'Tier', 'You hold', 'Fire it'].map(function (x) { return el('th', { text: x }); }))));
+        var tb = el('tbody');
+        list.forEach(function (s) {
+          tb.appendChild(el('tr', null, [el('td', { 'data-l': 'Shard' }, el('strong', { text: s.label })),
+            el('td', { 'data-l': 'Tier', text: s.tier === 'eldritch' ? 'Eldritch' : 'Pact' }),
+            el('td', { 'data-l': 'You hold', text: num(s.qty) }),
+            el('td', { 'data-l': 'Fire it' }, el('code', { text: '!fx ' + s.id }))]));
+        });
+        t.appendChild(tb); box.appendChild(t);
+      } else box.appendChild(el('p', { class: 'eldr-muted eldr-small', text: 'No opened shards yet.' }));
+      if (d.expires) box.appendChild(el('p', { class: 'eldr-muted eldr-small', text: 'This browser stays signed in until ' + day(d.expires) + '. Only you see this part of the page.' }));
+    }
+    function fill() {
+      if (!stored(RIFT_KEY)) { signIn(); return; }
+      box.innerHTML = ''; box.appendChild(el('h2', { text: 'Your shards' })); box.appendChild(el('p', { class: 'eldr-muted', text: 'Looking…' }));
+      call('/web/rift/me').then(function (res) {
+        if (res.status === 401) { store(RIFT_KEY, null); signIn('Your key has expired or was revoked. Get a new one with /shard key.'); return; }
+        if (res.status !== 200 || !res.j.ok) { box.innerHTML = ''; box.appendChild(el('h2', { text: 'Your shards' })); box.appendChild(el('p', { class: 'eldr-note', text: res.j.error || 'Your shards are out of reach right now.' })); return; }
+        show(res.j);
+      }).catch(function () { box.innerHTML = ''; box.appendChild(el('h2', { text: 'Your shards' })); box.appendChild(el('p', { class: 'eldr-note', text: 'Your shards are out of reach right now (the forge may be offline).' })); });
+    }
+    fill();
+    return box;
   }
 
   // ================================================================== 11 Nov: the menu, the hub, look-up by name
@@ -1353,15 +1518,16 @@
       });
     }
     paint();
+    row.pick = function (id) { st.tab = id; paint(); draw(); };
     return row;
   }
 
   // The look-up box: people.json is only fetched when someone uses it. Everything in it is already said in chat.
-  function personCard(p) {
+  function personCard(p, extra) {
     var kids = [el('div', { class: 'eldr-row' }, [
       el('h3', { text: mark(p.rebirths) + p.name }),
       el('span', { class: 'eldr-badge gold', text: 'Level ' + p.level })])];
-    var line = [p.title, p.frame ? p.frame + ' frame' : '', p.occupation].filter(Boolean).join(' · ');
+    var line = [p.title, p.frame ? p.frame + ' frame' : '', [p.lineage, p.occupation].filter(Boolean).join(' '), p.pronouns].filter(Boolean).join(' · ');
     if (line) kids.push(el('div', { class: 'eldr-small eldr-muted', text: line }));
     if ((p.aka || []).length) kids.push(el('div', { class: 'eldr-small eldr-muted', text: 'Also known as ' + p.aka.join(', ') }));
     if (p.rebirths > 0) kids.push(el('div', { class: 'eldr-small', text: 'Born again ' + (p.rebirths === 1 ? 'once' : p.rebirths + ' times') + '.' }));
@@ -1380,9 +1546,11 @@
       if (f.best) kids.push(el('div', { class: 'eldr-small', text: 'Best catch: ' + f.best.fish + ' (' + weight(f.best.grams) + ')' }));
       if ((f.legendaries || []).length) kids.push(el('div', { class: 'eldr-small' }, [el('span', { class: 'eldr-badge gold', text: 'Legendary' }), ' ' + f.legendaries.join(', ')]));
     }
+    var more = extra ? extra(p) : null;
+    if (more) kids.push(more);
     return el('article', { class: 'ci bound lk-card' }, kids);
   }
-  function lookup(ctx) {
+  function lookup(ctx, extra) {
     var st = ctx.state, people = null, busy = null;
     var input = el('input', { class: 'eldr-search', type: 'search', placeholder: 'A chat name…', 'aria-label': 'Look someone up by chat name', autocomplete: 'off', spellcheck: 'false', value: st.who || '' });
     var box = el('div', { 'aria-live': 'polite' });
@@ -1402,10 +1570,10 @@
         box.innerHTML = '';
         if (!list.length) { box.appendChild(empty('Nobody is written down yet.')); return; }
         var exact = list.filter(function (p) { return norm(p.name) === q || (p.aka || []).some(function (a) { return norm(a) === q; }); })[0];
-        if (exact) { box.appendChild(personCard(exact)); return; }
+        if (exact) { box.appendChild(personCard(exact, extra)); return; }
         var near = list.filter(function (p) { return norm(p.name).indexOf(q) >= 0 || (p.aka || []).some(function (a) { return norm(a).indexOf(q) >= 0; }); });
         near.sort(function (a, b) { return (norm(a.name).indexOf(q) === 0 ? 0 : 1) - (norm(b.name).indexOf(q) === 0 ? 0 : 1) || b.level - a.level; });
-        if (near.length === 1) { box.appendChild(personCard(near[0])); return; }
+        if (near.length === 1) { box.appendChild(personCard(near[0], extra)); return; }
         if (!near.length) { box.appendChild(el('p', { class: 'eldr-muted eldr-small', style: { textAlign: 'center' }, html: 'Nobody by that name is on the public pages. A name appears after its first XP on stream, and <code>!forget</code> takes it off again.' })); return; }
         box.appendChild(el('div', { class: 'eldr-chips', style: { margin: '0' } }, near.slice(0, 12).map(function (p) {
           return el('button', { class: 'eldr-chip', type: 'button', text: p.name, onclick: function () { input.value = p.name; show(p.name); } });
@@ -1422,16 +1590,239 @@
       input, box]);
   }
 
+  // ================================================================== THE TALENT TREE (11 Nov)
+  // A planner, the way talent calculators work: click to take a rank, right-click to give it back. It spends nothing:
+  // the site knows nobody. It writes the one chat line (!talent build …) that takes the build for real.
+  // investigator.json: trees[].talents[] = { id, name, ranks, cost, capstone, soon, text, needs:[{id, rank}], points }.
+  function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  // A small rune for every talent, always the same for the same id: a path through a 3x3 lattice inside the ring.
+  function rune(id) {
+    var h = hash('rune:' + id), pts = [], used = {}, n = 4 + (h % 3);
+    function next() { h ^= h << 13; h >>>= 0; h ^= h >>> 17; h ^= h << 5; h >>>= 0; return h; }
+    while (pts.length < n) { var k = next() % 9; if (used[k]) continue; used[k] = 1; pts.push([6 + (k % 3) * 6, 6 + Math.floor(k / 3) * 6]); }
+    var d = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0] + ' ' + p[1]; }).join(' ');
+    var dot = pts[next() % pts.length];
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + d + '" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<circle cx="' + dot[0] + '" cy="' + dot[1] + '" r="1.9" fill="currentColor"/></svg>';
+  }
+  function talentTree(ctx, d, redrawPage) {
+    var st = ctx.state, trees = d.trees || [], tp = d.talentPoints || {}, first = Number(tp.firstLevel || 5), rebMax = Number(tp.rebirthMax || 0), maxLevel = Number(d.maxLevel || 60);
+    var by = {}, order = [];
+    trees.forEach(function (tr) { (tr.talents || []).forEach(function (t) { t.tree = tr.id; t.treeName = tr.name; by[t.id] = t; order.push(t); }); });
+    if (!st.build) {
+      st.build = {}; st.base = st.base || {};
+      try {
+        var q = new URLSearchParams(location.search).get('build') || '';
+        q.split('.').forEach(function (tok) { var m = /^([a-z0-9]+?)(\d+)$/.exec(tok); if (m && by[m[1]]) st.build[m[1]] = Math.min(by[m[1]].ranks, Number(m[2])); });
+      } catch (e) {}
+      // a link is only kept as far as the tree's own rules allow
+      var again = true, keep = {};
+      while (again) { again = false; order.forEach(function (t) { if (st.build[t.id] && !keep[t.id]) { var b = st.build; st.build = keep; var ok = !blocks(t).length; st.build = b; if (ok) { keep[t.id] = b[t.id]; again = true; } } }); }
+      st.build = keep;
+    }
+    function rank(id) { return st.build[id] || 0; }
+    function base(id) { return (st.base && st.base[id]) || 0; }
+    function inTree(tree, not) { return order.reduce(function (a, t) { return a + (t.tree === tree && t.id !== not ? rank(t.id) * t.cost : 0); }, 0); }
+    function spent() { return order.reduce(function (a, t) { return a + rank(t.id) * t.cost; }, 0); }
+    function blocks(t) {
+      var out = [];
+      (t.needs || []).forEach(function (n) { var p = by[n.id]; if (p && rank(p.id) < n.rank) out.push(p.name + (n.rank > 1 ? ' at rank ' + n.rank : '')); });
+      if (t.points > 0 && inTree(t.tree, t.id) < t.points) out.push(t.points + ' points in the ' + t.treeName + ' tree (' + inTree(t.tree, t.id) + ' so far)');
+      return out;
+    }
+    function cap() { return Math.max(0, maxLevel - first + 1) + rebMax; }
+    function budget() { var m = st.me; return m ? (m.level >= first ? m.level - first + 1 : 0) + Math.min(rebMax, m.rebirths || 0) : null; }
+    function whyNotAdd(t) {
+      if (t.soon) return 'Not ready yet: it waits for its part of the game.';
+      if (rank(t.id) >= t.ranks) return 'Already at its top rank.';
+      var b = blocks(t); if (b.length) return 'Needs ' + b.join(' and ') + ' first.';
+      if (spent() + t.cost > cap()) return 'That is every talent point there is.';
+      return '';
+    }
+    function whyNotRemove(t) {
+      if (rank(t.id) <= 0) return 'Nothing to give back.';
+      if (rank(t.id) <= base(t.id)) return 'Already taken in the game. Only a stay at Arkham Sanitarium gives it back.';
+      st.build[t.id]--;
+      var hurt = order.filter(function (u) { return u.id !== t.id && rank(u.id) > 0 && blocks(u).length; })[0];
+      st.build[t.id]++;
+      return hurt ? hurt.name + ' rests on this. Give that back first.' : '';
+    }
+    function levelFor(pts) { return pts <= 0 ? 0 : first + pts - 1; }
+    function save() {
+      try {
+        var u = new URL(location.href), s = order.filter(function (t) { return rank(t.id) > 0; }).map(function (t) { return t.id + rank(t.id); }).join('.');
+        if (s) u.searchParams.set('build', s); else u.searchParams.delete('build');
+        history.replaceState(null, '', u.toString());
+      } catch (e) {}
+    }
+    function command() {
+      var parts = order.filter(function (t) { return rank(t.id) > base(t.id); }).map(function (t) { return t.id + (t.ranks > 1 ? ':' + rank(t.id) : ''); });
+      return parts.length ? '!talent build ' + parts.join(' ') : '';
+    }
+
+    var root = el('div', { class: 'tt' }), focusId = null;
+    function add(t) { var w = whyNotAdd(t); st.sel = t.id; if (w) { st.msg = w; st.shake = t.id; } else { st.build[t.id] = rank(t.id) + 1; st.msg = ''; } save(); draw(); }
+    function remove(t) {
+      var w = whyNotRemove(t); st.sel = t.id;
+      if (w) { st.msg = w; st.shake = t.id; } else { st.build[t.id]--; if (!st.build[t.id]) delete st.build[t.id]; st.msg = ''; }
+      save(); draw();
+    }
+    function copy(text, btn) {
+      function done() { var old = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = old; }, 1400); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
+      else { var ta = el('textarea', { style: { position: 'fixed', opacity: '0' } }); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} document.body.removeChild(ta); }
+    }
+
+    // rows: a talent sits one row under what it needs; a capstone (points in the tree) sits on a row of its own at the foot
+    function layout(tr) {
+      var list = tr.talents || [], depth = {};
+      function dep(t, guard) {
+        if (depth[t.id] != null) return depth[t.id];
+        if (guard > 12) return 0;
+        var ps = (t.needs || []).map(function (n) { return by[n.id]; }).filter(function (p) { return p && p.tree === t.tree; });
+        return (depth[t.id] = ps.length ? 1 + Math.max.apply(null, ps.map(function (p) { return dep(p, guard + 1); })) : 0);
+      }
+      list.forEach(function (t) { dep(t, 0); });
+      var deepest = Math.max.apply(null, [0].concat(list.filter(function (t) { return !(t.points > 0); }).map(function (t) { return depth[t.id]; })));
+      list.forEach(function (t) { if (t.points > 0 && !(t.needs || []).length) depth[t.id] = deepest + 1; });
+      var rows = [], x = {};
+      list.forEach(function (t) { (rows[depth[t.id]] = rows[depth[t.id]] || []).push(t); });
+      rows = rows.filter(Boolean);
+      // a long row without anything above it (odds and ends) wraps
+      var wrapped = [];
+      rows.forEach(function (r) {
+        if (r.length <= 4) { wrapped.push(r); return; }
+        var per = Math.ceil(r.length / Math.ceil(r.length / 4));
+        for (var i = 0; i < r.length; i += per) wrapped.push(r.slice(i, i + per));
+      });
+      rows = wrapped;
+      rows.forEach(function (r) {
+        var want = r.map(function (t, i) {
+          var ps = (t.needs || []).map(function (n) { return x[n.id]; }).filter(function (v) { return v != null; });
+          return { t: t, w: ps.length ? ps.reduce(function (a, b) { return a + b; }, 0) / ps.length : (i + 0.5) / r.length * 100, i: i };
+        }).sort(function (a, b) { return a.w - b.w || a.i - b.i; });
+        var gap = 100 / Math.max(3, r.length), lo = gap / 2, hi = 100 - gap / 2;
+        if (r.length === 1 && !(r[0].needs || []).length) want[0].w = 50;
+        for (var i = 0; i < want.length; i++) want[i].w = Math.max(want[i].w, i ? want[i - 1].w + gap : lo);
+        for (var j = want.length - 1; j >= 0; j--) want[j].w = Math.min(want[j].w, j < want.length - 1 ? want[j + 1].w - gap : hi);
+        want.forEach(function (o) { x[o.t.id] = o.w; });
+      });
+      return { rows: rows, x: x };
+    }
+
+    function node(t) {
+      var r = rank(t.id), b = blocks(t), locked = !t.soon && r === 0 && b.length > 0;
+      var state = t.soon ? 'soon' : r >= t.ranks ? 'full' : r > 0 ? 'some' : locked ? 'locked' : 'open';
+      var n = el('button', { type: 'button', class: 'tt-node ' + state + (t.capstone ? ' cap' : '') + (st.sel === t.id ? ' sel' : '') + (st.shake === t.id ? ' shake' : ''),
+        'data-id': t.id, title: t.name + ': ' + t.text,
+        'aria-label': t.name + ', rank ' + r + ' of ' + t.ranks + (t.soon ? ', not ready yet' : locked ? ', locked: needs ' + b.join(' and ') : ''),
+        'aria-pressed': String(st.sel === t.id),
+        onclick: function () { focusId = t.id; add(t); },
+        oncontextmenu: function (e) { e.preventDefault(); focusId = t.id; remove(t); },
+        onkeydown: function (e) { if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '-') { e.preventDefault(); focusId = t.id; remove(t); } }
+      }, [el('span', { class: 'tt-ring', html: rune(t.id) }), el('span', { class: 'tt-rank', text: t.soon ? 'soon' : r + '/' + t.ranks })]);
+      return n;
+    }
+    function treeCard(tr) {
+      var lay = layout(tr), ROW = 124, TOP = 16, ys = [], yy = TOP;
+      lay.rows.forEach(function (r) { if (r.some(function (t) { return t.points > 0; })) yy += 30; ys.push(yy); yy += ROW; });
+      var H = yy;
+      var stage = el('div', { class: 'tt-stage', style: { height: H + 'px' } });
+      var lines = '';
+      lay.rows.forEach(function (r, ri) {
+        r.forEach(function (t) {
+          (t.needs || []).forEach(function (nd) {
+            var p = by[nd.id]; if (!p || lay.x[p.id] == null) return;
+            var pr = -1; lay.rows.forEach(function (rr, k) { if (rr.indexOf(p) >= 0) pr = k; });
+            if (pr < 0) return;
+            var x1 = lay.x[p.id], y1 = ys[pr] + 58, x2 = lay.x[t.id], y2 = ys[ri] - 2, m = (y1 + y2) / 2;
+            var met = rank(p.id) >= nd.rank;
+            lines += '<path class="' + (met ? 'on' : '') + '" d="M' + x1 + ' ' + y1 + ' C' + x1 + ' ' + m + ' ' + x2 + ' ' + m + ' ' + x2 + ' ' + y2 + '" vector-effect="non-scaling-stroke"/>';
+          });
+        });
+      });
+      var svg = el('div', { class: 'tt-lines', html: '<svg viewBox="0 0 100 ' + H + '" preserveAspectRatio="none" aria-hidden="true">' + lines + '</svg>' });
+      stage.appendChild(svg);
+      lay.rows.forEach(function (r, ri) {
+        r.forEach(function (t) {
+          var gate = t.points > 0 ? el('span', { class: 'tt-gate' + (inTree(t.tree, t.id) >= t.points ? ' on' : ''), text: Math.min(inTree(t.tree, t.id), t.points) + ' / ' + t.points + ' points in ' + tr.name }) : null;
+          stage.appendChild(el('div', { class: 'tt-cell', style: { left: lay.x[t.id] + '%', top: ys[ri] + 'px' } }, [gate, node(t), el('span', { class: 'tt-name', text: t.name })]));
+        });
+      });
+      var pts = inTree(tr.id, null);
+      return el('section', { class: 'eldr-card tt-tree' + (pts ? ' has' : '') }, [
+        el('div', { class: 'eldr-row' }, [el('h2', { text: tr.name }), el('span', { class: 'eldr-badge' + (pts ? ' gold' : ''), text: pts + (pts === 1 ? ' point' : ' points') })]), stage]);
+    }
+    function detail() {
+      var t = by[st.sel];
+      if (!t) return el('div', { class: 'tt-detail idle' }, [el('p', { class: 'eldr-muted', html: '<strong>Click a talent</strong> to take a rank. <strong>Right-click</strong> (or the − button) gives it back. Start with the ones on the top row: the others open as you go.' })]);
+      var r = rank(t.id), b = blocks(t), wa = whyNotAdd(t), wr = whyNotRemove(t);
+      var needs = (t.needs || []).map(function (n) { var p = by[n.id]; return p ? p.name + (n.rank > 1 ? ' at rank ' + n.rank : '') : ''; }).filter(Boolean);
+      if (t.points > 0) needs.push(t.points + ' points in the ' + t.treeName + ' tree');
+      return el('div', { class: 'tt-detail' }, [
+        el('div', { class: 'eldr-row' }, [
+          el('div', null, [el('h3', { text: t.name }), el('div', { class: 'eldr-small eldr-muted', text: t.treeName + (t.capstone ? ' · Capstone' : '') + ' · ' + t.cost + (t.cost === 1 ? ' point' : ' points') + (t.ranks > 1 ? ' a rank' : '') })]),
+          el('div', { class: 'tt-step' }, [
+            el('button', { type: 'button', class: 'tt-btn', disabled: wr ? '' : null, 'aria-label': 'Give a rank of ' + t.name + ' back', text: '−', onclick: function () { remove(t); } }),
+            pips(r, t.ranks),
+            el('button', { type: 'button', class: 'tt-btn', disabled: wa ? '' : null, 'aria-label': 'Take a rank of ' + t.name, text: '+', onclick: function () { add(t); } })])]),
+        el('p', { text: String(t.text || '').replace(/^Capstone:\s*/i, '').replace(/^./, function (c) { return c.toUpperCase(); }) + (/[.!?]$/.test(t.text || '') ? '' : '.') }),
+        needs.length ? el('div', { class: 'eldr-small ' + (b.length ? 'tt-need' : 'tt-met'), text: b.length ? 'Needs ' + b.join(' and ') + ' first.' : 'Opened by ' + needs.join(' and ') + '.' }) : null,
+        st.msg && !(b.length && /^Needs /.test(st.msg)) ? el('div', { class: 'eldr-small tt-msg', role: 'status', text: st.msg }) : null]);
+    }
+    function summary() {
+      var s = spent(), bud = budget(), lvl = levelFor(s), cmd = command(), m = st.me, kids = [];
+      var baseSpent = order.reduce(function (a, t) { return a + base(t.id) * t.cost; }, 0);
+      var line;
+      if (!s) line = 'No talents picked yet.';
+      else if (bud != null) {
+        line = bud - s >= 0 ? (bud - s) + (bud - s === 1 ? ' point' : ' points') + ' left at level ' + m.level + '.'
+          : 'This is ' + (s - bud) + (s - bud === 1 ? ' point' : ' points') + ' more than level ' + m.level + ' has. ' + (lvl <= maxLevel ? 'It all fits at level ' + (lvl - Math.min(rebMax, m.rebirths || 0)) + '.' : 'The last of it comes with Rebirths.');
+      } else line = lvl <= maxLevel ? 'This build is whole at level ' + lvl + '.' : 'This build needs the top level and ' + (lvl - maxLevel) + (lvl - maxLevel === 1 ? ' Rebirth.' : ' Rebirths.');
+      kids.push(el('div', { class: 'eldr-row' }, [
+        el('div', null, [el('span', { class: 'tt-total', text: s + (s === 1 ? ' point' : ' points') }), el('span', { class: 'eldr-small eldr-muted', text: '  ' + line })]),
+        el('div', { class: 'tt-acts' }, [
+          s > baseSpent ? el('button', { type: 'button', class: 'eldr-chip', text: 'Clear', onclick: function () { st.build = {}; Object.keys(st.base || {}).forEach(function (k) { st.build[k] = st.base[k]; }); st.msg = ''; st.sel = null; save(); draw(); } }) : null,
+          s ? el('button', { type: 'button', class: 'eldr-chip', text: 'Copy link', onclick: function (e) { copy(location.href, e.currentTarget); } }) : null])]));
+      if (m) kids.push(el('div', { class: 'eldr-small eldr-muted' }, ['Planning from ' + m.name + '’s talents (level ' + m.level + '). ',
+        el('button', { type: 'button', class: 'tt-link', text: 'Start empty instead', onclick: function () { st.me = null; st.base = {}; st.build = {}; st.msg = ''; save(); draw(); } })]));
+      return el('section', { class: 'eldr-card tt-sum' }, kids);
+    }
+    function takeIt() {
+      var cmd = command();
+      if (!cmd) return null;
+      var btn = el('button', { type: 'button', class: 'eldr-chip tt-copy', text: 'Copy', onclick: function () { copy(cmd, btn); } });
+      return el('section', { class: 'eldr-card tt-cmd' }, [el('h2', { text: 'Take it in chat' }),
+        el('p', { class: 'eldr-small', text: 'Paste this in chat on stream and the build is yours:' }), el('div', { class: 'tt-cmdrow' }, [el('code', { text: cmd }), btn]),
+        el('p', { class: 'eldr-small eldr-muted', text: 'Chat takes what your points and the tree allow, and tells you what has to wait. Nothing is spent here on the site.' })]);
+    }
+    function draw() {
+      var had = focusId; focusId = null;
+      root.innerHTML = '';
+      root.appendChild(summary());
+      root.appendChild(el('section', { class: 'eldr-card tt-pick' }, [detail()]));
+      var grid = el('div', { class: 'tt-grid' });
+      trees.forEach(function (tr) { grid.appendChild(treeCard(tr)); });
+      root.appendChild(grid);
+      var take = takeIt(); if (take) root.appendChild(take);
+      root.appendChild(el('p', { class: 'eldr-muted eldr-small', style: { textAlign: 'center' }, html: 'Changed your mind after taking them? <em>A Stay at Arkham Sanitarium</em> (channel points) or <code>!talent reset</code> hands every point back.' }));
+      st.shake = null;
+      if (had) { var f = root.querySelector('.tt-node[data-id="' + had + '"]'); if (f) f.focus({ preventScroll: true }); }
+    }
+    draw();
+    return root;
+  }
+
   // ================================================================== THE INVESTIGATOR (investigator.json, 11 Nov)
   // What things are and what they do, never the figures behind them: the feed carries no weights, odds or prices.
   var CROWN = { gold: 'The gold crown', silver: 'The silver crown', copper: 'The copper crown' };
   function investigator(ctx) {
     return load('investigator.json').then(function (d) {
       d = d || {};
-      var st = ctx.state, trees = d.trees || [], occs = d.occupations || [], board = d.board || [];
+      var st = ctx.state, trees = d.trees || [], occs = d.occupations || [], lins = d.lineages || [], board = d.board || [];
       if (!st.tab) st.tab = ctx.page === 'talents' && trees.length ? 'talents' : 'levels';
       var out = [head(ctx.opts, 'The Investigator', 'Everything you do is written down',
-        'Turn up, play and support, and your investigator climbs: levels, titles, talents and an occupation of your own.')];
+        'Turn up, play and support, and your investigator climbs: levels, titles, talents, and a lineage and an occupation of your own.')];
       var aw = d.awakening;
       out.push(el('div', { class: 'eldr-stats' }, [
         el('div', { class: 'eldr-stat' }, [el('b', { text: num(d.investigators) }), el('span', { text: 'Investigators' })]),
@@ -1439,10 +1830,19 @@
         aw ? el('div', { class: 'eldr-stat' }, [el('b', { text: num(aw.level) }), el('span', { text: 'Eldritzh’s Awakening' })]) : null,
         trees.length ? el('div', { class: 'eldr-stat' }, [el('b', { text: num(trees.reduce(function (a, t) { return a + (t.talents || []).length; }, 0)) }), el('span', { text: 'Talents' })]) : null
       ]));
-      out.push(lookup(ctx));
+      var hasTree = trees.length && trees.every(function (tr) { return (tr.talents || []).every(function (t) { return t.id; }); });
+      var tabRow = null;
+      out.push(lookup(ctx, hasTree ? function (p) {
+        return el('div', { style: { marginTop: '14px' } }, [el('button', { type: 'button', class: 'eldr-chip', text: 'Plan talents from here', onclick: function () {
+          st.me = p; st.base = {}; (p.talents || []).forEach(function (t) { if (t.id) st.base[t.id] = t.rank; });
+          st.build = {}; Object.keys(st.base).forEach(function (k) { st.build[k] = st.base[k]; }); st.sel = null; st.msg = '';
+          if (tabRow) { tabRow.pick('talents'); tabRow.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        } })]);
+      } : null));
       var box = el('div');
       var list = [['levels', 'Levels']];
       if (trees.length) list.push(['talents', 'Talents']);
+      if (lins.length) list.push(['lineages', 'Lineages']);
       if (occs.length) list.push(['occupations', 'Occupations']);
       list.push(['board', 'Leaderboard']);
       function ladder(rows, what) {
@@ -1453,7 +1853,12 @@
       }
       function draw() {
         box.innerHTML = '';
-        if (st.tab === 'talents') {
+        if (st.tab === 'talents' && hasTree) {
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'The talent trees' }),
+            el('p', { html: 'Talent points come with your levels, from level ' + ((d.talentPoints || {}).firstLevel || 5) + '. Plan a build here: take the talents on the top row first, and the ones below open as you go. A <strong>capstone</strong> is the last thing a tree teaches, and wants points in its tree first.' }),
+            el('p', { class: 'eldr-muted eldr-small', html: 'This is a planner. When you like what you see, it writes one line for chat that takes it for real. In chat you can also take them one at a time: <code>!talent &lt;name&gt;</code> (in Discord: <code>/talent</code>).' })]));
+          box.appendChild(talentTree(ctx, d));
+        } else if (st.tab === 'talents') {
           box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Talents' }),
             el('p', { html: 'Talent points come with your levels. Spend them in any tree with <code>!talent &lt;name&gt;</code> (in Discord: <code>/talent</code>); <code>!talent</code> shows what you have. The dots are how many ranks a talent has. A capstone is the last thing a tree teaches.' }),
             el('p', { class: 'eldr-muted eldr-small', html: 'Changed your mind? <em>A Stay at Arkham Sanitarium</em> (channel points) or <code>!talent reset</code> hands every point back.' })]));
@@ -1468,6 +1873,23 @@
             });
             box.appendChild(sec);
           });
+        } else if (st.tab === 'lineages') {
+          var linCard = function (o) {
+            return el('article', { class: 'ci' }, [
+              el('h3', null, [o.name, o.locked ? el('span', { class: 'eldr-badge', style: { marginLeft: '8px' }, text: 'Behind a deed' }) : null]),
+              el('div', { class: 'eldr-small', text: o.text }),
+              (o.stages || []).length ? el('div', { class: 'eldr-small eldr-muted', text: 'In time: ' + o.stages.map(function (s) { return s.name + ' at level ' + s.level; }).join(', ') + '.' }) : null,
+              o.locked && o.open ? el('div', { class: 'eldr-small eldr-muted', text: 'To open it: ' + String(o.open).replace(/\s*\(!rebirth\)/, '') + '.' }) : null]);
+          };
+          var here = lins.filter(function (o) { return !o.otherworld; }), other = lins.filter(function (o) { return o.otherworld; });
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Lineages' }),
+            el('p', { html: 'What your investigator is, under the skin. One at a time, a small gift that is always on: <code>!lineage &lt;name&gt;</code> (in Discord: <code>/lineage</code>). Some only open after a deed, and a few change their name as you level; the gift stays the same.' }),
+            el('div', { class: 'eldr-grid' }, here.map(linCard))]));
+          if (other.length) box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Otherworlders' }),
+            el('p', { class: 'eldr-muted eldr-small', text: 'They came through the Rift, like much else.' }),
+            el('div', { class: 'eldr-grid' }, other.map(linCard))]));
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Who you are' }),
+            el('p', { html: 'Apart from all that, you can tell the ledger who you are, if you want to: <code>!identity</code> and <code>!pronouns</code> (in Discord: <code>/identity</code>, <code>/pronouns</code>). It changes nothing in play, it costs nothing, and you can change it or take it back whenever you like. <code>!character</code> shows your whole investigator.' })]));
         } else if (st.tab === 'occupations') {
           var grid = el('div', { class: 'eldr-grid' });
           occs.forEach(function (o) { grid.appendChild(el('article', { class: 'ci' }, [el('h3', { text: o.name }), el('div', { class: 'eldr-small', text: o.text })])); });
@@ -1500,7 +1922,7 @@
           if (g.childNodes.length) box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Titles and frames' }),
             el('p', { class: 'eldr-muted eldr-small', text: 'Your level gives you a title, and a frame around your name on the stream’s overlays.' }), g]));
           box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Rebirth' }),
-            el('p', { html: 'At the top level you can be born again with <code>!rebirth</code>: back to level 1 with a ✦ beside your name. You keep your occupation, your crowns and achievements, your rank in the Order and your skills and journals. Your talents are reset and earned again as you level, with one extra point for the Rebirth.' })]));
+            el('p', { html: 'At the top level you can be born again with <code>!rebirth</code>: back to level 1 with a ✦ beside your name. You keep your lineage and occupation, your crowns and achievements, your rank in the Order and your skills and journals. Your talents are reset and earned again as you level, with one extra point for the Rebirth.' })]));
           var crowns = d.crowns || [];
           box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'The three crowns' }),
             el('p', { html: 'All the XP the congregation earns also wakes Eldritzh (see the Covenant page). The three investigators who have given the Awakening the most wear the gold, silver and copper crowns.' }),
@@ -1509,7 +1931,8 @@
             })) : el('p', { class: 'eldr-muted eldr-small', text: 'Nobody wears a crown yet.' })]));
         }
       }
-      out.push(tabs(st, list, draw));
+      tabRow = tabs(st, list, draw);
+      out.push(tabRow);
       draw();
       out.push(box, foot(d.updated, el('div', { text: 'Type !level in chat to see your own.' })));
       return out;
