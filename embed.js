@@ -24,7 +24,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.6.0';
+  var VERSION = '1.7.0';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -308,6 +308,10 @@
     '.eldr-site .tt-acts{display:flex;gap:8px;flex-wrap:wrap}',
     '.eldr-site section.tt-cmd{margin-top:22px;border-top-color:var(--gold)}',
     '.eldr-site .tt-cmdrow{display:flex;gap:10px;align-items:center;margin:6px 0}',
+    '.eldr-site .tt-save{background:var(--gold);color:#15120a;border-color:var(--gold);font-weight:600}',
+    '.eldr-site .tt-save:hover{background:#f0d36b;color:#15120a}',
+    '.eldr-site .tt-save[disabled]{opacity:.55;cursor:wait}',
+    '.eldr-site .tt-acct{border-color:var(--gold-dim)}',
     '.eldr-site .tt-cmdrow code{flex:1;min-width:0;display:block;padding:9px 12px;font-size:13px;white-space:nowrap;overflow-x:auto;user-select:all}',
     '.eldr-site button.tt-link{all:unset;cursor:pointer;color:var(--green);text-decoration:underline;text-underline-offset:3px;font-size:inherit}',
     '.eldr-site section.tt-pick{padding:16px 18px;margin-bottom:22px;min-height:118px}',
@@ -1631,7 +1635,7 @@
       return out;
     }
     function cap() { return Math.max(0, maxLevel - first + 1) + rebMax; }
-    function budget() { var m = st.me; return m ? (m.level >= first ? m.level - first + 1 : 0) + Math.min(rebMax, m.rebirths || 0) : null; }
+    function budget() { var m = st.me; if (m && m.points != null) return m.points; return m ? (m.level >= first ? m.level - first + 1 : 0) + Math.min(rebMax, m.rebirths || 0) : null; }
     function whyNotAdd(t) {
       if (t.soon) return 'Not ready yet: it waits for its part of the game.';
       if (rank(t.id) >= t.ranks) return 'Already at its top rank.';
@@ -1658,6 +1662,74 @@
     function command() {
       var parts = order.filter(function (t) { return rank(t.id) > base(t.id); }).map(function (t) { return t.id + (t.ranks > 1 ? ':' + rank(t.id) : ''); });
       return parts.length ? '!talent build ' + parts.join(' ') : '';
+    }
+
+    // 12 Nov: members save a build to their own character with the key from /shard key (the Rift page's key). The forge
+    // checks the key and the membership and queues "!talent build …" for Codex :: Engine; the Codex checks every rule
+    // and only ever adds ranks. Without a key (or for non-members) the tree stays the planner + chat line it was.
+    var api = ctx.site && ctx.site.staffApi ? String(ctx.site.staffApi).replace(/\/+$/, '') : '';
+    function tcall(path, opts) {
+      opts = opts || {};
+      opts.headers = Object.assign({ 'X-Rift-Key': stored(RIFT_KEY) || '' }, opts.headers || {});
+      opts.cache = 'no-store'; opts.credentials = 'omit';
+      return fetch(api + path, opts).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, j: j || {} }; }); });
+    }
+    function loadMe(keepPlan) {
+      takeRiftKey();
+      if (!api || !stored(RIFT_KEY)) { st.acct = null; return; }
+      st.acct = { busy: true };
+      tcall('/web/talent/me').then(function (res) {
+        if (res.status === 401) { store(RIFT_KEY, null); st.acct = { err: 'Your key has expired or was revoked. Get a new one with /shard key in Discord.' }; draw(); return; }
+        if (res.status !== 200 || !res.j.ok) { st.acct = { err: res.j.error || 'Your character is out of reach right now.' }; draw(); return; }
+        var d = res.j, old = st.build || {};
+        st.acct = d;
+        st.me = { name: d.name, level: d.level, points: d.points, mine: true };
+        st.base = {}; Object.keys(d.ranks || {}).forEach(function (k) { if (by[k]) st.base[k] = Math.min(by[k].ranks, d.ranks[k]); });
+        st.build = {}; Object.keys(st.base).forEach(function (k) { st.build[k] = st.base[k]; });
+        // what was planned on top stays (taking more of something never breaks what rests on it)
+        if (keepPlan) Object.keys(old).forEach(function (k) { if (by[k] && old[k] > (st.build[k] || 0)) st.build[k] = old[k]; });
+        save(); draw();
+      }).catch(function () { st.acct = { err: 'Your character is out of reach right now (the forge may be offline).' }; draw(); });
+    }
+    if (st.acct === undefined) loadMe(true);
+    function account() {
+      if (!api) return null;
+      var a = st.acct, box = el('section', { class: 'eldr-card tt-acct' });
+      if (!a || a.err) {
+        var input = el('input', { class: 'eldr-search eldr-keyin', type: 'password', autocomplete: 'off', spellcheck: 'false', placeholder: 'rift_… or the link from Discord', 'aria-label': 'Your key' });
+        var msg = el('p', { class: 'eldr-keymsg', text: a && a.err ? a.err : '' });
+        box.appendChild(el('h2', { text: 'Save builds to your character' }));
+        box.appendChild(el('p', { class: 'eldr-small', html: 'Members can send a build straight to their character instead of pasting the chat line. In Discord, type <code>/shard key</code> (the same key as the Rift page) and open its link once, or paste the key here. Your Discord has to be linked first: <code>/forge link</code>.' }));
+        box.appendChild(el('form', { onsubmit: function (ev) {
+          ev.preventDefault();
+          var m = (input.value || '').trim().match(/rift_[A-Za-z0-9_\-]+/);
+          if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a key. It starts with rift_.'; return; }
+          store(RIFT_KEY, m[0]); loadMe(true); draw();
+        } }, [el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Load my character' })]), msg]));
+        return box;
+      }
+      if (a.busy) { box.appendChild(el('p', { class: 'eldr-muted', text: 'Looking up your character…' })); return box; }
+      box.appendChild(el('div', { class: 'eldr-keyrow', style: { justifyContent: 'space-between', margin: '0' } }, [
+        el('div', null, [el('h2', { text: 'Your character · ' + (a.name || ''), style: { margin: '0' } }),
+          el('div', { class: 'eldr-small eldr-muted', text: a.known ? 'Level ' + a.level + ' · ' + a.points + (a.points === 1 ? ' talent point' : ' talent points') + ', ' + a.free + ' free' : 'No talent points yet: they come from level ' + first + '.' })]),
+        el('div', { class: 'tt-acts' }, [
+          el('button', { class: 'eldr-chip', type: 'button', text: 'Reload', onclick: function () { st.saved = ''; loadMe(false); draw(); } }),
+          el('button', { class: 'eldr-chip', type: 'button', text: 'Sign out', onclick: function () { store(RIFT_KEY, null); st.acct = null; st.me = null; st.base = {}; st.saved = ''; draw(); } })])]));
+      if (!a.canSave && a.why) box.appendChild(el('p', { class: 'eldr-note', style: { margin: '10px 0 0' }, text: a.why }));
+      return box;
+    }
+    function saveToCharacter(cmd, btn, msg) {
+      btn.disabled = true; msg.textContent = '';
+      tcall('/web/talent/build', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ build: cmd, nonce: nonce() }) })
+        .then(function (res) {
+          if (res.status === 401) { store(RIFT_KEY, null); st.acct = { err: 'Your key has expired or was revoked. Get a new one with /shard key in Discord.' }; draw(); return; }
+          if (res.status !== 200 || !res.j.ok) { btn.disabled = false; msg.textContent = res.j.error || 'That didn\'t work. Try again in a moment.'; return; }
+          st.saved = res.j.text || 'Sent to your character.';
+          draw();
+          clearTimeout(st.reloadTimer);
+          st.reloadTimer = setTimeout(function () { if (document.body.contains(root)) { st.saved = ''; loadMe(true); } }, 75000);   // the bridge runs every minute
+        })
+        .catch(function () { btn.disabled = false; msg.textContent = 'The forge is out of reach right now. Nothing was sent.'; });
     }
 
     var root = el('div', { class: 'tt' }), focusId = null;
@@ -1784,7 +1856,7 @@
         el('div', { class: 'tt-acts' }, [
           s > baseSpent ? el('button', { type: 'button', class: 'eldr-chip', text: 'Clear', onclick: function () { st.build = {}; Object.keys(st.base || {}).forEach(function (k) { st.build[k] = st.base[k]; }); st.msg = ''; st.sel = null; save(); draw(); } }) : null,
           s ? el('button', { type: 'button', class: 'eldr-chip', text: 'Copy link', onclick: function (e) { copy(location.href, e.currentTarget); } }) : null])]));
-      if (m) kids.push(el('div', { class: 'eldr-small eldr-muted' }, ['Planning from ' + m.name + '’s talents (level ' + m.level + '). ',
+      if (m && !m.mine) kids.push(el('div', { class: 'eldr-small eldr-muted' }, ['Planning from ' + m.name + '’s talents (level ' + m.level + '). ',
         el('button', { type: 'button', class: 'tt-link', text: 'Start empty instead', onclick: function () { st.me = null; st.base = {}; st.build = {}; st.msg = ''; save(); draw(); } })]));
       return el('section', { class: 'eldr-card tt-sum' }, kids);
     }
@@ -1792,6 +1864,16 @@
       var cmd = command();
       if (!cmd) return null;
       var btn = el('button', { type: 'button', class: 'eldr-chip tt-copy', text: 'Copy', onclick: function () { copy(cmd, btn); } });
+      var a = st.acct;
+      if (a && a.ok && a.canSave) {
+        var msg = el('p', { class: 'eldr-keymsg' });
+        var sv = el('button', { type: 'button', class: 'eldr-chip tt-save', text: 'Save to my character' });
+        sv.addEventListener('click', function () { saveToCharacter(cmd, sv, msg); });
+        return el('section', { class: 'eldr-card tt-cmd' }, [el('h2', { text: 'Take it' }),
+          st.saved ? el('p', { class: 'eldr-note', role: 'status', text: st.saved }) : null,
+          el('div', { class: 'tt-cmdrow' }, [el('code', { text: cmd }), sv, btn]), msg,
+          el('p', { class: 'eldr-small eldr-muted', text: 'Saving sends exactly this line as you, so the same rules apply as in chat: what your points and the tree allow is taken, the rest waits, and chat says which. Nothing is ever taken away. Copy pastes it in chat yourself instead.' })]);
+      }
       return el('section', { class: 'eldr-card tt-cmd' }, [el('h2', { text: 'Take it in chat' }),
         el('p', { class: 'eldr-small', text: 'Paste this in chat on stream and the build is yours:' }), el('div', { class: 'tt-cmdrow' }, [el('code', { text: cmd }), btn]),
         el('p', { class: 'eldr-small eldr-muted', text: 'Chat takes what your points and the tree allow, and tells you what has to wait. Nothing is spent here on the site.' })]);
@@ -1799,6 +1881,8 @@
     function draw() {
       var had = focusId; focusId = null;
       root.innerHTML = '';
+      var ac = account(); if (ac) root.appendChild(ac);
+      if (st.saved && !command()) root.appendChild(el('p', { class: 'eldr-note', role: 'status', text: st.saved }));
       root.appendChild(summary());
       root.appendChild(el('section', { class: 'eldr-card tt-pick' }, [detail()]));
       var grid = el('div', { class: 'tt-grid' });
@@ -1856,7 +1940,7 @@
         if (st.tab === 'talents' && hasTree) {
           box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'The talent trees' }),
             el('p', { html: 'Talent points come with your levels, from level ' + ((d.talentPoints || {}).firstLevel || 5) + '. Plan a build here: take the talents on the top row first, and the ones below open as you go. A <strong>capstone</strong> is the last thing a tree teaches, and wants points in its tree first.' }),
-            el('p', { class: 'eldr-muted eldr-small', html: 'This is a planner. When you like what you see, it writes one line for chat that takes it for real. In chat you can also take them one at a time: <code>!talent &lt;name&gt;</code> (in Discord: <code>/talent</code>).' })]));
+            el('p', { class: 'eldr-muted eldr-small', html: 'This is a planner. When you like what you see, it writes one line for chat that takes it for real' + (ctx.site && ctx.site.staffApi ? ', and members can save it straight to their character' : '') + '. In chat you can also take them one at a time: <code>!talent &lt;name&gt;</code> (in Discord: <code>/talent</code>).' })]));
           box.appendChild(talentTree(ctx, d));
         } else if (st.tab === 'talents') {
           box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Talents' }),
