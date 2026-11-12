@@ -292,7 +292,7 @@ Some sounds are cheaper (or free) for subs, members and the special folk. Happy 
 | `!fx <name>` | Fire an effect on stream: uses a Rift Shard you hold for it, otherwise a Pact. If the dark is busy, it waits its turn |
 | `!fx <name> pact` | Pay with a Pact even if you hold that shard |
 | `!fx roll` | Rift Roulette: one Pact for a random effect (it can bite back) |
-| `!shard` | Buy a Rift Shard for a Pact: a random effect to keep and fire later |
+| `!shard` | Buy a sealed Rift Shard for a Pact (`!shard 3` buys three). `!shard open` shows what it holds |
 | `!shard open` | Open your sealed shards (from bits, subs, gifts, donations, hype trains, the Merchant…) |
 | `!shard eldritch [name] [name]` | An Eldritch Pact: 3 shards from a darker pool, or choose 1 Eldritch shard or 2 Pact shards |
 | `!shard give <user> <name>` | Give a shard to someone (`sealed` for a sealed one) |

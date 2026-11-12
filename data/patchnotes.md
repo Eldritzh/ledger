@@ -2,6 +2,13 @@
 
 *What's new on the stream, in Discord and on this site. Newest first.*
 
+## 12 November 2026
+
+### Fixed
+- **`!shard` now buys a sealed shard**, as it always should have: open it with `!shard open` (or in Discord, or on the Rift page) to see what it holds. It used to hand out an opened one straight away.
+- **`/shard` and `/shards` in Discord** were missing: they're there now (`/shards`, `/shard open`, `/shard give`, `/shard key`).
+- The **Rift Shards** page now lists the same commands as the Commands page.
+
 ## 11 November 2026
 
 ### New
