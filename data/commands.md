@@ -11,9 +11,12 @@
 | `!relics` | Every relic you carry: Wards, Elder Signs, Pages, Keys and more |
 | `!satchel` | Your forge materials, lures, keys, charms and infusions |
 | `!level` | Your investigator level, title and XP to the next level (everything you do earns XP); `!level <name>` for someone else's |
-| `!talent` | Your talent points (one a level from level 5): `!talent tree scholar`, `!talent <name>` to take one, `!talent reset` to start over |
+| `!talent` | Your talent points (one a level from level 5): `!talent tree scholar`, `!talent <name>` to take one, `!talent info <name>` for what it does and what it needs first, `!talent reset` to start over. Plan a whole build on the site's talent tree and paste the `!talent build …` line it writes |
 | `!occupation` | Pick your occupation, a small passive (Antiquarian, Journalist, Private Eye, Professor, Dilettante, Occultist, Sailor, Doctor) |
-| `/talent`, `/occupation` (Discord) | The same in the forge bot (changes apply when the bot's stream side next runs) |
+| `!lineage` | What you are: pick a lineage for one small gift that is always on. `!lineage locked` lists the ones that wait behind deeds; `!lineage info <name>` explains one |
+| `!identity`, `!pronouns` | Who you are, if you want to say: `!identity non-binary`, `!pronouns they` (or `none`). Free, changes nothing in play, change it whenever you like |
+| `!character` | Your investigator in one line: level, title, lineage, occupation; `!character <name>` for someone else's |
+| `/talent`, `/occupation`, `/lineage`, `/identity`, `/pronouns`, `/character` (Discord) | The same in the forge bot (changes apply when the bot's stream side next runs) |
 | `!rebirth` | At the top level (60): be born again at level 1 with a ✦ mark (`!rebirth confirm`) |
 | `!covenant` | Eldritzh's Awakening and the Covenant: talents for everyone, chosen by chat vote (one per Awakening level) |
 | `!codex` | Your achievements |
@@ -294,9 +297,11 @@ Some sounds are cheaper (or free) for subs, members and the special folk. Happy 
 | `!shard eldritch [name] [name]` | An Eldritch Pact: 3 shards from a darker pool, or choose 1 Eldritch shard or 2 Pact shards |
 | `!shard give <user> <name>` | Give a shard to someone (`sealed` for a sealed one) |
 | `!shards` | The shards you hold. In Discord: `/shards`, `/shard open`, `/shard give` |
+| Discord `/shard key` | A private link to the Rift page on eldritzh.com, where you see your shards and open your sealed ones. It can't give, buy or fire anything. `/shard key revoke:True` kills it |
 | `!seal` | Spend an Elder Sign to stop an Eldritch effect before it lands |
 | `!claim <code>` | Bind a Ko-fi or Fourthwall offering to your account |
 | `!partners` | The stream's current partners and their commands |
+| `!charity` | The cause we're raising for right now: how much is in, the goal and where to give |
 | `!stirring` | How close the stars are to a hype train |
 
 ## 🐫 The Merchant from Leng
@@ -359,10 +364,12 @@ On Twitch, prophecies also appear as a **Twitch prediction** (bet Sanity there) 
 | Command | What it does |
 |---|---|
 | `!fish` | Cast a line (100 Madness, or the **Go Fishing** channel point reward). The catch bites a few seconds later. `!fish <water>` to try another water |
+| `!fish reel` | Reel in right away instead of waiting for the bite. On Twitch you can also click your own bobber on the stream (Heat extension, with your identity shared) |
 | `!fishing` | Your Fishing skill, your journal and your best catches |
 | `!water` | The waters open to you; `!water <name>` to move there (deeper waters need skill and better bait) |
 | `!bait` | Your tackle box; `!bait <name>` puts bait on the line (`!bait trinket` for the one that never runs out) |
 | `!fish creel` · `!fish sell` · `!fish feed` | What you've caught; sell it all to the Merchant from Leng; or tip it into Tsathoggua's pool |
+| `!fish derby` | The fishing derby running on stream: its rules, the minutes left, the top three and your score. Booty Bay's Extravaganza runs every Sunday stream |
 | `/fish` (Discord) | The same in the forge bot: `cast`, `water`, `bait`, `info`, `creel`, `sell`, `feed` (a few casts a day, rare fish bite less while we're offline) |
 
 Over a hundred fish in 25 waters, some straight from Booty Bay, Skyrim, the Lost River or the Devil's Roar. Every fish has a quality (Fine, Choice, Prime) and a weight, from a 20 g sprat to things that don't fit the boat. Supporting the stream (bits, subs, gifts, tips) comes with free bait. Some come up **Aberrant**. Each water has a Legendary. When **the Wreckage** drifts in from the fog, every cast hauls up something from the *Alert* as well.

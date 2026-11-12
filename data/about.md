@@ -3,12 +3,12 @@
 *What this site is, what it keeps and where it comes from.*
 
 ## What this site keeps
-Everything here comes from the stream: chat names, levels, achievements, talents, and what you've caught or banished. All of it is already public in chat. Nothing is collected here that isn't said or earned on stream.
+Everything here comes from the stream: chat names, levels, achievements, lineages, occupations and talents, and what you've caught or banished. Pronouns are shown only if you set them yourself with `!pronouns` or `!identity`, and `!pronouns none` and `!identity none` take them away again. All of it is already public in chat. Nothing is collected here that isn't said or earned on stream.
 
 There is no viewer sign-in and nothing to fill in. The site doesn't know who is reading it.
 
 ## Looking someone up
-The Investigator and Night Fishing pages have a look-up box. Type a chat name to see that person's level, title, talents, banished Elites and fishing journal: the same things `!level`, `!talent`, `!banished` and `!fishing` say in chat.
+The Investigator and Night Fishing pages have a look-up box. Type a chat name to see that person's level, title, lineage, occupation, talents, banished Elites and fishing journal: the same things `!level`, `!character`, `!talent`, `!banished` and `!fishing` say in chat.
 
 ## Your data
 Type `!forget` in chat and you are taken off every public page here: the Codex, the leaderboards and your own look-up entry. It takes a few minutes. Nothing changes in the game, and `!forget undo` brings you back. (`!codex hide` does the same.)
