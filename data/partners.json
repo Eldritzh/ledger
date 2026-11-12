@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12T19:14:38Z",
+  "updated": "2026-11-12T21:30:39Z",
   "partners": [
     {
       "id": "dreadmoor",
@@ -16,7 +16,7 @@
       ],
       "circles": [],
       "giveaway": {
-        "status": "open",
+        "status": "locked",
         "prize": "Dreadmoor steam key",
         "enter": "!dreadmoor",
         "terms": ""
