@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-12T20:05:55.4742797Z",
+  "updated": "2026-11-12T20:14:04.3394211Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 64,
+    "checkins": 66,
     "fed": 1257612,
     "tsath_fills": 10,
     "messages": 500,
-    "banishes": 47,
+    "banishes": 48,
     "delve_bottoms": 2,
     "sunwait_candles": 1,
     "chants": 0,
@@ -21,7 +21,7 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 4,
+    "stream:checkins": 6,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
@@ -30,8 +30,8 @@
     "count:streams_attended": 24,
     "stream:messages": 25,
     "sum:circle_top": 0,
-    "stream:banishes": 0,
-    "@moon": 25,
+    "stream:banishes": 1,
+    "@moon": 50,
     "kinds:beings_seen": 12,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -45,16 +45,16 @@
     "kinds:legend_weapons": 0,
     "episodes": 0,
     "max:streak": 35,
-    "@hand": 5,
+    "@hand": 6,
     "stream:chants": 0
   },
   "progress": {
     "ink": {
-      "pct": 42.7,
+      "pct": 44.0,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 64,
+          "have": 66,
           "need": 150
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 26.7,
+      "pct": 40.0,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 4,
+          "have": 6,
           "need": 15
         }
       ],
@@ -226,16 +226,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 25.0,
+      "pct": 50.0,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 4,
+          "have": 6,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 0,
+          "have": 1,
           "need": 4
         }
       ],
@@ -450,16 +450,16 @@
       "wait": ""
     },
     "hand": {
-      "pct": 6.0,
+      "pct": 6.1,
       "parts": [
         {
           "label": "Signatures",
-          "have": 64,
+          "have": 66,
           "need": 2500
         },
         {
           "label": "Banishments",
-          "have": 47,
+          "have": 48,
           "need": 500
         },
         {
