@@ -24,7 +24,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.8.0';
+  var VERSION = '1.9.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -1952,6 +1952,78 @@
       if (lins.length) list.push(['lineages', 'Lineages']);
       if (occs.length) list.push(['occupations', 'Occupations']);
       list.push(['board', 'Leaderboard']);
+      // 12 Nov: members take a lineage or an occupation right here, with the same key as the Rift page and the talent tree
+      // (/shard key in Discord). The forge queues it as their own "!lineage <id>" / "!occupation <id>"; the Codex decides
+      // the cost (free first change and after a retune, else an Eldritch Pact, taken then) and says so in chat.
+      var papi = ctx.site && ctx.site.staffApi ? String(ctx.site.staffApi).replace(/\/+$/, '') : '';
+      function pcall(path, opts) {
+        opts = opts || {};
+        opts.headers = Object.assign({ 'X-Rift-Key': stored(RIFT_KEY) || '' }, opts.headers || {});
+        opts.cache = 'no-store'; opts.credentials = 'omit';
+        return fetch(papi + path, opts).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, j: j || {} }; }); });
+      }
+      var KEY_GONE = 'Your key has expired or was revoked. Get a new one with /shard key in Discord.';
+      function pkLoad() {
+        takeRiftKey();
+        if (!papi || !stored(RIFT_KEY)) { st.pk = null; return; }
+        st.pk = { busy: true };
+        pcall('/web/talent/me').then(function (res) {
+          if (res.status === 401) { store(RIFT_KEY, null); st.pk = { err: KEY_GONE }; }
+          else if (res.status !== 200 || !res.j.ok) st.pk = { err: res.j.error || 'Your character is out of reach right now.' };
+          else st.pk = res.j;
+          draw();
+        }).catch(function () { st.pk = { err: 'Your character is out of reach right now (the forge may be offline).' }; draw(); });
+      }
+      function pickBar(kind) {
+        if (!papi) return null;
+        if (st.pk === undefined) pkLoad();
+        var a = st.pk, word = kind === 'lineage' ? 'lineage' : 'occupation', box = el('section', { class: 'eldr-card tt-acct' });
+        if (!a || a.err) {
+          var input = el('input', { class: 'eldr-search eldr-keyin', type: 'password', autocomplete: 'off', spellcheck: 'false', placeholder: 'rift_… or the link from Discord', 'aria-label': 'Your key' });
+          var msg = el('p', { class: 'eldr-keymsg', text: a && a.err ? a.err : '' });
+          box.appendChild(el('h2', { text: 'Take one from here' }));
+          box.appendChild(el('p', { class: 'eldr-small', html: 'Members can pick their ' + word + ' right on this page. In Discord, type <code>/shard key</code> (the same key as the Rift page and the talent tree) and open its link once, or paste the key here. Your Discord has to be linked first: <code>/forge link</code>.' }));
+          box.appendChild(el('form', { onsubmit: function (ev) {
+            ev.preventDefault();
+            var m = (input.value || '').trim().match(/rift_[A-Za-z0-9_\-]+/);
+            if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a key. It starts with rift_.'; return; }
+            store(RIFT_KEY, m[0]); pkLoad(); draw();
+          } }, [el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Load my character' })]), msg]));
+          return box;
+        }
+        if (a.busy) { box.appendChild(el('p', { class: 'eldr-muted', text: 'Looking up your character…' })); return box; }
+        var cur = kind === 'lineage' ? a.lineage : a.occupation;
+        box.appendChild(el('div', { class: 'eldr-keyrow', style: { justifyContent: 'space-between', margin: '0' } }, [
+          el('div', null, [el('h2', { text: 'Your character · ' + (a.name || ''), style: { margin: '0' } }),
+            el('div', { class: 'eldr-small eldr-muted', text: cur ? 'Your ' + word + ': ' + cur + '.' : 'No ' + word + ' yet: the first pick is free.' })]),
+          el('div', { class: 'tt-acts' }, [
+            el('button', { class: 'eldr-chip', type: 'button', text: 'Reload', onclick: function () { st.pkMsg = ''; pkLoad(); draw(); } }),
+            el('button', { class: 'eldr-chip', type: 'button', text: 'Sign out', onclick: function () { store(RIFT_KEY, null); st.pk = null; st.pkMsg = ''; draw(); } })])]));
+        if (!a.canSave && a.why) box.appendChild(el('p', { class: 'eldr-note', style: { margin: '10px 0 0' }, text: a.why }));
+        else box.appendChild(el('p', { class: 'eldr-small eldr-muted', style: { margin: '10px 0 0' }, text: 'Use Take this on a card. A change costs 1 Eldritch Pact unless it is one of your free ones (the first change, and one after each retune); chat tells you which when it lands.' }));
+        if (st.pkMsg) box.appendChild(el('p', { class: 'eldr-note', style: { margin: '10px 0 0' }, text: st.pkMsg }));
+        return box;
+      }
+      function pickBtn(kind, o) {
+        var a = st.pk;
+        if (!papi || !a || !a.ok || !a.canSave) return null;
+        var cur = kind === 'lineage' ? a.lineage : a.occupation;
+        if (cur === o.name) return el('div', { style: { marginTop: '8px' } }, [el('span', { class: 'eldr-badge', text: 'You are this' })]);
+        if (kind === 'lineage' && (a.linOpen || []).indexOf(o.name) < 0) return null;
+        var btn = el('button', { class: 'eldr-chip', type: 'button', text: 'Take this', style: { marginTop: '8px' } });
+        btn.onclick = function () {
+          btn.disabled = true;
+          pcall('/web/talent/pick', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind: kind, name: o.name, nonce: nonce() }) })
+            .then(function (res) {
+              if (res.status === 401) { store(RIFT_KEY, null); st.pk = { err: KEY_GONE }; draw(); return; }
+              st.pkMsg = res.j.text || res.j.error || (res.j.ok ? 'Sent.' : 'That didn\'t work. Try again in a moment.');
+              draw();
+              if (res.j.queued) { clearTimeout(st.pkTimer); st.pkTimer = setTimeout(function () { if (document.body.contains(box)) { st.pkMsg = ''; pkLoad(); } }, 75000); }
+            })
+            .catch(function () { st.pkMsg = 'The forge is out of reach right now. Nothing was sent.'; draw(); });
+        };
+        return btn;
+      }
       function ladder(rows, what) {
         var t = el('table', { class: 'cx-top' }), tb = el('tbody');
         rows.forEach(function (r) { tb.appendChild(el('tr', null, [el('td', { text: r.level }), el('td', { text: r.name })])); });
@@ -1986,8 +2058,10 @@
               el('h3', null, [o.name, o.locked ? el('span', { class: 'eldr-badge', style: { marginLeft: '8px' }, text: 'Behind a deed' }) : null]),
               boonBane(o.text),
               (o.stages || []).length ? el('div', { class: 'eldr-small eldr-muted', text: 'In time: ' + o.stages.map(function (s) { return s.name + ' at level ' + s.level; }).join(', ') + '.' }) : null,
-              o.locked && o.open ? el('div', { class: 'eldr-small eldr-muted', text: 'To open it: ' + String(o.open).replace(/\s*\(!rebirth\)/, '') + '.' }) : null]);
+              o.locked && o.open ? el('div', { class: 'eldr-small eldr-muted', text: 'To open it: ' + String(o.open).replace(/\s*\(!rebirth\)/, '') + '.' }) : null,
+              pickBtn('lineage', o)]);
           };
+          var lbar = pickBar('lineage'); if (lbar) box.appendChild(lbar);
           var here = lins.filter(function (o) { return !o.otherworld; }), other = lins.filter(function (o) { return o.otherworld; });
           box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Lineages' }),
             el('p', { html: 'What your investigator is, under the skin. Every lineage is good at some things and bad at others, the way that blood would be: in descents, raids and the Delve, against certain foes and with certain weapons, in banishing, and at the water. One at a time: <code>!lineage &lt;name&gt;</code>, and <code>!lineage info &lt;name&gt;</code> says it in full (in Discord: <code>/lineage</code>, <code>/lineage info:</code>). Some only open after a deed, and a few change their name as you level; what they are good and bad at stays the same.' }),
@@ -1999,7 +2073,8 @@
             el('p', { html: 'Apart from all that, you can tell the ledger who you are, if you want to: <code>!identity</code> and <code>!pronouns</code> (in Discord: <code>/identity</code>, <code>/pronouns</code>). It changes nothing in play, it costs nothing, and you can change it or take it back whenever you like. <code>!character</code> shows your whole investigator.' })]));
         } else if (st.tab === 'occupations') {
           var grid = el('div', { class: 'eldr-grid' });
-          occs.forEach(function (o) { grid.appendChild(el('article', { class: 'ci' }, [el('h3', { text: o.name }), boonBane(o.text)])); });
+          occs.forEach(function (o) { grid.appendChild(el('article', { class: 'ci' }, [el('h3', { text: o.name }), boonBane(o.text), pickBtn('occupation', o)])); });
+          var obar = pickBar('occupation'); if (obar) box.appendChild(obar);
           box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Occupations' }),
             el('p', { html: 'What your investigator did before the dark found them. A trade has its strengths and its blind spots: each occupation is good at some fights, foes and waters and bad at others. One at a time: <code>!occupation &lt;name&gt;</code>, and <code>!occupation info &lt;name&gt;</code> says it in full (in Discord: <code>/occupation</code>, <code>/occupation info:</code>).' }),
             el('p', { class: 'eldr-muted eldr-small', text: 'Your occupation and your lineage add up, and your talents come on top. Since 12 November everyone may change each once for free.' }), grid]));
