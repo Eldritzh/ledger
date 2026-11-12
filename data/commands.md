@@ -12,11 +12,11 @@
 | `!satchel` | Your forge materials, lures, keys, charms and infusions |
 | `!level` | Your investigator level, title and XP to the next level (everything you do earns XP); `!level <name>` for someone else's |
 | `!talent` | Your talent points (one a level from level 5): `!talent tree scholar`, `!talent <name>` to take one, `!talent info <name>` for what it does and what it needs first, `!talent reset` to start over. Plan a whole build on the site's talent tree and paste the `!talent build …` line it writes |
-| `!occupation` | Pick your occupation, a small passive (Antiquarian, Journalist, Private Eye, Professor, Dilettante, Occultist, Sailor, Doctor) |
-| `!lineage` | What you are: pick a lineage for one small gift that is always on. `!lineage locked` lists the ones that wait behind deeds; `!lineage info <name>` explains one |
+| `!occupation` | Pick your occupation (Antiquarian, Journalist, Private Eye, Professor, Dilettante, Occultist, Sailor, Doctor). Each is good at some fights, foes and waters and bad at others; `!occupation info <name>` explains one |
+| `!lineage` | What you are: pick a lineage, good at some things and bad at others (in descents, raids, the Delve, banishing and fishing). `!lineage locked` lists the ones that wait behind deeds; `!lineage info <name>` explains one |
 | `!identity`, `!pronouns` | Who you are, if you want to say: `!identity non-binary`, `!pronouns they` (or `none`). Free, changes nothing in play, change it whenever you like |
 | `!character` | Your investigator in one line: level, title, lineage, occupation; `!character <name>` for someone else's |
-| `/talent`, `/occupation`, `/lineage`, `/identity`, `/pronouns`, `/character` (Discord) | The same in the forge bot (changes apply when the bot's stream side next runs) |
+| `/talent`, `/occupation`, `/lineage`, `/identity`, `/pronouns`, `/character` (Discord) | The same in the forge bot (changes apply when the bot's stream side next runs); `/occupation info:` and `/lineage info:` show one in full |
 | `!rebirth` | At the top level (60): be born again at level 1 with a ✦ mark (`!rebirth confirm`) |
 | `!covenant` | Eldritzh's Awakening and the Covenant: talents for everyone, chosen by chat vote (one per Awakening level) |
 | `!codex` | Your achievements |

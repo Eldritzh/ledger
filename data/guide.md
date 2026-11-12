@@ -33,7 +33,7 @@ The state of the congregation right now: which cult rules this month, how full T
 Everything the stream keeps, written down. Pick a page.
 
 ## Page: investigator
-Everything you do on stream earns XP: turning up, playing the games, supporting. XP becomes levels, levels bring titles, talent points and a frame for your name. Look anyone up by chat name in the box below; `!forget` in chat takes you off every page here.
+Everything you do on stream earns XP: turning up, playing the games, supporting. XP becomes levels, levels bring titles, talent points and a frame for your name. The Talents tab is a tree you can click a build together in, and it writes the chat line that takes it. The Lineages and Occupations tabs say what each one is good and bad at: in descents, raids and the Delve, in banishing, and at the water. Look anyone up by chat name in the box below; `!forget` in chat takes you off every page here.
 
 ## Page: covenant
 All the XP everyone earns wakes Eldritzh, level by level. Every Awakening level gives the congregation one point, and chat votes on what it buys: a talent that then counts for everyone, for good.
