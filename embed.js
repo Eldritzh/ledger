@@ -24,7 +24,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.9.0';
+  var VERSION = '1.10.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -155,6 +155,20 @@
     '.eldr-site .eldr-badge.green{color:var(--green);border-color:rgba(82,183,136,.45)}',
     '.eldr-site .eldr-badge.teal{color:var(--teal);border-color:rgba(47,179,168,.5)}',
     '.eldr-site .eldr-badge.red{color:#d9776f;border-color:rgba(122,42,36,.8)}',
+    /* 12 Nov: switched off right now: a red row with a tag, a whole system folded to its red name bar */
+    '.eldr-site .eldr-offtag{color:#f2a59c;background:rgba(122,42,36,.38);border-color:rgba(176,64,56,.9);font-size:10px;margin:0 0 0 8px;vertical-align:middle}',
+    '.eldr-site tr.eldr-offrow>td{background:rgba(122,42,36,.16)}',
+    '.eldr-site tr.eldr-offrow>td:first-child{box-shadow:inset 3px 0 0 #a23b33}',
+    '.eldr-site tr.eldr-offrow code{color:#e0948b;background:rgba(122,42,36,.18);border-color:rgba(176,64,56,.4)}',
+    '.eldr-site section.eldr-card.eldr-off{border-color:rgba(162,59,51,.55);border-top-color:#a23b33;background:linear-gradient(180deg,rgba(122,42,36,.24),rgba(122,42,36,.07) 120px),var(--panel)}',
+    '.eldr-site section.eldr-off>h2{margin:0}',
+    '.eldr-site section.eldr-off.eldr-open>h2,.eldr-site section.eldr-off.eldr-peek>h2{margin:0 0 14px}',
+    '.eldr-site section.eldr-off:not(.eldr-open):not(.eldr-peek){padding-bottom:20px}',
+    '.eldr-site section.eldr-off:not(.eldr-open):not(.eldr-peek)>:not(h2){display:none !important}',
+    '.eldr-site .eldr-offtoggle{all:unset;box-sizing:border-box;display:flex;align-items:center;flex-wrap:wrap;gap:6px 0;width:100%;cursor:pointer;color:#d9877e}',
+    '.eldr-site .eldr-offtoggle:focus-visible{outline:2px solid #a23b33;outline-offset:4px;border-radius:4px}',
+    '.eldr-site .eldr-offtoggle .eldr-chev{margin-left:auto;padding-left:12px;font-size:14px;color:var(--muted);transition:transform .2s}',
+    '.eldr-site .eldr-open .eldr-offtoggle .eldr-chev{transform:rotate(180deg)}',
     '.eldr-site .eldr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}',
     '.eldr-site .eldr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:0 0 22px}',
     '.eldr-site .eldr-stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center}',
@@ -345,6 +359,8 @@
     '  .eldr-site table.stack tr:last-child{border-bottom:none}',
     '  .eldr-site table.stack td{display:block;width:100% !important;border:none;padding:2px 0}',
     '  .eldr-site table.stack td:first-child{margin-bottom:4px}',
+    '  .eldr-site table.stack tr.eldr-offrow{background:rgba(122,42,36,.16);box-shadow:inset 3px 0 0 #a23b33;padding-left:12px;padding-right:8px}',
+    '  .eldr-site table.stack tr.eldr-offrow>td{background:none;box-shadow:none}',
     '  .eldr-site code{white-space:normal}',
     '  .eldr-site nav.eldr-chips{display:none}',
     '  .eldr-site nav.eldr-nav .eldr-chip.near{display:none}',
@@ -427,6 +443,28 @@
     });
   }
 
+  // ================================================================== SWITCHED OFF (12 Nov)
+  // What is off right now comes from the publisher (sounds.json / fx.json "off" and "enabled", {off} in commands.md).
+  // One thing off: its row turns red with a tag. A whole system off: its card folds to the red name bar; click to open.
+  function offTag(word) { return el('span', { class: 'eldr-badge red eldr-offtag', text: word }); }
+  function offRow(tr, word) {
+    tr.classList.add('eldr-offrow');
+    var td = tr.firstChild; if (td && word) td.appendChild(offTag(word));
+    return tr;
+  }
+  function foldOff(section, word, open) {
+    var h2 = section.querySelector('h2'); if (!h2) return section;
+    section.classList.add('eldr-off');
+    if (open) section.classList.add('eldr-open');
+    var btn = el('button', { class: 'eldr-offtoggle', type: 'button', 'aria-expanded': String(!!open) });
+    while (h2.firstChild) btn.appendChild(h2.firstChild);
+    btn.appendChild(offTag(word));
+    btn.appendChild(el('span', { class: 'eldr-chev', 'aria-hidden': 'true', text: '\u25BE' }));
+    btn.addEventListener('click', function () { var o = section.classList.toggle('eldr-open'); btn.setAttribute('aria-expanded', String(o)); });
+    h2.appendChild(btn);
+    return section;
+  }
+
   // ================================================================== COMMANDS (from commands.md)
   function inline(s) {
     var out = esc(s);
@@ -454,7 +492,11 @@
     for (var i = 0; i < lines.length; i++) {
       var ln = lines[i];
       if (/^#\s+/.test(ln)) { flush(); doc.title = ln.replace(/^#\s+/, '').replace(/[⛧✦☩✠]/g, '').trim(); continue; }
-      if (/^##\s+/.test(ln)) { flush(); cur = { title: ln.replace(/^##\s+/, '').trim(), blocks: [] }; doc.sections.push(cur); continue; }
+      if (/^##\s+/.test(ln)) {
+        flush();
+        var ttl = ln.replace(/^##\s+/, '').trim(), offH = /\s*\{off\}\s*$/.test(ttl);   // {off}: the whole system is switched off
+        cur = { title: ttl.replace(/\s*\{off\}\s*$/, ''), off: offH, blocks: [] }; doc.sections.push(cur); continue;
+      }
       if (/^###\s+/.test(ln)) { flush(); (cur ? cur.blocks : doc.intro).push({ type: 'h3', text: ln.replace(/^###\s+/, '') }); continue; }
       if (/^\s*(-{3,}|\*{3,})\s*$/.test(ln)) { flush(); continue; }
       if (/^\s*\|/.test(ln)) {
@@ -463,6 +505,7 @@
         while (i < lines.length && /^\s*\|/.test(lines[i])) { rows.push(lines[i]); i++; }
         i--;
         var hdr = cells(rows[0]), body = rows.slice(1).filter(function (r) { return !/^\s*\|?\s*:?-{2,}/.test(r); }).map(cells);
+        body.forEach(function (r) { if (/^\{off\}\s*/.test(r[0] || '')) { r[0] = r[0].replace(/^\{off\}\s*/, ''); r.off = true; } });   // {off}: this one is switched off
         (cur ? cur.blocks : doc.intro).push({ type: 'table', head: hdr, rows: body });
         continue;
       }
@@ -480,14 +523,17 @@
     flush();
     return doc;
   }
-  function blockNode(b) {
+  function blockNode(b, offWord, offAll) {
     if (b.type === 'p') return el('p', { class: 'eldr-note', html: inline(b.text) });
     if (b.type === 'h3') return el('h3', { html: inline(b.text) });
     if (b.type === 'ul') return el('ul', null, b.items.map(function (t) { return el('li', { html: inline(t) }); }));
     var t = el('table', { class: 'stack' });
     t.appendChild(el('thead', null, el('tr', null, b.head.map(function (h) { return el('th', { html: inline(h) }); }))));
     var tb = el('tbody');
-    b.rows.forEach(function (r) { tb.appendChild(el('tr', null, r.map(function (c, j) { return el('td', { html: inline(c), style: j === 0 ? { width: '36%' } : null }); }))); });
+    b.rows.forEach(function (r) {
+      var tr = el('tr', null, r.map(function (c, j) { return el('td', { html: inline(c), style: j === 0 ? { width: '36%' } : null }); }));
+      tb.appendChild(r.off || offAll ? offRow(tr, offWord || 'sealed') : tr);
+    });
     t.appendChild(tb);
     return t;
   }
@@ -503,7 +549,9 @@
       nodes.push(h);
       var secs = doc.sections.map(function (s) {
         var id = 'eldr-' + slug(s.title.replace(/^[^\w]+/, ''));
-        var node = el('section', { class: 'eldr-card', id: id }, [el('h2', { html: inline(s.title) }), aboutBox(guideFor(ctx, s.title))].concat(s.blocks.map(blockNode)));
+        var node = el('section', { class: 'eldr-card', id: id }, [el('h2', { html: inline(s.title) }), aboutBox(guideFor(ctx, s.title))]
+          .concat(s.blocks.map(function (b) { return blockNode(b, 'sealed', s.off); })));
+        if (s.off) foldOff(node, 'sealed');
         return { s: s, id: id, node: node };
       });
       var search = el('input', { class: 'eldr-search', type: 'search', placeholder: 'Find a command…', 'aria-label': 'Find a command' });
@@ -519,6 +567,7 @@
         })));
       function goTo(x) {
         if (search.value) { search.value = ''; search.dispatchEvent(new Event('input')); }
+        if (x.s.off && !x.node.classList.contains('eldr-open')) { var tg = x.node.querySelector('.eldr-offtoggle'); if (tg) tg.click(); }
         x.node.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
       search.addEventListener('input', function () {
@@ -529,6 +578,7 @@
           var title = x.s.title.toLowerCase().indexOf(q) >= 0;
           if (title && q) x.node.querySelectorAll('tbody tr').forEach(function (tr) { tr.style.display = ''; });
           x.node.style.display = (!q || any || title) ? '' : 'none';
+          x.node.classList.toggle('eldr-peek', !!q && (any || title));   // a folded (switched-off) section opens while it matches
         });
       });
       nodes.push(el('div', { class: 'eldr-jumpbox' }, [nav, jump]), search);
@@ -926,7 +976,8 @@
       var list = d.sounds || [], st = ctx.state;
       var out = [head(ctx.opts, 'Sounds', 'Make the stream scream',
         'Type a sound\'s name in chat to play it on stream. Each one has its own price, cooldown and audience.')];
-      if (d.enabled === false) out.push(el('p', { class: 'eldr-note', text: 'The sound engine is switched off right now. The list below is what plays when it is back.' }));
+      var engineOff = d.enabled === false;
+      if (engineOff) out.push(el('p', { class: 'eldr-note', text: 'The sound engine is silenced right now. Open a group to see what plays when it is back.' }));
       var notes = [];
       if (d.happyHour) notes.push('Happy hour makes Madness prices cheaper (Pacts are never discounted).');
       if (list.some(function (s) { return s.bits > 0; })) notes.push('Cheer bits, send a Super Chat or KICKs with the sound\'s name in the message (like <code>!steven</code>) to play it with money' + (d.moneyAnyTier ? ', whoever you are.' : '.'));
@@ -965,17 +1016,20 @@
             if (pr.base) parts.push(priceText(pr.base));
             Object.keys(pr).forEach(function (k) { if (k !== 'base') parts.push((WHO[k] || k) + ': ' + priceText(pr[k])); });
             var who = (s.who || []).map(function (w) { return WHO[w] || w; }).join(' or ');
-            tb.appendChild(el('tr', { style: s.off ? { opacity: '.55' } : null }, [
-              el('td', null, [el('code', { text: '!' + s.id }), ' ', el('strong', { text: s.label || '' }),
-                (s.aliases || []).length ? el('div', { class: 'eldr-small eldr-muted', text: 'also ' + s.aliases.map(function (a) { return '!' + a; }).join(', ') }) : null,
-                s.off ? el('span', { class: 'eldr-badge red', text: 'silenced' }) : null]),
+            var tr = el('tr', null, [
+              el('td', null, [el('code', { text: '!' + s.id }), ' ', el('strong', { text: s.label || '' }), s.off || engineOff ? offTag('silenced') : null,
+                (s.aliases || []).length ? el('div', { class: 'eldr-small eldr-muted', text: 'also ' + s.aliases.map(function (a) { return '!' + a; }).join(', ') }) : null]),
               el('td', null, [who, s.others ? el('div', { class: 'eldr-small eldr-muted', text: 'Others: unlock for ' + priceText(s.others) }) : null]),
               el('td', null, [parts.join(' · '), s.bits > 0 ? el('div', { class: 'eldr-small eldr-muted', text: 'or cheer ' + num(s.bits) + ' bits' }) : null]),
               el('td', { text: secsText(s.cooldown) })
-            ]));
+            ]);
+            tb.appendChild(s.off || engineOff ? offRow(tr) : tr);
           });
           t.appendChild(tb);
-          box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: g.charAt(0).toUpperCase() + g.slice(1) }), t]));
+          var card = el('section', { class: 'eldr-card' }, [el('h2', { text: g.charAt(0).toUpperCase() + g.slice(1) }), t]);
+          // the whole engine off, or every sound in the group silenced: fold the group to its name (opens while searching)
+          if (engineOff || list.every(function (s) { return (s.group || 'Sounds') !== g || s.off; })) { foldOff(card, 'silenced'); if (q) card.classList.add('eldr-peek'); }
+          box.appendChild(card);
         });
       }
       search.addEventListener('input', function () { st.q = search.value; draw(); });
@@ -1338,12 +1392,18 @@
       cmds.appendChild(el('h2', { text: 'Commands' }));
       cmds.appendChild(blockNode({ type: 'table', head: ['Command', 'What it does'], rows: rows }));
     });
+    // 12 Nov: every effect the Rift can fire (fx.json), dormant ones in red; the whole Rift sealed folds the card
+    var fxP = loadOpt('fx.json');
+    var fxCard = el('section', { class: 'eldr-card', style: { display: 'none' } });
+    top.push(fxCard);
+    fxP.then(function (fx) { if (fx && (fx.effects || []).length) { fxEffects(fxCard, fx); fxCard.style.display = ''; } });
     if (!api) { top.push(el('p', { class: 'eldr-note', text: 'The live shard list appears here once the forge address is set.' })); return top; }
     top.push(riftMine(ctx, api));
-    return fetch(api.replace(/\/+$/, '') + '/web/rift', { cache: 'no-store', credentials: 'omit' })
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
+    return Promise.all([fetch(api.replace(/\/+$/, '') + '/web/rift', { cache: 'no-store', credentials: 'omit' }).then(function (r) { return r.json(); }), fxP])
+      .then(function (res) {
+        var d = res[0], fx = res[1] || {}, dormant = {};
         if (!d || !d.ok) throw new Error('no data');
+        (fx.effects || []).forEach(function (e) { if (e.off || fx.enabled === false) dormant[e.id] = true; });
         var out = top.slice(), st = ctx.state;
         if (d.sealed && d.sealed.total) {
           out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Still sealed' }),
@@ -1366,11 +1426,12 @@
           t.appendChild(el('thead', null, el('tr', null, ['Shard', 'Tier', 'Held', 'Holders'].map(function (x) { return el('th', { text: x }); }))));
           var tb = el('tbody');
           rows.forEach(function (e) {
-            tb.appendChild(el('tr', null, [
-              el('td', { 'data-l': 'Shard' }, [el('strong', { text: e.label }), el('div', { class: 'eldr-muted eldr-small' }, el('code', { text: '!fx ' + e.id }))]),
+            var tr = el('tr', null, [
+              el('td', { 'data-l': 'Shard' }, [el('strong', { text: e.label }), dormant[e.id] ? offTag('dormant') : null, el('div', { class: 'eldr-muted eldr-small' }, el('code', { text: '!fx ' + e.id }))]),
               el('td', { 'data-l': 'Tier' }, [e.tier === 'eldritch' ? 'Eldritch' : 'Pact', e.drawable ? null : el('div', { class: 'eldr-small eldr-muted', text: 'not drawn' })]),
               el('td', { 'data-l': 'Held', text: num(e.held) }),
-              el('td', { 'data-l': 'Holders', text: (e.holders || []).map(function (h) { return h.name + (h.qty > 1 ? ' ×' + h.qty : ''); }).join(', ') || '—' })]));
+              el('td', { 'data-l': 'Holders', text: (e.holders || []).map(function (h) { return h.name + (h.qty > 1 ? ' ×' + h.qty : ''); }).join(', ') || '—' })]);
+            tb.appendChild(dormant[e.id] ? offRow(tr) : tr);
           });
           t.appendChild(tb); box.appendChild(t);
         }
@@ -1379,6 +1440,35 @@
         return out.concat(foot(d.updated));
       })
       .catch(function () { return top.concat([el('p', { class: 'eldr-note', text: 'The rift is quiet right now (the forge may be offline). The list comes back by itself.' })]); });
+  }
+
+  // ------------------------------------------------------------------ 12 Nov: the Rift's effects, what is dormant right now
+  var FX_KIND = { visual: 'On screen', sound: 'A sound', input: 'In the game' };
+  function fxEffects(card, fx) {
+    var sealed = fx.enabled === false, groups = [], by = {};
+    fx.effects.forEach(function (e) { var g = e.group || 'Effects'; if (!by[g]) { by[g] = []; groups.push(g); } by[g].push(e); });
+    card.appendChild(el('h2', { text: 'Every effect' }));
+    card.appendChild(el('p', { class: 'eldr-note', html: sealed
+      ? 'The Rift is <strong>sealed</strong> right now: no effect can be fired until it opens again.'
+      : 'Fire any of these with <code>!fx &lt;name&gt;</code>. Ones marked <strong>dormant</strong> are switched off for now.' }));
+    groups.forEach(function (g) {
+      card.appendChild(el('h3', { text: g.charAt(0).toUpperCase() + g.slice(1) }));
+      var t = el('table', { class: 'stack' });
+      t.appendChild(el('thead', null, el('tr', null, ['Effect', 'Costs', 'Where'].map(function (x) { return el('th', { text: x }); }))));
+      var tb = el('tbody');
+      by[g].forEach(function (e) {
+        var cost = [e.tier === 'eldritch' ? 'An Eldritch Pact' : 'A Pact'];
+        if (e.ritual > 1) cost = [e.ritual + ' viewers, ' + (e.tier === 'eldritch' ? 'an Eldritch Pact' : 'a Pact') + ' each'];
+        var tr = el('tr', null, [
+          el('td', { 'data-l': 'Effect', style: { width: '40%' } }, [el('strong', { text: e.label }), e.off || sealed ? offTag('dormant') : null,
+            el('div', { class: 'eldr-muted eldr-small' }, el('code', { text: '!fx ' + e.id }))]),
+          el('td', { 'data-l': 'Costs' }, [cost[0], e.cult ? el('div', { class: 'eldr-small eldr-muted', text: 'Only for the faithful of ' + e.cult.charAt(0).toUpperCase() + e.cult.slice(1) }) : null]),
+          el('td', { 'data-l': 'Where', text: (e.kind || []).map(function (k) { return FX_KIND[k] || k; }).join(' + ') })]);
+        tb.appendChild(e.off || sealed ? offRow(tr) : tr);
+      });
+      t.appendChild(tb); card.appendChild(t);
+    });
+    if (sealed) foldOff(card, 'sealed');
   }
 
   // ------------------------------------------------------------------ 12 Nov: your own shards, and opening sealed ones
