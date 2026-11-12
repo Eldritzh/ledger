@@ -348,7 +348,7 @@ On Twitch, prophecies also appear as a **Twitch prediction** (bet Sanity there) 
 |---|---|
 | `!expedition 1000` | Send your dreamer into the Dreamlands. Speak in chat after about 12 hours to hear what they found |
 | `!haunt @user <message>` | 1 Pact: a whisper that finds them the next time they speak |
-| `!riddle` / `!riddle hint` | The lore riddle hanging in the air. Type the answer in chat. A dreamer who Seeks sometimes brings back a **riddle hint**: `!riddle hint` while a riddle is open tells you the answer's length and first letter |
+| {off} `!riddle` / `!riddle hint` | The lore riddle hanging in the air. Type the answer in chat. A dreamer who Seeks sometimes brings back a **riddle hint**: `!riddle hint` while a riddle is open tells you the answer's length and first letter |
 | `Iä! Iä!` | Chant the old words in chat. When enough voices chant together, something answers |
 | `!story` | The Eldritch Ledger, the community's story. New pages unlock as you play |
 | `!story goals` | The three sealed pages closest to opening, and how far along each is |
@@ -374,7 +374,7 @@ On Twitch, prophecies also appear as a **Twitch prediction** (bet Sanity there) 
 
 Over a hundred fish in 25 waters, some straight from Booty Bay, Skyrim, the Lost River or the Devil's Roar. Every fish has a quality (Fine, Choice, Prime) and a weight, from a 20 g sprat to things that don't fit the boat. Supporting the stream (bits, subs, gifts, tips) comes with free bait. Some come up **Aberrant**. Each water has a Legendary. When **the Wreckage** drifts in from the fog, every cast hauls up something from the *Alert* as well.
 
-## 🌌 The Stars Are Right
+## 🌌 The Stars Are Right {off}
 | Command | What it does |
 |---|---|
 | `!strike 500` | When a Great Old One rises, strike it with Madness (or `!strike pact`). Chatting, banishing, feeding, bits and subs all hurt it too |
