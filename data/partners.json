@@ -1,10 +1,11 @@
 {
-  "updated": "2026-11-09T22:17:32Z",
+  "updated": "2026-11-12T10:15:29Z",
   "partners": [
     {
       "id": "dreadmoor",
       "name": "DREADMOOR",
       "label": "Ad",
+      "type": "ad",
       "blurb": "Dark first-person fishing adventure set in a submerged world.",
       "link": "https://store.steampowered.com/app/3629430/DREADMOOR/",
       "logo": "logos/dreadmoor-bc702a5d.png",
@@ -19,6 +20,7 @@
       "id": "g-portal",
       "name": "G-Portal",
       "label": "Partner",
+      "type": "ad",
       "blurb": "Save 10% on game servers and support the stream!",
       "link": "https://www.g-portal.com/?ref=Eldritzh",
       "logo": "logos/g-portal-435e9c9c.png",
@@ -33,6 +35,7 @@
       "id": "wehype",
       "name": "Wehype",
       "label": "Affiliate",
+      "type": "ad",
       "blurb": "Buy games and DLCs at great prices while supporting the stream!",
       "link": "https://eldritzh.wehype.app",
       "logo": "logos/wehype-668b263b.png",
