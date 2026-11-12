@@ -1,15 +1,15 @@
 {
-  "updated": "2026-11-12T20:34:05.6606442Z",
+  "updated": "2026-11-12T21:20:28.8876057Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 67,
+    "checkins": 68,
     "fed": 1397946,
     "tsath_fills": 11,
-    "messages": 525,
+    "messages": 550,
     "banishes": 49,
     "delve_bottoms": 2,
     "sunwait_candles": 1,
@@ -21,17 +21,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 7,
+    "stream:checkins": 8,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
     "sum:goblins_grabbed": 3,
     "sum:hg_challenges_held": 0,
-    "count:streams_attended": 24,
-    "stream:messages": 50,
+    "count:streams_attended": 25,
+    "stream:messages": 75,
     "sum:circle_top": 0,
     "stream:banishes": 2,
-    "@moon": 68,
+    "@moon": 75,
     "kinds:beings_seen": 13,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 44.7,
+      "pct": 45.3,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 67,
+          "have": 68,
           "need": 150
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 46.7,
+      "pct": 53.3,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 7,
+          "have": 8,
           "need": 15
         }
       ],
@@ -193,22 +193,22 @@
       "wait": ""
     },
     "census": {
-      "pct": 24.0,
+      "pct": 25.0,
       "parts": [
         {
           "label": "One hundred different souls sign the Ledger",
-          "have": 24,
+          "have": 25,
           "need": 100
         }
       ],
       "wait": ""
     },
     "vigil": {
-      "pct": 20.0,
+      "pct": 30.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 50,
+          "have": 75,
           "need": 250
         }
       ],
@@ -226,11 +226,11 @@
       "wait": ""
     },
     "moon": {
-      "pct": 68.8,
+      "pct": 75.0,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 7,
+          "have": 8,
           "need": 8
         },
         {
@@ -450,11 +450,11 @@
       "wait": ""
     },
     "hand": {
-      "pct": 6.1,
+      "pct": 6.3,
       "parts": [
         {
           "label": "Signatures",
-          "have": 67,
+          "have": 68,
           "need": 2500
         },
         {
@@ -469,7 +469,7 @@
         },
         {
           "label": "Souls",
-          "have": 24,
+          "have": 25,
           "need": 200
         }
       ],
