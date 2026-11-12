@@ -24,9 +24,19 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.7.1';
+  var VERSION = '1.8.0';
 
   // ------------------------------------------------------------------ tiny helpers
+  // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
+  function boonBane(text) {
+    var t = String(text || ''), m = t.split(/[.,;:]?\s*\bBanes?:\s*/);
+    if (m.length < 2) return el('div', { class: 'eldr-small', text: t });
+    var good = m[0].replace(/[.,;\s]+$/, ''), bad = m.slice(1).join(' ').replace(/[.\s]+$/, '');
+    return el('div', { class: 'eldr-small' }, [
+      el('div', null, [el('strong', { text: 'Good at: ' }), good.charAt(0).toUpperCase() + good.slice(1) + '.']),
+      el('div', { class: 'eldr-muted' }, [el('strong', { text: 'Bad at: ' }), bad.charAt(0).toUpperCase() + bad.slice(1) + '.'])]);
+  }
+
   function el(tag, attrs, kids) {
     var n = document.createElement(tag);
     if (attrs) for (var k in attrs) {
@@ -1974,13 +1984,13 @@
           var linCard = function (o) {
             return el('article', { class: 'ci' }, [
               el('h3', null, [o.name, o.locked ? el('span', { class: 'eldr-badge', style: { marginLeft: '8px' }, text: 'Behind a deed' }) : null]),
-              el('div', { class: 'eldr-small', text: o.text }),
+              boonBane(o.text),
               (o.stages || []).length ? el('div', { class: 'eldr-small eldr-muted', text: 'In time: ' + o.stages.map(function (s) { return s.name + ' at level ' + s.level; }).join(', ') + '.' }) : null,
               o.locked && o.open ? el('div', { class: 'eldr-small eldr-muted', text: 'To open it: ' + String(o.open).replace(/\s*\(!rebirth\)/, '') + '.' }) : null]);
           };
           var here = lins.filter(function (o) { return !o.otherworld; }), other = lins.filter(function (o) { return o.otherworld; });
           box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Lineages' }),
-            el('p', { html: 'What your investigator is, under the skin. One at a time, a small gift that is always on: <code>!lineage &lt;name&gt;</code> (in Discord: <code>/lineage</code>). Some only open after a deed, and a few change their name as you level; the gift stays the same.' }),
+            el('p', { html: 'What your investigator is, under the skin. Every lineage is good at some things and bad at others, the way that blood would be: in descents, raids and the Delve, against certain foes and with certain weapons, in banishing, and at the water. One at a time: <code>!lineage &lt;name&gt;</code>, and <code>!lineage info &lt;name&gt;</code> says it in full (in Discord: <code>/lineage</code>, <code>/lineage info:</code>). Some only open after a deed, and a few change their name as you level; what they are good and bad at stays the same.' }),
             el('div', { class: 'eldr-grid' }, here.map(linCard))]));
           if (other.length) box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Otherworlders' }),
             el('p', { class: 'eldr-muted eldr-small', text: 'They came through the Rift, like much else.' }),
@@ -1989,9 +1999,10 @@
             el('p', { html: 'Apart from all that, you can tell the ledger who you are, if you want to: <code>!identity</code> and <code>!pronouns</code> (in Discord: <code>/identity</code>, <code>/pronouns</code>). It changes nothing in play, it costs nothing, and you can change it or take it back whenever you like. <code>!character</code> shows your whole investigator.' })]));
         } else if (st.tab === 'occupations') {
           var grid = el('div', { class: 'eldr-grid' });
-          occs.forEach(function (o) { grid.appendChild(el('article', { class: 'ci' }, [el('h3', { text: o.name }), el('div', { class: 'eldr-small', text: o.text })])); });
+          occs.forEach(function (o) { grid.appendChild(el('article', { class: 'ci' }, [el('h3', { text: o.name }), boonBane(o.text)])); });
           box.appendChild(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Occupations' }),
-            el('p', { html: 'What your investigator did before the dark found them. One at a time, a small gift that is always on: <code>!occupation &lt;name&gt;</code> (in Discord: <code>/occupation</code>).' }), grid]));
+            el('p', { html: 'What your investigator did before the dark found them. A trade has its strengths and its blind spots: each occupation is good at some fights, foes and waters and bad at others. One at a time: <code>!occupation &lt;name&gt;</code>, and <code>!occupation info &lt;name&gt;</code> says it in full (in Discord: <code>/occupation</code>, <code>/occupation info:</code>).' }),
+            el('p', { class: 'eldr-muted eldr-small', text: 'Your occupation and your lineage add up, and your talents come on top. Since 12 November everyone may change each once for free.' }), grid]));
         } else if (st.tab === 'board') {
           if (!board.length) { box.appendChild(empty('Nobody has earned XP yet.')); return; }
           var t = el('table', { class: 'stack cx-top' }), tb = el('tbody');
