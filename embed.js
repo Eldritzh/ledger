@@ -24,7 +24,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.7.0';
+  var VERSION = '1.7.1';
 
   // ------------------------------------------------------------------ tiny helpers
   function el(tag, attrs, kids) {
@@ -1308,13 +1308,26 @@
     var top = [head(ctx.opts, 'Rift Shards', 'Hold the tear in your hand',
       'Shards are effects you keep for later: get one now, fire it on stream whenever you like with !fx and its name.')];
     var how = el('section', { class: 'eldr-card' }, [el('h2', { text: 'How it works' }), el('ul', null, [
-      'You gain <strong>sealed shards</strong> from bits, subs, gifted subs, memberships, Super Chats, KICKs, Ko-fi and the shop (one per ~2.50 €), from hype trains, the Merchant and some achievements.',
-      '<code>!shard open</code> cracks them and tells you which effect each one holds. In Discord: <code>/shard open</code>. Or right here, under <strong>Your shards</strong>.',
-      '<code>!fx &lt;name&gt;</code> fires a shard you hold instead of costing a Pact. Cooldowns, Elder Sign seals and the line still apply when you use it; if chat seals it, you get the shard back.',
-      '<code>!shard</code> buys one for a Pact. <code>!shard eldritch</code> pours an Eldritch Pact in for three from a darker pool, or choose: <code>!shard eldritch eclipse</code> (one Eldritch shard) or <code>!shard eldritch eye croak</code> (two Pact shards).',
-      '<code>!shard give &lt;name&gt; &lt;effect&gt;</code> hands one to someone else. <code>!shards</code> shows what you hold.'
+      '<strong>Get sealed shards</strong>: buy one with <code>!shard</code> (a Pact), or gain them from bits, subs, gifted subs, memberships, Super Chats, KICKs, Ko-fi and the shop (one per ~2.50 €), hype trains, the Merchant and some achievements.',
+      '<strong>Open them</strong> when you like: <code>!shard open</code> in chat, <code>/shard open</code> in Discord, or right here under <strong>Your shards</strong>. Each one shows which effect it holds.',
+      '<strong>Fire one</strong> on stream with <code>!fx &lt;name&gt;</code>: an opened shard pays instead of a Pact. Cooldowns, Elder Sign seals and the line still apply; if chat seals it, you get the shard back.'
     ].map(function (h) { return el('li', { html: h }); }))]);
     top.push(how);
+    // 12 Nov: the command list comes from commands.md (the Effects, Support & Patrons rows that touch shards or !fx),
+    // so this page and the Commands page can't drift apart again.
+    var cmds = el('section', { class: 'eldr-card' });
+    top.push(cmds);
+    loadOpt('commands.md', true).then(function (md) {
+      var rows = [];
+      parseMd(md || '').sections.forEach(function (sec) {
+        sec.blocks.forEach(function (b) {
+          if (b.type === 'table') b.rows.forEach(function (r) { if (/!fx|!shard|\/shard|!seal\b|!rend/i.test(r[0] || '')) rows.push(r); });
+        });
+      });
+      if (!rows.length) return;
+      cmds.appendChild(el('h2', { text: 'Commands' }));
+      cmds.appendChild(blockNode({ type: 'table', head: ['Command', 'What it does'], rows: rows }));
+    });
     if (!api) { top.push(el('p', { class: 'eldr-note', text: 'The live shard list appears here once the forge address is set.' })); return top; }
     top.push(riftMine(ctx, api));
     return fetch(api.replace(/\/+$/, '') + '/web/rift', { cache: 'no-store', credentials: 'omit' })
