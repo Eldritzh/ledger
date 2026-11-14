@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12T21:30:39Z",
+  "updated": "2026-11-14T19:01:54Z",
   "partners": [
     {
       "id": "dreadmoor",
@@ -14,13 +14,7 @@
         "!dreadmoor",
         "!dread"
       ],
-      "circles": [],
-      "giveaway": {
-        "status": "locked",
-        "prize": "Dreadmoor steam key",
-        "enter": "!dreadmoor",
-        "terms": ""
-      }
+      "circles": []
     },
     {
       "id": "g-portal",
