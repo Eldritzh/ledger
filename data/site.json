@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-14T22:44:26Z",
+  "updated": "2026-11-14T22:59:28Z",
   "version": "1.4.0",
   "reason": "routine",
   "files": {
@@ -12,7 +12,7 @@
     "commands.md": "2026-11-12T22:06:23Z",
     "guide.md": "2026-11-12T15:01:53Z",
     "sounds.json": "2026-11-04T19:52:27Z",
-    "bestiary.json": "2026-11-11T19:18:05Z",
+    "bestiary.json": "2026-11-14T22:59:28Z",
     "congregation.json": "2026-11-14T22:44:26Z",
     "order.json": "2026-11-14T22:19:34Z",
     "remembrance.json": "2026-11-05T19:10:46Z",
