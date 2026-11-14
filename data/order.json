@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-14T19:58:57Z",
+  "updated": "2026-11-14T22:18:54Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -268,7 +268,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 5,
-      "rep": 856,
+      "rep": 871,
       "astray": false
     },
     {
@@ -278,7 +278,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 4,
-      "rep": 700,
+      "rep": 748,
       "astray": false
     },
     {
@@ -288,17 +288,17 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 4,
-      "rep": 648,
+      "rep": 658,
       "astray": false
     },
     {
       "name": "datduckhs",
       "platform": "twitch",
-      "rank": 1,
-      "rankName": "Seeker",
+      "rank": 2,
+      "rankName": "Listener",
       "circle": 1,
       "days": 3,
-      "rep": 500,
+      "rep": 600,
       "astray": false
     },
     {
@@ -308,7 +308,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 3,
-      "rep": 401,
+      "rep": 426,
       "astray": false
     },
     {
@@ -398,7 +398,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
-      "rep": 100,
+      "rep": 130,
       "astray": false
     }
   ]
