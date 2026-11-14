@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-14T20:44:12Z",
+  "updated": "2026-11-14T20:59:13Z",
   "version": "1.4.0",
   "reason": "routine",
   "files": {
@@ -7,7 +7,7 @@
     "story_state.json": "2026-11-14T20:44:12Z",
     "pacts.json": "2026-11-14T19:14:03Z",
     "circles.json": "2026-11-14T19:29:04Z",
-    "codex.json": "2026-11-14T20:44:12Z",
+    "codex.json": "2026-11-14T20:59:13Z",
     "partners.json": "2026-11-14T19:14:03Z",
     "commands.md": "2026-11-12T22:06:23Z",
     "guide.md": "2026-11-12T15:01:53Z",
@@ -16,13 +16,13 @@
     "congregation.json": "2026-11-14T20:14:09Z",
     "order.json": "2026-11-14T19:59:07Z",
     "remembrance.json": "2026-11-05T19:10:46Z",
-    "investigator.json": "2026-11-14T20:44:12Z",
-    "fishing.json": "2026-11-14T20:44:12Z",
+    "investigator.json": "2026-11-14T20:59:13Z",
+    "fishing.json": "2026-11-14T20:59:13Z",
     "patchnotes.md": "2026-11-12T19:06:07Z",
     "about.md": "2026-11-12T10:57:17Z",
     "nav.json": "2026-11-11T19:45:51Z",
-    "covenant.json": "2026-11-14T20:44:12Z",
-    "people.json": "2026-11-14T20:44:12Z",
+    "covenant.json": "2026-11-14T20:59:13Z",
+    "people.json": "2026-11-14T20:59:13Z",
     "fx.json": "2026-11-12T22:06:23Z"
   },
   "staffApi": "https://forge-web.warden.se"
