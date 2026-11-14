@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-14T21:00:56.5441337Z",
+  "updated": "2026-11-14T21:15:22.9764812Z",
   "unlocked": [
     "toad",
     "margins",
@@ -10,7 +10,7 @@
     "fed": 1578810,
     "tsath_fills": 11,
     "messages": 650,
-    "banishes": 51,
+    "banishes": 52,
     "delve_bottoms": 3,
     "sunwait_candles": 1,
     "chants": 0,
@@ -30,9 +30,9 @@
     "count:streams_attended": 26,
     "stream:messages": 75,
     "sum:circle_top": 0,
-    "stream:banishes": 2,
-    "@moon": 62,
-    "kinds:beings_seen": 13,
+    "stream:banishes": 3,
+    "@moon": 75,
+    "kinds:beings_seen": 14,
     "pacts": 0,
     "sunwait_unseen": 0,
     "prophecies": 0,
@@ -226,7 +226,7 @@
       "wait": ""
     },
     "moon": {
-      "pct": 62.5,
+      "pct": 75.0,
       "parts": [
         {
           "label": "Souls signed tonight",
@@ -235,18 +235,18 @@
         },
         {
           "label": "Beings banished tonight",
-          "have": 2,
+          "have": 3,
           "need": 4
         }
       ],
       "wait": "only during a Moon Night"
     },
     "bestiary": {
-      "pct": 86.7,
+      "pct": 93.3,
       "parts": [
         {
           "label": "Banish 15 different kinds of Being",
-          "have": 13,
+          "have": 14,
           "need": 15
         }
       ],
@@ -450,7 +450,7 @@
       "wait": ""
     },
     "hand": {
-      "pct": 6.5,
+      "pct": 6.6,
       "parts": [
         {
           "label": "Signatures",
@@ -459,7 +459,7 @@
         },
         {
           "label": "Banishments",
-          "have": 51,
+          "have": 52,
           "need": 500
         },
         {
