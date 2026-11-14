@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-14T22:19:34Z",
+  "updated": "2026-11-14T22:44:26Z",
   "version": "1.4.0",
-  "reason": "stream end",
+  "reason": "routine",
   "files": {
     "story_chapters.json": "2026-11-04T19:52:27Z",
     "story_state.json": "2026-11-14T22:09:22Z",
@@ -13,7 +13,7 @@
     "guide.md": "2026-11-12T15:01:53Z",
     "sounds.json": "2026-11-04T19:52:27Z",
     "bestiary.json": "2026-11-11T19:18:05Z",
-    "congregation.json": "2026-11-14T21:44:19Z",
+    "congregation.json": "2026-11-14T22:44:26Z",
     "order.json": "2026-11-14T22:19:34Z",
     "remembrance.json": "2026-11-05T19:10:46Z",
     "investigator.json": "2026-11-14T22:19:34Z",
