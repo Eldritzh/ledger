@@ -2,6 +2,19 @@
 
 *What's new on the stream, in Discord and on this site. Newest first.*
 
+## 15 November 2026
+
+### Changed
+- **Banishing pays far more.** Every Being now gives about ten times the Madness it used to, and twice the Ichor.
+- **Elites pay properly.** Everyone who fights an Elite now gets 1,000 to 3,500 Madness (it was 100 to 250). Rare Elites pay double that, and the fiercest fighter against a Rare Elite also earns a Pact.
+- **Chatting pays more.** Every chat message now gives 15 Madness, up from 5.
+- **Tsathoggua isn't so hungry.** His appetite had grown into the hundreds of thousands. He's back to 5,000 to fill. Fill him two streams in a row and he still wakes up hungrier, but now only three times as hungry (it was five), and after that he grows 5% per fill (it was 10%). Careful with `!feed all`: it really does feed him everything you have.
+- **Night Fishing costs less while you learn.** The price of a cast now follows your Fishing skill: a new angler pays only a tenth of it, and the price climbs as your skill grows, up to the full price at the top.
+
+### Fixed
+- A giveaway of Eldritzh's own no longer shows a sponsor's *Ad* tag left over from an earlier sponsored giveaway.
+- Mods could not give out Madness with `!bestow`. It works again.
+
 ## 12 November 2026
 
 ### New
