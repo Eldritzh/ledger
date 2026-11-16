@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-16T20:31:57Z",
+  "updated": "2026-11-16T21:01:57Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -268,7 +268,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 6,
-      "rep": 971,
+      "rep": 985,
       "astray": false
     },
     {
@@ -278,7 +278,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 5,
-      "rep": 848,
+      "rep": 893,
       "astray": false
     },
     {
@@ -288,7 +288,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 4,
-      "rep": 700,
+      "rep": 800,
       "astray": false
     },
     {
@@ -308,7 +308,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 4,
-      "rep": 526,
+      "rep": 566,
       "astray": false
     },
     {
@@ -328,7 +328,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 2,
-      "rep": 300,
+      "rep": 336,
       "astray": false
     },
     {
@@ -339,6 +339,16 @@
       "circle": 1,
       "days": 2,
       "rep": 350,
+      "astray": false
+    },
+    {
+      "name": "marcomandy",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 2,
+      "rep": 245,
       "astray": false
     },
     {
@@ -372,16 +382,6 @@
       "astray": false
     },
     {
-      "name": "marcomandy",
-      "platform": "twitch",
-      "rank": 1,
-      "rankName": "Seeker",
-      "circle": 1,
-      "days": 1,
-      "rep": 133,
-      "astray": false
-    },
-    {
       "name": "SeppeLaury",
       "platform": "twitch",
       "rank": 1,
@@ -408,7 +408,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
-      "rep": 100,
+      "rep": 131,
       "astray": false
     }
   ]
