@@ -24,7 +24,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.10.0';
+  var VERSION = '1.11.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -868,7 +868,13 @@
         grid.appendChild(el('article', { class: 'pt' }, [
           plate,
           row,
-          el('div', { class: 'eldr-row' }, [el('h3', { text: p.name }), el('span', { class: 'eldr-badge', text: p.label || 'Ad' })]),
+          el('div', { class: 'eldr-row' }, [
+            el('h3', { text: p.name }),
+            el('div', { style: { display: 'flex', gap: '6px', flexWrap: 'wrap' } }, [
+              p.label && p.label.trim().toLowerCase() !== 'ad' ? el('span', { class: 'eldr-badge gold', text: p.label }) : null,
+              el('span', { class: 'eldr-badge', text: 'Ad' })
+            ])
+          ]),
           p.blurb ? el('p', { text: p.blurb, style: { margin: 0 } }) : null,
           (p.codes || []).length ? el('div', { class: 'cd' }, p.codes.map(function (c) {
             return el('span', null, [el('code', { text: c.code }), c.text ? ' ' + c.text : '', c.expires ? el('span', { class: 'eldr-muted eldr-small', text: ' until ' + day(c.expires) }) : null]);
