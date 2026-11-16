@@ -1,19 +1,19 @@
 {
-  "updated": "2026-11-16T20:14:43.5531160Z",
+  "updated": "2026-11-16T20:26:05.8878840Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 79,
+    "checkins": 80,
     "fed": 1638739,
     "tsath_fills": 13,
-    "messages": 700,
-    "banishes": 54,
+    "messages": 725,
+    "banishes": 55,
     "delve_bottoms": 3,
     "sunwait_candles": 1,
-    "deaths": 3,
+    "deaths": 4,
     "chants": 0,
     "rituals": 0,
     "expeditions": 0,
@@ -21,17 +21,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 5,
+    "stream:checkins": 6,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
-    "sum:goblins_grabbed": 4,
+    "sum:goblins_grabbed": 6,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
-    "stream:messages": 25,
+    "stream:messages": 50,
     "sum:circle_top": 0,
-    "stream:banishes": 1,
-    "@moon": 43,
+    "stream:banishes": 2,
+    "@moon": 62,
     "kinds:beings_seen": 14,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 52.7,
+      "pct": 53.3,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 79,
+          "have": 80,
           "need": 150
         }
       ],
@@ -72,11 +72,11 @@
       "wait": ""
     },
     "deaths": {
-      "pct": 3.0,
+      "pct": 4.0,
       "parts": [
         {
           "label": "The Keeper must fall 100 times",
-          "have": 3,
+          "have": 4,
           "need": 100
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 33.3,
+      "pct": 40.0,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 5,
+          "have": 6,
           "need": 15
         }
       ],
@@ -171,11 +171,11 @@
       "wait": ""
     },
     "goblins": {
-      "pct": 16.0,
+      "pct": 24.0,
       "parts": [
         {
           "label": "Grab 25 treasure goblins",
-          "have": 4,
+          "have": 6,
           "need": 25
         }
       ],
@@ -204,11 +204,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 10.0,
+      "pct": 20.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 25,
+          "have": 50,
           "need": 250
         }
       ],
@@ -226,16 +226,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 43.8,
+      "pct": 62.5,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 5,
+          "have": 6,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 1,
+          "have": 2,
           "need": 4
         }
       ],
@@ -368,11 +368,11 @@
       "wait": ""
     },
     "graves": {
-      "pct": 0.6,
+      "pct": 0.8,
       "parts": [
         {
           "label": "The Keeper must fall 500 times",
-          "have": 3,
+          "have": 4,
           "need": 500
         }
       ],
@@ -450,16 +450,16 @@
       "wait": ""
     },
     "hand": {
-      "pct": 6.7,
+      "pct": 6.8,
       "parts": [
         {
           "label": "Signatures",
-          "have": 79,
+          "have": 80,
           "need": 2500
         },
         {
           "label": "Banishments",
-          "have": 54,
+          "have": 55,
           "need": 500
         },
         {
