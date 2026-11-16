@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16T19:32:03.9869639Z",
+  "updated": "2026-11-16T19:40:04.4734483Z",
   "unlocked": [
     "toad",
     "margins",
@@ -9,8 +9,8 @@
     "checkins": 77,
     "fed": 1638739,
     "tsath_fills": 13,
-    "messages": 675,
-    "banishes": 53,
+    "messages": 700,
+    "banishes": 54,
     "delve_bottoms": 3,
     "sunwait_candles": 1,
     "deaths": 2,
@@ -28,10 +28,10 @@
     "sum:goblins_grabbed": 3,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
-    "stream:messages": 0,
+    "stream:messages": 25,
     "sum:circle_top": 0,
-    "stream:banishes": 0,
-    "@moon": 18,
+    "stream:banishes": 1,
+    "@moon": 31,
     "kinds:beings_seen": 14,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -204,11 +204,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 0.0,
+      "pct": 10.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 0,
+          "have": 25,
           "need": 250
         }
       ],
@@ -226,7 +226,7 @@
       "wait": ""
     },
     "moon": {
-      "pct": 18.8,
+      "pct": 31.2,
       "parts": [
         {
           "label": "Souls signed tonight",
@@ -235,7 +235,7 @@
         },
         {
           "label": "Beings banished tonight",
-          "have": 0,
+          "have": 1,
           "need": 4
         }
       ],
@@ -459,7 +459,7 @@
         },
         {
           "label": "Banishments",
-          "have": 53,
+          "have": 54,
           "need": 500
         },
         {
