@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16T20:26:05.8878840Z",
+  "updated": "2026-11-16T20:41:58.3978959Z",
   "unlocked": [
     "toad",
     "margins",
@@ -10,10 +10,10 @@
     "fed": 1638739,
     "tsath_fills": 13,
     "messages": 725,
-    "banishes": 55,
+    "banishes": 56,
     "delve_bottoms": 3,
     "sunwait_candles": 1,
-    "deaths": 4,
+    "deaths": 5,
     "chants": 0,
     "rituals": 0,
     "expeditions": 0,
@@ -25,13 +25,13 @@
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
-    "sum:goblins_grabbed": 6,
+    "sum:goblins_grabbed": 9,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
     "stream:messages": 50,
     "sum:circle_top": 0,
-    "stream:banishes": 2,
-    "@moon": 62,
+    "stream:banishes": 3,
+    "@moon": 75,
     "kinds:beings_seen": 14,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -72,11 +72,11 @@
       "wait": ""
     },
     "deaths": {
-      "pct": 4.0,
+      "pct": 5.0,
       "parts": [
         {
           "label": "The Keeper must fall 100 times",
-          "have": 4,
+          "have": 5,
           "need": 100
         }
       ],
@@ -171,11 +171,11 @@
       "wait": ""
     },
     "goblins": {
-      "pct": 24.0,
+      "pct": 36.0,
       "parts": [
         {
           "label": "Grab 25 treasure goblins",
-          "have": 6,
+          "have": 9,
           "need": 25
         }
       ],
@@ -226,7 +226,7 @@
       "wait": ""
     },
     "moon": {
-      "pct": 62.5,
+      "pct": 75.0,
       "parts": [
         {
           "label": "Souls signed tonight",
@@ -235,7 +235,7 @@
         },
         {
           "label": "Beings banished tonight",
-          "have": 2,
+          "have": 3,
           "need": 4
         }
       ],
@@ -368,11 +368,11 @@
       "wait": ""
     },
     "graves": {
-      "pct": 0.8,
+      "pct": 1.0,
       "parts": [
         {
           "label": "The Keeper must fall 500 times",
-          "have": 4,
+          "have": 5,
           "need": 500
         }
       ],
@@ -459,7 +459,7 @@
         },
         {
           "label": "Banishments",
-          "have": 55,
+          "have": 56,
           "need": 500
         },
         {
