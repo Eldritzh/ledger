@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-16T19:32:24Z",
+  "updated": "2026-11-16T20:01:57Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -399,6 +399,16 @@
       "circle": 1,
       "days": 1,
       "rep": 130,
+      "astray": false
+    },
+    {
+      "name": "vikingbear89",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
       "astray": false
     }
   ]

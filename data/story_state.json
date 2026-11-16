@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-16T19:40:04.4734483Z",
+  "updated": "2026-11-16T19:48:52.8147482Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 77,
+    "checkins": 78,
     "fed": 1638739,
     "tsath_fills": 13,
     "messages": 700,
@@ -21,17 +21,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 3,
+    "stream:checkins": 4,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
-    "sum:goblins_grabbed": 3,
+    "sum:goblins_grabbed": 4,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
     "stream:messages": 25,
     "sum:circle_top": 0,
     "stream:banishes": 1,
-    "@moon": 31,
+    "@moon": 37,
     "kinds:beings_seen": 14,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 51.3,
+      "pct": 52.0,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 77,
+          "have": 78,
           "need": 150
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 20.0,
+      "pct": 26.7,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 3,
+          "have": 4,
           "need": 15
         }
       ],
@@ -171,11 +171,11 @@
       "wait": ""
     },
     "goblins": {
-      "pct": 12.0,
+      "pct": 16.0,
       "parts": [
         {
           "label": "Grab 25 treasure goblins",
-          "have": 3,
+          "have": 4,
           "need": 25
         }
       ],
@@ -226,11 +226,11 @@
       "wait": ""
     },
     "moon": {
-      "pct": 31.2,
+      "pct": 37.5,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 3,
+          "have": 4,
           "need": 8
         },
         {
@@ -454,7 +454,7 @@
       "parts": [
         {
           "label": "Signatures",
-          "have": 77,
+          "have": 78,
           "need": 2500
         },
         {
