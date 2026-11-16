@@ -1,14 +1,14 @@
 {
-  "updated": "2026-11-16T18:52:35Z",
+  "updated": "2026-11-16T19:00:40Z",
   "version": "1.4.0",
-  "reason": "routine",
+  "reason": "!web push",
   "files": {
     "story_chapters.json": "2026-11-04T19:52:27Z",
     "story_state.json": "2026-11-14T22:09:22Z",
     "pacts.json": "2026-11-16T18:52:35Z",
     "circles.json": "2026-11-16T18:52:35Z",
     "codex.json": "2026-11-14T22:19:34Z",
-    "partners.json": "2026-11-14T19:14:03Z",
+    "partners.json": "2026-11-16T19:00:40Z",
     "commands.md": "2026-11-12T22:06:23Z",
     "guide.md": "2026-11-12T15:01:53Z",
     "sounds.json": "2026-11-04T19:52:27Z",
