@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-16T19:17:26Z",
+  "updated": "2026-11-16T19:32:24Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -322,6 +322,16 @@
       "astray": false
     },
     {
+      "name": "plommonpirat",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 2,
+      "rep": 300,
+      "astray": false
+    },
+    {
       "name": "Tredbull",
       "platform": "twitch",
       "rank": 1,
@@ -343,16 +353,6 @@
     },
     {
       "name": "DurinBjornsson",
-      "platform": "twitch",
-      "rank": 1,
-      "rankName": "Seeker",
-      "circle": 1,
-      "days": 1,
-      "rep": 200,
-      "astray": false
-    },
-    {
-      "name": "plommonpirat",
       "platform": "twitch",
       "rank": 1,
       "rankName": "Seeker",

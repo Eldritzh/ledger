@@ -1,27 +1,27 @@
 {
-  "updated": "2026-11-16T19:15:25.0947287Z",
+  "updated": "2026-11-16T19:32:03.9869639Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom"
   ],
   "counters": {
-    "checkins": 76,
+    "checkins": 77,
     "fed": 1638739,
     "tsath_fills": 13,
     "messages": 675,
     "banishes": 53,
     "delve_bottoms": 3,
     "sunwait_candles": 1,
+    "deaths": 2,
     "chants": 0,
-    "deaths": 0,
     "rituals": 0,
     "expeditions": 0,
     "great_ones": 0,
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 2,
+    "stream:checkins": 3,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
@@ -31,7 +31,7 @@
     "stream:messages": 0,
     "sum:circle_top": 0,
     "stream:banishes": 0,
-    "@moon": 12,
+    "@moon": 18,
     "kinds:beings_seen": 14,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -50,11 +50,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 50.7,
+      "pct": 51.3,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 76,
+          "have": 77,
           "need": 150
         }
       ],
@@ -72,11 +72,11 @@
       "wait": ""
     },
     "deaths": {
-      "pct": 0.0,
+      "pct": 2.0,
       "parts": [
         {
           "label": "The Keeper must fall 100 times",
-          "have": 0,
+          "have": 2,
           "need": 100
         }
       ],
@@ -149,11 +149,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 13.3,
+      "pct": 20.0,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 2,
+          "have": 3,
           "need": 15
         }
       ],
@@ -226,11 +226,11 @@
       "wait": ""
     },
     "moon": {
-      "pct": 12.5,
+      "pct": 18.8,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 2,
+          "have": 3,
           "need": 8
         },
         {
@@ -368,11 +368,11 @@
       "wait": ""
     },
     "graves": {
-      "pct": 0.0,
+      "pct": 0.4,
       "parts": [
         {
           "label": "The Keeper must fall 500 times",
-          "have": 0,
+          "have": 2,
           "need": 500
         }
       ],
@@ -454,7 +454,7 @@
       "parts": [
         {
           "label": "Signatures",
-          "have": 76,
+          "have": 77,
           "need": 2500
         },
         {
