@@ -24,7 +24,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.11.0';
+  var VERSION = '1.10.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -850,7 +850,12 @@
       var list = d.partners || [];
       var out = [head(ctx.opts, 'Patrons of the Ledger', 'Brands that signed the book',
         'Paid partnerships of the stream. Using their links and codes supports the channel.')];
-      if (!list.length) { out.push(empty('No patrons have signed the Ledger yet.')); return out.concat(foot(d.updated)); }
+      var inquiry = el('p', {
+        class: 'eldr-note eldr-small',
+        style: { textAlign: 'center', marginTop: '24px' },
+        html: 'Want to be seen here? Contact Eldritzh at <a href="mailto:dave@eldritzh.com">dave@eldritzh.com</a> or on Discord.'
+      });
+      if (!list.length) { out.push(empty('No patrons have signed the Ledger yet.'), inquiry); return out.concat(foot(d.updated)); }
       var grid = el('div', { class: 'eldr-grid' });
       list.forEach(function (p) {
         var cos = (p.partners || []).filter(function (m) { return m && m.name; });
@@ -883,7 +888,7 @@
           /^https?:\/\//i.test(p.link || '') ? el('a', { href: p.link, target: '_blank', rel: 'sponsored noopener', text: 'Visit ' + p.name + ' →' }) : null
         ]));
       });
-      out.push(grid, foot(d.updated));
+      out.push(grid, inquiry, foot(d.updated));
       return out;
     });
   }
