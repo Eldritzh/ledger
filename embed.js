@@ -13,6 +13,7 @@
      data-eldr-refresh="5"            minutes between quiet re-checks while the page is open (0 = off)
      data-eldr-title="0"              hide the page's own header
      data-eldr-nav="0"                hide the row of links to the other pages (nav.json, from website\nav.txt)
+     data-eldr-discord="https://discord.gg/…"   the Discord invite the pages link to (default: the "discord" line of nav.txt)
 
    Data comes from ./data/ next to this file. Streamer.bot's "Website :: Publish" action
    commits it to GitHub; GitHub Pages serves it. Nothing here needs editing for new data.
@@ -24,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.10.0';
+  var VERSION = '1.11.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -317,6 +318,14 @@
     '.eldr-site .tt-node.soon{cursor:default}',
     '.eldr-site .tt-node.soon .tt-ring{border-style:dashed;border-color:#2b3037;color:#3a4048}',
     '.eldr-site .tt-node.soon:hover .tt-ring{transform:none;box-shadow:none}',
+    '.eldr-site .tt-node.ro{cursor:help}',
+    '.eldr-site .tt-node.mine .tt-ring{box-shadow:0 0 0 3px rgba(47,179,168,.6),0 0 14px rgba(47,179,168,.35)}',
+    '.eldr-site .tt-node.ballot .tt-ring{animation:eldr-ballot 2.4s ease-in-out infinite}',
+    '@keyframes eldr-ballot{0%,100%{box-shadow:0 0 0 2px rgba(82,183,136,.25)}50%{box-shadow:0 0 0 5px rgba(82,183,136,.55),0 0 18px rgba(82,183,136,.4)}}',
+    '.eldr-site .cv-pl{position:absolute;left:-12px;top:-6px;font-size:10px;font-weight:600;line-height:1;padding:3px 6px;border-radius:999px;background:#0b0d0f;border:1px solid rgba(47,179,168,.55);color:var(--teal);white-space:nowrap}',
+    '.eldr-site section.cv-vote{border-top-color:var(--green)}',
+    '.eldr-site .cv-opts{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}',
+    '.eldr-site .tt-node.ro:hover .tt-ring{transform:none}',
     '.eldr-site .tt-node.sel .tt-ring{box-shadow:0 0 0 3px rgba(82,183,136,.55),0 0 16px rgba(212,175,55,.25)}',
     '.eldr-site .tt-node.cap{width:68px;height:68px}',
     '.eldr-site .tt-node.cap .tt-ring{border-radius:16px;transform:rotate(45deg);border-width:2px;outline:1px solid rgba(212,175,55,.25);outline-offset:4px}',
@@ -845,16 +854,31 @@
     });
     return img;
   }
+  // 18 Nov: the Discord invite: data-eldr-discord on the div, or the "discord" line of website\nav.txt (nav.json)
+  function discordUrl(ctx) {
+    var u = (ctx.opts && ctx.opts.discord) || '';
+    if (!u) { var n = ((ctx.nav && ctx.nav.pages) || []).filter(function (p) { return p && p.page === 'discord'; })[0]; u = n ? n.url : ''; }
+    return /^https:\/\//.test(u || '') ? u : '';
+  }
+  function discordLink(ctx, text) {
+    var u = discordUrl(ctx);
+    return u ? el('a', { href: u, target: '_blank', rel: 'noopener', text: text }) : text;
+  }
+  // 18 Nov: partners first, then affiliates, then ads (Partners :: Core sends rank; older files fall back on the label)
+  function ptRank(p) {
+    if (typeof p.rank === 'number') return p.rank;
+    var l = String(p.label || p.type || '').toLowerCase();
+    return /^partner/.test(l) ? 0 : /^affiliate/.test(l) ? 1 : 2;
+  }
   function partners(ctx) {
     return load('partners.json').then(function (d) {
-      var list = d.partners || [];
+      var list = (d.partners || []).map(function (p, i) { return { p: p, i: i }; })
+        .sort(function (a, b) { return ptRank(a.p) - ptRank(b.p) || a.i - b.i; }).map(function (x) { return x.p; });
       var out = [head(ctx.opts, 'Patrons of the Ledger', 'Brands that signed the book',
         'Paid partnerships of the stream. Using their links and codes supports the channel.')];
-      var inquiry = el('p', {
-        class: 'eldr-note eldr-small',
-        style: { textAlign: 'center', marginTop: '24px' },
-        html: 'Want to be seen here? Contact Eldritzh at <a href="mailto:dave@eldritzh.com">dave@eldritzh.com</a> or on Discord.'
-      });
+      var inquiry = el('p', { class: 'eldr-note eldr-small', style: { textAlign: 'center', marginTop: '24px' } }, [
+        'Want to be seen here? Contact Eldritzh at ', el('a', { href: 'mailto:dave@eldritzh.com', text: 'dave@eldritzh.com' }),
+        ' or ', discordLink(ctx, 'on Discord'), '.']);
       if (!list.length) { out.push(empty('No patrons have signed the Ledger yet.'), inquiry); return out.concat(foot(d.updated)); }
       var grid = el('div', { class: 'eldr-grid' });
       list.forEach(function (p) {
@@ -1470,10 +1494,11 @@
       by[g].forEach(function (e) {
         var cost = [e.tier === 'eldritch' ? 'An Eldritch Pact' : 'A Pact'];
         if (e.ritual > 1) cost = [e.ritual + ' viewers, ' + (e.tier === 'eldritch' ? 'an Eldritch Pact' : 'a Pact') + ' each'];
+        var rite = e.rite > 1 && !(e.ritual > 1) ? el('div', { class: 'eldr-small eldr-muted' }, ['or ' + e.rite + ' viewers together, a Pact each: ', el('code', { text: '!fx ' + e.id + ' rite' })]) : null;   // 18 Nov
         var tr = el('tr', null, [
           el('td', { 'data-l': 'Effect', style: { width: '40%' } }, [el('strong', { text: e.label }), e.off || sealed ? offTag('dormant') : null,
             el('div', { class: 'eldr-muted eldr-small' }, el('code', { text: '!fx ' + e.id }))]),
-          el('td', { 'data-l': 'Costs' }, [cost[0], e.cult ? el('div', { class: 'eldr-small eldr-muted', text: 'Only for the faithful of ' + e.cult.charAt(0).toUpperCase() + e.cult.slice(1) }) : null]),
+          el('td', { 'data-l': 'Costs' }, [cost[0], rite, e.cult ? el('div', { class: 'eldr-small eldr-muted', text: 'Only for the faithful of ' + e.cult.charAt(0).toUpperCase() + e.cult.slice(1) }) : null]),
           el('td', { 'data-l': 'Where', text: (e.kind || []).map(function (k) { return FX_KIND[k] || k; }).join(' + ') })]);
         tb.appendChild(e.off || sealed ? offRow(tr) : tr);
       });
@@ -1733,6 +1758,43 @@
     return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + d + '" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
       '<circle cx="' + dot[0] + '" cy="' + dot[1] + '" r="1.9" fill="currentColor"/></svg>';
   }
+  // Shared by the talent trees and the Covenant (18 Nov). rows: a talent sits one row under what it needs; a capstone (points in the tree) sits on a row of its own at the foot
+  function ttLayout(list, by) {
+    var depth = {};
+    function dep(t, guard) {
+      if (depth[t.id] != null) return depth[t.id];
+      if (guard > 12) return 0;
+      var ps = (t.needs || []).map(function (n) { return by[n.id]; }).filter(function (p) { return p && p.tree === t.tree; });
+      return (depth[t.id] = ps.length ? 1 + Math.max.apply(null, ps.map(function (p) { return dep(p, guard + 1); })) : 0);
+    }
+    list.forEach(function (t) { dep(t, 0); });
+    var deepest = Math.max.apply(null, [0].concat(list.filter(function (t) { return !(t.points > 0); }).map(function (t) { return depth[t.id]; })));
+    list.forEach(function (t) { if (t.points > 0 && !(t.needs || []).length) depth[t.id] = deepest + 1; });
+    var rows = [], x = {};
+    list.forEach(function (t) { (rows[depth[t.id]] = rows[depth[t.id]] || []).push(t); });
+    rows = rows.filter(Boolean);
+    // a long row without anything above it (odds and ends) wraps
+    var wrapped = [];
+    rows.forEach(function (r) {
+      if (r.length <= 4) { wrapped.push(r); return; }
+      var per = Math.ceil(r.length / Math.ceil(r.length / 4));
+      for (var i = 0; i < r.length; i += per) wrapped.push(r.slice(i, i + per));
+    });
+    rows = wrapped;
+    rows.forEach(function (r) {
+      var want = r.map(function (t, i) {
+        var ps = (t.needs || []).map(function (n) { return x[n.id]; }).filter(function (v) { return v != null; });
+        return { t: t, w: ps.length ? ps.reduce(function (a, b) { return a + b; }, 0) / ps.length : (i + 0.5) / r.length * 100, i: i };
+      }).sort(function (a, b) { return a.w - b.w || a.i - b.i; });
+      var gap = 100 / Math.max(3, r.length), lo = gap / 2, hi = 100 - gap / 2;
+      if (r.length === 1 && !(r[0].needs || []).length) want[0].w = 50;
+      for (var i = 0; i < want.length; i++) want[i].w = Math.max(want[i].w, i ? want[i - 1].w + gap : lo);
+      for (var j = want.length - 1; j >= 0; j--) want[j].w = Math.min(want[j].w, j < want.length - 1 ? want[j + 1].w - gap : hi);
+      want.forEach(function (o) { x[o.t.id] = o.w; });
+    });
+    return { rows: rows, x: x };
+  }
+
   function talentTree(ctx, d, redrawPage) {
     var st = ctx.state, trees = d.trees || [], tp = d.talentPoints || {}, first = Number(tp.firstLevel || 5), rebMax = Number(tp.rebirthMax || 0), maxLevel = Number(d.maxLevel || 60);
     var by = {}, order = [];
@@ -1816,14 +1878,18 @@
       }).catch(function () { st.acct = { err: 'Your character is out of reach right now (the forge may be offline).' }; draw(); });
     }
     if (st.acct === undefined) loadMe(true);
+    // 18 Nov: the tree is for everyone to look at, but planning wants a signed-in, linked account (the key from
+    // /shard key). Saving still wants a membership (canSave). With no forge configured the planner stays open.
+    function canPlan() { return !api || !!(st.acct && st.acct.ok); }
+    var SIGN_IN = 'Sign in with your key (above) to plan a build. Anyone with a linked account can plan; members can also save it.';
     function account() {
       if (!api) return null;
       var a = st.acct, box = el('section', { class: 'eldr-card tt-acct' });
       if (!a || a.err) {
         var input = el('input', { class: 'eldr-search eldr-keyin', type: 'password', autocomplete: 'off', spellcheck: 'false', placeholder: 'rift_… or the link from Discord', 'aria-label': 'Your key' });
         var msg = el('p', { class: 'eldr-keymsg', text: a && a.err ? a.err : '' });
-        box.appendChild(el('h2', { text: 'Save builds to your character' }));
-        box.appendChild(el('p', { class: 'eldr-small', html: 'Members can send a build straight to their character instead of pasting the chat line. In Discord, type <code>/shard key</code> (the same key as the Rift page) and open its link once, or paste the key here. Your Discord has to be linked first: <code>/forge link</code>.' }));
+        box.appendChild(el('h2', { text: 'Sign in to plan' }));
+        box.appendChild(el('p', { class: 'eldr-small', html: 'The trees are here for everyone to read. To plan a build, sign in with your key: in Discord, type <code>/shard key</code> (the same key as the Rift page) and open its link once, or paste the key here. Your Discord has to be linked first: <code>/forge link</code>. Members can then send a build straight to their character.' }));
         box.appendChild(el('form', { onsubmit: function (ev) {
           ev.preventDefault();
           var m = (input.value || '').trim().match(/rift_[A-Za-z0-9_\-]+/);
@@ -1857,8 +1923,12 @@
     }
 
     var root = el('div', { class: 'tt' }), focusId = null;
-    function add(t) { var w = whyNotAdd(t); st.sel = t.id; if (w) { st.msg = w; st.shake = t.id; } else { st.build[t.id] = rank(t.id) + 1; st.msg = ''; } save(); draw(); }
+    function add(t) {
+      if (!canPlan()) { st.sel = t.id; st.msg = ''; draw(); return; }   // signed out: a click only reads it
+      var w = whyNotAdd(t); st.sel = t.id; if (w) { st.msg = w; st.shake = t.id; } else { st.build[t.id] = rank(t.id) + 1; st.msg = ''; } save(); draw();
+    }
     function remove(t) {
+      if (!canPlan()) { st.sel = t.id; st.msg = ''; draw(); return; }
       var w = whyNotRemove(t); st.sel = t.id;
       if (w) { st.msg = w; st.shake = t.id; } else { st.build[t.id]--; if (!st.build[t.id]) delete st.build[t.id]; st.msg = ''; }
       save(); draw();
@@ -1869,47 +1939,10 @@
       else { var ta = el('textarea', { style: { position: 'fixed', opacity: '0' } }); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} document.body.removeChild(ta); }
     }
 
-    // rows: a talent sits one row under what it needs; a capstone (points in the tree) sits on a row of its own at the foot
-    function layout(tr) {
-      var list = tr.talents || [], depth = {};
-      function dep(t, guard) {
-        if (depth[t.id] != null) return depth[t.id];
-        if (guard > 12) return 0;
-        var ps = (t.needs || []).map(function (n) { return by[n.id]; }).filter(function (p) { return p && p.tree === t.tree; });
-        return (depth[t.id] = ps.length ? 1 + Math.max.apply(null, ps.map(function (p) { return dep(p, guard + 1); })) : 0);
-      }
-      list.forEach(function (t) { dep(t, 0); });
-      var deepest = Math.max.apply(null, [0].concat(list.filter(function (t) { return !(t.points > 0); }).map(function (t) { return depth[t.id]; })));
-      list.forEach(function (t) { if (t.points > 0 && !(t.needs || []).length) depth[t.id] = deepest + 1; });
-      var rows = [], x = {};
-      list.forEach(function (t) { (rows[depth[t.id]] = rows[depth[t.id]] || []).push(t); });
-      rows = rows.filter(Boolean);
-      // a long row without anything above it (odds and ends) wraps
-      var wrapped = [];
-      rows.forEach(function (r) {
-        if (r.length <= 4) { wrapped.push(r); return; }
-        var per = Math.ceil(r.length / Math.ceil(r.length / 4));
-        for (var i = 0; i < r.length; i += per) wrapped.push(r.slice(i, i + per));
-      });
-      rows = wrapped;
-      rows.forEach(function (r) {
-        var want = r.map(function (t, i) {
-          var ps = (t.needs || []).map(function (n) { return x[n.id]; }).filter(function (v) { return v != null; });
-          return { t: t, w: ps.length ? ps.reduce(function (a, b) { return a + b; }, 0) / ps.length : (i + 0.5) / r.length * 100, i: i };
-        }).sort(function (a, b) { return a.w - b.w || a.i - b.i; });
-        var gap = 100 / Math.max(3, r.length), lo = gap / 2, hi = 100 - gap / 2;
-        if (r.length === 1 && !(r[0].needs || []).length) want[0].w = 50;
-        for (var i = 0; i < want.length; i++) want[i].w = Math.max(want[i].w, i ? want[i - 1].w + gap : lo);
-        for (var j = want.length - 1; j >= 0; j--) want[j].w = Math.min(want[j].w, j < want.length - 1 ? want[j + 1].w - gap : hi);
-        want.forEach(function (o) { x[o.t.id] = o.w; });
-      });
-      return { rows: rows, x: x };
-    }
-
     function node(t) {
       var r = rank(t.id), b = blocks(t), locked = !t.soon && r === 0 && b.length > 0;
       var state = t.soon ? 'soon' : r >= t.ranks ? 'full' : r > 0 ? 'some' : locked ? 'locked' : 'open';
-      var n = el('button', { type: 'button', class: 'tt-node ' + state + (t.capstone ? ' cap' : '') + (st.sel === t.id ? ' sel' : '') + (st.shake === t.id ? ' shake' : ''),
+      var n = el('button', { type: 'button', class: 'tt-node ' + state + (t.capstone ? ' cap' : '') + (st.sel === t.id ? ' sel' : '') + (st.shake === t.id ? ' shake' : '') + (canPlan() ? '' : ' ro'),
         'data-id': t.id, title: t.name + ': ' + t.text,
         'aria-label': t.name + ', rank ' + r + ' of ' + t.ranks + (t.soon ? ', not ready yet' : locked ? ', locked: needs ' + b.join(' and ') : ''),
         'aria-pressed': String(st.sel === t.id),
@@ -1920,7 +1953,7 @@
       return n;
     }
     function treeCard(tr) {
-      var lay = layout(tr), ROW = 124, TOP = 16, ys = [], yy = TOP;
+      var lay = ttLayout(tr.talents || [], by), ROW = 124, TOP = 16, ys = [], yy = TOP;
       lay.rows.forEach(function (r) { if (r.some(function (t) { return t.points > 0; })) yy += 30; ys.push(yy); yy += ROW; });
       var H = yy;
       var stage = el('div', { class: 'tt-stage', style: { height: H + 'px' } });
@@ -1951,26 +1984,31 @@
     }
     function detail() {
       var t = by[st.sel];
-      if (!t) return el('div', { class: 'tt-detail idle' }, [el('p', { class: 'eldr-muted', html: '<strong>Click a talent</strong> to take a rank. <strong>Right-click</strong> (or the − button) gives it back. Start with the ones on the top row: the others open as you go.' })]);
+      if (!t) return el('div', { class: 'tt-detail idle' }, [el('p', { class: 'eldr-muted', html: canPlan()
+        ? '<strong>Click a talent</strong> to take a rank. <strong>Right-click</strong> (or the − button) gives it back. Start with the ones on the top row: the others open as you go.'
+        : '<strong>Click a talent</strong> to read what it does. ' + esc(SIGN_IN) })]);
       var r = rank(t.id), b = blocks(t), wa = whyNotAdd(t), wr = whyNotRemove(t);
       var needs = (t.needs || []).map(function (n) { var p = by[n.id]; return p ? p.name + (n.rank > 1 ? ' at rank ' + n.rank : '') : ''; }).filter(Boolean);
       if (t.points > 0) needs.push(t.points + ' points in the ' + t.treeName + ' tree');
       return el('div', { class: 'tt-detail' }, [
         el('div', { class: 'eldr-row' }, [
           el('div', null, [el('h3', { text: t.name }), el('div', { class: 'eldr-small eldr-muted', text: t.treeName + (t.capstone ? ' · Capstone' : '') + ' · ' + t.cost + (t.cost === 1 ? ' point' : ' points') + (t.ranks > 1 ? ' a rank' : '') })]),
-          el('div', { class: 'tt-step' }, [
+          canPlan() ? el('div', { class: 'tt-step' }, [
             el('button', { type: 'button', class: 'tt-btn', disabled: wr ? '' : null, 'aria-label': 'Give a rank of ' + t.name + ' back', text: '−', onclick: function () { remove(t); } }),
             pips(r, t.ranks),
-            el('button', { type: 'button', class: 'tt-btn', disabled: wa ? '' : null, 'aria-label': 'Take a rank of ' + t.name, text: '+', onclick: function () { add(t); } })])]),
+            el('button', { type: 'button', class: 'tt-btn', disabled: wa ? '' : null, 'aria-label': 'Take a rank of ' + t.name, text: '+', onclick: function () { add(t); } })])
+            : el('div', { class: 'tt-step' }, [pips(r, t.ranks)])]),
         el('p', { text: String(t.text || '').replace(/^Capstone:\s*/i, '').replace(/^./, function (c) { return c.toUpperCase(); }) + (/[.!?]$/.test(t.text || '') ? '' : '.') }),
         needs.length ? el('div', { class: 'eldr-small ' + (b.length ? 'tt-need' : 'tt-met'), text: b.length ? 'Needs ' + b.join(' and ') + ' first.' : 'Opened by ' + needs.join(' and ') + '.' }) : null,
-        st.msg && !(b.length && /^Needs /.test(st.msg)) ? el('div', { class: 'eldr-small tt-msg', role: 'status', text: st.msg }) : null]);
+        st.msg && !(b.length && /^Needs /.test(st.msg)) ? el('div', { class: 'eldr-small tt-msg', role: 'status', text: st.msg }) : null,
+        canPlan() ? null : el('div', { class: 'eldr-small eldr-muted', style: { marginTop: '6px' }, text: SIGN_IN })]);
     }
     function summary() {
       var s = spent(), bud = budget(), lvl = levelFor(s), cmd = command(), m = st.me, kids = [];
       var baseSpent = order.reduce(function (a, t) { return a + base(t.id) * t.cost; }, 0);
       var line;
-      if (!s) line = 'No talents picked yet.';
+      if (!canPlan()) line = s ? 'A shared build, to read. Sign in to plan your own.' : 'Read-only: sign in to plan a build.';
+      else if (!s) line = 'No talents picked yet.';
       else if (bud != null) {
         line = bud - s >= 0 ? (bud - s) + (bud - s === 1 ? ' point' : ' points') + ' left at level ' + m.level + '.'
           : 'This is ' + (s - bud) + (s - bud === 1 ? ' point' : ' points') + ' more than level ' + m.level + ' has. ' + (lvl <= maxLevel ? 'It all fits at level ' + (lvl - Math.min(rebMax, m.rebirths || 0)) + '.' : 'The last of it comes with Rebirths.');
@@ -1978,7 +2016,7 @@
       kids.push(el('div', { class: 'eldr-row' }, [
         el('div', null, [el('span', { class: 'tt-total', text: s + (s === 1 ? ' point' : ' points') }), el('span', { class: 'eldr-small eldr-muted', text: '  ' + line })]),
         el('div', { class: 'tt-acts' }, [
-          s > baseSpent ? el('button', { type: 'button', class: 'eldr-chip', text: 'Clear', onclick: function () { st.build = {}; Object.keys(st.base || {}).forEach(function (k) { st.build[k] = st.base[k]; }); st.msg = ''; st.sel = null; save(); draw(); } }) : null,
+          s > baseSpent && canPlan() ? el('button', { type: 'button', class: 'eldr-chip', text: 'Clear', onclick: function () { st.build = {}; Object.keys(st.base || {}).forEach(function (k) { st.build[k] = st.base[k]; }); st.msg = ''; st.sel = null; save(); draw(); } }) : null,
           s ? el('button', { type: 'button', class: 'eldr-chip', text: 'Copy link', onclick: function (e) { copy(location.href, e.currentTarget); } }) : null])]));
       if (m && !m.mine) kids.push(el('div', { class: 'eldr-small eldr-muted' }, ['Planning from ' + m.name + '’s talents (level ' + m.level + '). ',
         el('button', { type: 'button', class: 'tt-link', text: 'Start empty instead', onclick: function () { st.me = null; st.base = {}; st.build = {}; st.msg = ''; save(); draw(); } })]));
@@ -1986,7 +2024,7 @@
     }
     function takeIt() {
       var cmd = command();
-      if (!cmd) return null;
+      if (!cmd || !canPlan()) return null;
       var btn = el('button', { type: 'button', class: 'eldr-chip tt-copy', text: 'Copy', onclick: function () { copy(cmd, btn); } });
       var a = st.acct;
       if (a && a.ok && a.canSave) {
@@ -2041,7 +2079,7 @@
       var hasTree = trees.length && trees.every(function (tr) { return (tr.talents || []).every(function (t) { return t.id; }); });
       var tabRow = null;
       out.push(lookup(ctx, hasTree ? function (p) {
-        return el('div', { style: { marginTop: '14px' } }, [el('button', { type: 'button', class: 'eldr-chip', text: 'Plan talents from here', onclick: function () {
+        return el('div', { style: { marginTop: '14px' } }, [el('button', { type: 'button', class: 'eldr-chip', text: 'Open in the talent tree', onclick: function () {
           st.me = p; st.base = {}; (p.talents || []).forEach(function (t) { if (t.id) st.base[t.id] = t.rank; });
           st.build = {}; Object.keys(st.base).forEach(function (k) { st.build[k] = st.base[k]; }); st.sel = null; st.msg = '';
           if (tabRow) { tabRow.pick('talents'); tabRow.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
@@ -2223,14 +2261,234 @@
     });
   }
 
-  // ================================================================== THE COVENANT (covenant.json, 11 Nov)
+  // ================================================================== THE COVENANT (covenant.json, 11 Nov; a tree since 18 Nov)
+  // The congregation's own talent tree, drawn like the investigator's. Nobody plans points here: the ranks are what chat
+  // has voted in. Signed in (the /shard key, a linked Discord) you see your pledge and the vote running now; members
+  // pledge (the most-pledged open talents always make the next vote) and vote from here (/web/covenant/*).
+  function covTree(ctx, d) {
+    var st = ctx.state, list = d.talents || [], branches = d.branches || [];
+    var by = {}, bname = {}, order = [];
+    branches.forEach(function (b) { bname[b.id] = b.name; });
+    list.forEach(function (t) { by[t.id] = t; });
+    list.forEach(function (t) {
+      t.tree = t.branch; t.treeName = bname[t.branch] || t.branch; t.points = 0;
+      t.needs = (t.needs || []).filter(function (n) { if (bname[n.id] && !by[n.id]) { t.points = n.rank; return false; } return true; });
+      by[t.id] = t; order.push(t);
+    });
+    function rank(id) { return by[id] ? Math.min(by[id].rank || 0, by[id].ranks) : 0; }
+    function inBranch(b, not) { return order.reduce(function (a, t) { return a + (t.tree === b && t.id !== not ? rank(t.id) : 0); }, 0); }
+    function blocks(t) {
+      var out = [];
+      t.needs.forEach(function (n) { var p = by[n.id]; if (p && rank(p.id) < n.rank) out.push(p.name + (n.rank > 1 ? ' at rank ' + n.rank : '')); });
+      if (t.points > 0 && inBranch(t.tree, t.id) < t.points) out.push(t.points + ' ranks in ' + t.treeName + ' (' + inBranch(t.tree, t.id) + ' so far)');
+      return out;
+    }
+    function isOpen(t) { return rank(t.id) < t.ranks && !blocks(t).length; }
+
+    var api = ctx.site && ctx.site.staffApi ? String(ctx.site.staffApi).replace(/\/+$/, '') : '';
+    var KEY_GONE = 'Your key has expired or was revoked. Get a new one with /shard key in Discord.';
+    function ccall(path, opts) {
+      opts = opts || {};
+      opts.headers = Object.assign({ 'X-Rift-Key': stored(RIFT_KEY) || '' }, opts.headers || {});
+      opts.cache = 'no-store'; opts.credentials = 'omit';
+      return fetch(api + path, opts).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, j: j || {} }; }); });
+    }
+    function loadMe() {
+      takeRiftKey();
+      if (!api || !stored(RIFT_KEY)) { st.cov = null; return; }
+      if (!st.cov || st.cov.err) st.cov = { busy: true };
+      ccall('/web/covenant/me').then(function (res) {
+        if (res.status === 401) { store(RIFT_KEY, null); st.cov = { err: KEY_GONE }; }
+        else if (res.status !== 200 || !res.j.ok) st.cov = { err: res.j.error || 'Your account is out of reach right now.' };
+        else { var sent = st.cov && st.cov.sentVote; st.cov = res.j; if (sent && st.cov.vote && st.cov.vote.id === sent.id && !st.cov.vote.mine) st.cov.vote.mine = sent.n; }
+        draw();
+      }).catch(function () { st.cov = { err: 'Your account is out of reach right now (the forge may be offline).' }; draw(); });
+    }
+    if (st.cov === undefined) loadMe();
+    function signedIn() { return !!(st.cov && st.cov.ok); }
+    function member() { return signedIn() && st.cov.canSave; }
+    var SIGN_IN = 'Sign in with your key (above) to pledge and vote from here.';
+
+    var root = el('div', { class: 'tt' });
+    // while a vote may be running, look again every 30 seconds (the forge sees it about a minute late)
+    clearInterval(st.covPoll);
+    st.covPoll = setInterval(function () {
+      if (!document.body.contains(root)) { clearInterval(st.covPoll); return; }
+      if (signedIn() && (d.voteOpen || st.cov.vote)) loadMe();
+    }, 30000);
+
+    function account() {
+      if (!api) return null;
+      var a = st.cov, box = el('section', { class: 'eldr-card tt-acct' });
+      if (!a || a.err) {
+        var input = el('input', { class: 'eldr-search eldr-keyin', type: 'password', autocomplete: 'off', spellcheck: 'false', placeholder: 'rift_… or the link from Discord', 'aria-label': 'Your key' });
+        var msg = el('p', { class: 'eldr-keymsg', text: a && a.err ? a.err : '' });
+        box.appendChild(el('h2', { text: 'Sign in to take part' }));
+        box.appendChild(el('p', { class: 'eldr-small', html: 'The tree is here for everyone to read. Signed in, members pledge to the talent they want most (the most-pledged ones are always on the next vote) and vote from here while a Covenant vote runs. In Discord, type <code>/shard key</code> (the same key as the Rift page and the talent tree) and open its link once, or paste the key here. Your Discord has to be linked first: <code>/forge link</code>.' }));
+        box.appendChild(el('form', { onsubmit: function (ev) {
+          ev.preventDefault();
+          var m = (input.value || '').trim().match(/rift_[A-Za-z0-9_\-]+/);
+          if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a key. It starts with rift_.'; return; }
+          store(RIFT_KEY, m[0]); st.cov = { busy: true }; loadMe(); draw();
+        } }, [el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Sign in' })]), msg]));
+        return box;
+      }
+      if (a.busy) { box.appendChild(el('p', { class: 'eldr-muted', text: 'Looking you up…' })); return box; }
+      var mine = by[a.pledge];
+      box.appendChild(el('div', { class: 'eldr-keyrow', style: { justifyContent: 'space-between', margin: '0' } }, [
+        el('div', null, [el('h2', { text: 'Signed in · ' + (a.name || ''), style: { margin: '0' } }),
+          el('div', { class: 'eldr-small eldr-muted', text: mine ? 'Your pledge: ' + mine.name + '.' : 'You haven\'t pledged to anything yet.' })]),
+        el('div', { class: 'tt-acts' }, [
+          el('button', { class: 'eldr-chip', type: 'button', text: 'Reload', onclick: function () { st.covMsg = ''; loadMe(); } }),
+          el('button', { class: 'eldr-chip', type: 'button', text: 'Sign out', onclick: function () { store(RIFT_KEY, null); st.cov = null; st.covMsg = ''; draw(); } })])]));
+      if (!a.canSave && a.why) box.appendChild(el('p', { class: 'eldr-note', style: { margin: '10px 0 0' }, text: a.why }));
+      else box.appendChild(el('p', { class: 'eldr-small eldr-muted', style: { margin: '10px 0 0' }, text: 'Click a talent to pledge to it. One pledge each; a new one replaces the old. In chat: !covenant pledge <name>.' }));
+      if (st.covMsg) box.appendChild(el('p', { class: 'eldr-note', role: 'status', style: { margin: '10px 0 0' }, text: st.covMsg }));
+      return box;
+    }
+
+    function post(path, body, btn, after) {
+      if (btn) btn.disabled = true;
+      body.nonce = nonce();
+      ccall(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (res) {
+          if (res.status === 401) { store(RIFT_KEY, null); st.cov = { err: KEY_GONE }; draw(); return; }
+          st.covMsg = res.j.text || res.j.error || (res.j.ok ? 'Sent.' : 'That didn\'t work. Try again in a moment.');
+          if (res.j.ok && after) after(res.j);
+          draw();
+          if (res.j.queued) { clearTimeout(st.covTimer); st.covTimer = setTimeout(function () { if (document.body.contains(root)) loadMe(); }, 75000); }
+        })
+        .catch(function () { if (btn) btn.disabled = false; st.covMsg = 'The forge is out of reach right now. Nothing was sent.'; draw(); });
+    }
+    function pledge(id, btn) { post('/web/covenant/pledge', { id: id }, btn, function () { st.cov.pledge = id; }); }
+    function vote(v, n, btn) { post('/web/covenant/vote', { vote: v.id, option: n }, btn, function () { v.mine = n; st.cov.sentVote = { id: v.id, n: n }; }); }
+
+    function voteCard() {
+      var v = st.cov && st.cov.ok && st.cov.vote;
+      if (!v) return null;
+      var secs = Math.max(0, Math.round(v.until - Date.now() / 1000));
+      var row = el('div', { class: 'cv-opts' });
+      v.options.forEach(function (o) {
+        var t = by[o.id], on = v.mine === o.n;
+        var b = el('button', { type: 'button', class: 'eldr-chip' + (on ? ' tt-save' : ''), 'aria-pressed': String(on), disabled: member() && !on ? null : '',
+          text: (on ? '✓ ' : '') + (t ? t.name : o.name) });
+        b.addEventListener('click', function () { vote(v, o.n, b); });
+        row.appendChild(b);
+      });
+      return el('section', { class: 'eldr-card cv-vote' }, [
+        el('div', { class: 'eldr-row' }, [el('h2', { text: 'A Covenant vote is running' }), el('span', { class: 'eldr-badge green', text: secs > 0 ? 'about ' + (secs >= 90 ? Math.round(secs / 60) + ' min' : secs + ' s') + ' left' : 'closing' })]),
+        el('p', { class: 'eldr-small', text: member() ? (v.mine ? 'Your vote is in. You can change it until the vote closes.' : 'Vote here or in chat (type the number). A vote from here lands within about a minute.') : 'Voting from here is for members. Everyone can vote in chat: type the number.' }),
+        row]);
+    }
+
+    function node(t) {
+      var r = rank(t.id), b = blocks(t), locked = r === 0 && b.length > 0;
+      var state = r >= t.ranks ? 'full' : r > 0 ? 'some' : locked ? 'locked' : 'open';
+      var onBallot = st.cov && st.cov.ok && st.cov.vote && st.cov.vote.options.some(function (o) { return o.id === t.id; });
+      var mine = st.cov && st.cov.ok && st.cov.pledge === t.id;
+      return el('button', { type: 'button', class: 'tt-node ' + state + (t.capstone ? ' cap' : '') + (st.covSel === t.id ? ' sel' : '') + (mine ? ' mine' : '') + (onBallot ? ' ballot' : '') + (signedIn() ? '' : ' ro'),
+        'data-id': t.id, title: t.name + ': ' + t.text,
+        'aria-label': t.name + ', ' + r + ' of ' + t.ranks + ' ranks taken' + (locked ? ', needs ' + b.join(' and ') : '') + (mine ? ', your pledge' : ''),
+        'aria-pressed': String(st.covSel === t.id),
+        onclick: function () { st.covSel = t.id; focusId = t.id; draw(); }
+      }, [el('span', { class: 'tt-ring', html: rune('cov:' + t.id) }), el('span', { class: 'tt-rank', text: r + '/' + t.ranks }),
+        t.pledges > 0 ? el('span', { class: 'cv-pl', title: t.pledges + (t.pledges === 1 ? ' pledge' : ' pledges'), text: '✦' + t.pledges }) : null]);
+    }
+    function branchCard(br) {
+      var mine = order.filter(function (t) { return t.tree === br.id; });
+      var lay = ttLayout(mine, by), ROW = 124, ys = [], yy = 16;
+      lay.rows.forEach(function (r) { if (r.some(function (t) { return t.points > 0; })) yy += 30; ys.push(yy); yy += ROW; });
+      var stage = el('div', { class: 'tt-stage', style: { height: yy + 'px' } }), lines = '';
+      lay.rows.forEach(function (r, ri) {
+        r.forEach(function (t) {
+          t.needs.forEach(function (nd) {
+            var p = by[nd.id]; if (!p || lay.x[p.id] == null) return;
+            var pr = -1; lay.rows.forEach(function (rr, k) { if (rr.indexOf(p) >= 0) pr = k; });
+            if (pr < 0) return;
+            var x1 = lay.x[p.id], y1 = ys[pr] + 58, x2 = lay.x[t.id], y2 = ys[ri] - 2, m = (y1 + y2) / 2;
+            lines += '<path class="' + (rank(p.id) >= nd.rank ? 'on' : '') + '" d="M' + x1 + ' ' + y1 + ' C' + x1 + ' ' + m + ' ' + x2 + ' ' + m + ' ' + x2 + ' ' + y2 + '" vector-effect="non-scaling-stroke"/>';
+          });
+        });
+      });
+      stage.appendChild(el('div', { class: 'tt-lines', html: '<svg viewBox="0 0 100 ' + yy + '" preserveAspectRatio="none" aria-hidden="true">' + lines + '</svg>' }));
+      lay.rows.forEach(function (r, ri) {
+        r.forEach(function (t) {
+          var have = inBranch(t.tree, t.id);
+          var gate = t.points > 0 ? el('span', { class: 'tt-gate' + (have >= t.points ? ' on' : ''), text: Math.min(have, t.points) + ' / ' + t.points + ' ranks in ' + br.name }) : null;
+          stage.appendChild(el('div', { class: 'tt-cell', style: { left: lay.x[t.id] + '%', top: ys[ri] + 'px' } }, [gate, node(t), el('span', { class: 'tt-name', text: t.name })]));
+        });
+      });
+      var taken = inBranch(br.id, null);
+      return el('section', { class: 'eldr-card tt-tree' + (taken ? ' has' : '') }, [
+        el('div', { class: 'eldr-row' }, [el('h2', { text: br.name }), el('span', { class: 'eldr-badge' + (taken ? ' gold' : ''), text: taken + (taken === 1 ? ' rank' : ' ranks') })]),
+        br.text ? el('p', { class: 'eldr-small eldr-muted', style: { margin: '0 0 4px' }, text: br.text }) : null, stage]);
+    }
+    function detail() {
+      var t = by[st.covSel];
+      if (!t) return el('div', { class: 'tt-detail idle' }, [el('p', { class: 'eldr-muted', html: '<strong>Click a talent</strong> to read what it does' + (member() ? ' and pledge to it.' : '. ' + esc(signedIn() ? (st.cov.why || '') : SIGN_IN)) })]);
+      var r = rank(t.id), b = blocks(t), open = isOpen(t), a = st.cov && st.cov.ok ? st.cov : null;
+      var needs = t.needs.map(function (n) { var p = by[n.id]; return p ? p.name + (n.rank > 1 ? ' at rank ' + n.rank : '') : ''; }).filter(Boolean);
+      if (t.points > 0) needs.push(t.points + ' ranks in ' + t.treeName);
+      var acts = [];
+      var v = a && a.vote, opt = v && v.options.filter(function (o) { return o.id === t.id; })[0];
+      if (opt && member()) {
+        var vb = el('button', { type: 'button', class: 'eldr-chip tt-save', disabled: v.mine === opt.n ? '' : null, text: v.mine === opt.n ? '✓ Your vote' : 'Vote for this' });
+        vb.addEventListener('click', function () { vote(v, opt.n, vb); });
+        acts.push(vb);
+      }
+      if (member()) {
+        if (a.pledge === t.id) {
+          var ub = el('button', { type: 'button', class: 'eldr-chip', text: 'Take back my pledge' });
+          ub.addEventListener('click', function () { pledge('', ub); });
+          acts.push(el('span', { class: 'eldr-badge gold', text: 'Your pledge' }), ub);
+        } else if (open) {
+          var pb = el('button', { type: 'button', class: 'eldr-chip', text: a.pledge ? 'Pledge to this instead' : 'Pledge to this' });
+          pb.addEventListener('click', function () { pledge(t.id, pb); });
+          acts.push(pb);
+        }
+      }
+      return el('div', { class: 'tt-detail' }, [
+        el('div', { class: 'eldr-row' }, [
+          el('div', null, [el('h3', { text: t.name }), el('div', { class: 'eldr-small eldr-muted', text: t.treeName + (t.capstone ? ' · Capstone' : '') + (t.pledges ? ' · ' + t.pledges + (t.pledges === 1 ? ' pledge' : ' pledges') : '') })]),
+          el('div', { class: 'tt-step' }, [pips(r, t.ranks)])]),
+        el('p', { text: String(t.text || '').replace(/^Capstone:\s*/i, '').replace(/^./, function (c) { return c.toUpperCase(); }) + (/[.!?]$/.test(t.text || '') ? '' : '.') }),
+        r >= t.ranks ? el('div', { class: 'eldr-small tt-met', text: 'Taken as far as it goes, for everyone.' })
+          : needs.length ? el('div', { class: 'eldr-small ' + (b.length ? 'tt-need' : 'tt-met'), text: b.length ? 'The congregation needs ' + b.join(' and ') + ' first.' : 'Opened by ' + needs.join(' and ') + '.' })
+          : el('div', { class: 'eldr-small tt-met', text: 'Open from the start: any vote may offer it.' }),
+        acts.length ? el('div', { class: 'tt-acts', style: { marginTop: '10px' } }, acts) : null,
+        !signedIn() ? el('div', { class: 'eldr-small eldr-muted', style: { marginTop: '6px' }, text: SIGN_IN }) : null]);
+    }
+    function summary() {
+      var taken = order.reduce(function (a, t) { return a + rank(t.id); }, 0), all = order.reduce(function (a, t) { return a + t.ranks; }, 0);
+      var openN = order.filter(isOpen).length;
+      return el('section', { class: 'eldr-card tt-sum' }, [el('div', { class: 'eldr-row' }, [
+        el('div', null, [el('span', { class: 'tt-total', text: taken + ' of ' + all + ' ranks' }), el('span', { class: 'eldr-small eldr-muted', text: '  taken for everyone · ' + openN + ' talents open to the next vote' })]),
+        d.waiting > 0 ? el('span', { class: 'eldr-badge gold', text: d.waiting + (d.waiting === 1 ? ' point' : ' points') + ' waiting' }) : null])]);
+    }
+    var focusId = null;
+    function draw() {
+      var had = focusId; focusId = null;
+      root.innerHTML = '';
+      var ac = account(); if (ac) root.appendChild(ac);
+      var vc = voteCard(); if (vc) root.appendChild(vc);
+      root.appendChild(summary());
+      root.appendChild(el('section', { class: 'eldr-card tt-pick' }, [detail()]));
+      var grid = el('div', { class: 'tt-grid' });
+      branches.forEach(function (br) { if (order.some(function (t) { return t.tree === br.id; })) grid.appendChild(branchCard(br)); });
+      root.appendChild(grid);
+      root.appendChild(el('p', { class: 'eldr-muted eldr-small', style: { textAlign: 'center' }, html: 'A lit ring is a rank the congregation has taken. ✦ is how many have pledged to it. The ones that open further down need what sits above them, and a capstone wants ranks in its branch first.' }));
+      if (had) { var f = root.querySelector('.tt-node[data-id="' + had + '"]'); if (f) f.focus({ preventScroll: true }); }
+    }
+    draw();
+    return root;
+  }
+
   function covenant(ctx) {
     return load('covenant.json').then(function (d) {
       d = d || {};
       var aw = d.awakening || {}, list = d.talents || [];
       var out = [head(ctx.opts, 'The Covenant', 'What the congregation woke together',
         'All the XP everyone earns wakes Eldritzh, level by level. Every level gives the congregation one point, and chat votes on what it buys: a talent for everyone, for good.')];
-      var taken = list.reduce(function (a, t) { return a + (t.rank || 0); }, 0);
       out.push(el('section', { class: 'eldr-card' }, [
         el('div', { class: 'eldr-row' }, [el('h2', { text: 'Eldritzh’s Awakening' }),
           d.voteOpen ? el('span', { class: 'eldr-badge green', text: 'Vote open in chat' }) : d.waiting > 0 ? el('span', { class: 'eldr-badge gold', text: d.waiting + (d.waiting === 1 ? ' point' : ' points') + ' waiting' }) : null]),
@@ -2240,6 +2498,12 @@
           : d.waiting > 0 ? 'The next vote opens in chat a little way into the next stream.'
           : 'The next point comes with the next Awakening level. <code>!covenant</code> in chat shows the same.' })]));
       if (!list.length) { out.push(empty('Nothing has been written into the Covenant yet.')); return out.concat(foot(d.updated)); }
+      // 18 Nov: the tree, when the feed carries it
+      if ((d.branches || []).length && list.every(function (t) { return t.id && t.branch; })) {
+        out.push(covTree(ctx, d));
+        out.push(foot(d.updated, el('div', { html: 'In chat: <code>!covenant</code> · <code>!covenant pledge &lt;name&gt;</code>' })));
+        return out;
+      }
       var have = list.filter(function (t) { return t.rank > 0; }), open = list.filter(function (t) { return t.rank < t.ranks; });
       function card(t) {
         return el('article', { class: 'ci' + (t.rank > 0 ? ' bound' : '') }, [
@@ -2375,7 +2639,8 @@
     ctx.opts = {
       game: root.getAttribute('data-eldr-game') || '',
       noTitle: root.getAttribute('data-eldr-title') === '0',
-      noNav: root.getAttribute('data-eldr-nav') === '0'
+      noNav: root.getAttribute('data-eldr-nav') === '0',
+      discord: root.getAttribute('data-eldr-discord') || ''
     };
     ctx.page = page;
     root.classList.add('eldr-site');
