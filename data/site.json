@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18T19:59:41Z",
+  "updated": "2026-11-18T21:34:49Z",
   "version": "1.4.1",
   "reason": "routine",
   "files": {
@@ -8,7 +8,7 @@
     "pacts.json": "2026-11-16T18:52:35Z",
     "circles.json": "2026-11-16T21:02:40Z",
     "codex.json": "2026-11-18T19:40:34Z",
-    "partners.json": "2026-11-18T19:26:49Z",
+    "partners.json": "2026-11-18T21:34:49Z",
     "commands.md": "2026-11-12T22:06:23Z",
     "guide.md": "2026-11-12T15:01:53Z",
     "sounds.json": "2026-11-04T19:52:27Z",
