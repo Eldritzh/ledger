@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.11.0';
+  var VERSION = '1.11.1';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -2504,6 +2504,7 @@
         out.push(foot(d.updated, el('div', { html: 'In chat: <code>!covenant</code> · <code>!covenant pledge &lt;name&gt;</code>' })));
         return out;
       }
+      var taken = list.reduce(function (a, t) { return a + (t.rank || 0); }, 0);          // the old list (no branches in the feed yet)
       var have = list.filter(function (t) { return t.rank > 0; }), open = list.filter(function (t) { return t.rank < t.ranks; });
       function card(t) {
         return el('article', { class: 'ci' + (t.rank > 0 ? ' bound' : '') }, [
