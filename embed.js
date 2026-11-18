@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.11.1';
+  var VERSION = '1.12.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -942,8 +942,10 @@
 
   // ================================================================== STAFF VIEW (key from /modkey, checked by the forge)
   var STAFF_KEY = 'eldr_staff_key';
-  function store(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { try { if (v == null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e2) {} } }
-  function stored(k) { try { var v = localStorage.getItem(k); if (v) return v; } catch (e) {} try { return sessionStorage.getItem(k); } catch (e2) { return null; } }
+  // 18 Nov: on the Fourthwall members' page (member.html, data-eldr-fw) the key is a session token kept in memory only
+  var FW = { on: false, token: null, pending: null, api: '', bar: null, root: null };
+  function store(k, v) { if (k === 'eldr_rift_key' && FW.on) { if (v == null && FW.token) { FW.token = null; fwBar('This visit has run out. Reload the page to sign in again.'); } else FW.token = v || null; return; } try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { try { if (v == null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e2) {} } }
+  function stored(k) { if (k === 'eldr_rift_key' && FW.on) return FW.token; try { var v = localStorage.getItem(k); if (v) return v; } catch (e) {} try { return sessionStorage.getItem(k); } catch (e2) { return null; } }
   function takeKeyFromUrl() {
     // #eldr-key=... (never sent to any server) or the old ?key=...; either way it is removed from the address bar
     var key = null, h = location.hash || '', m = h.match(/(?:^#|&)eldr-key=([A-Za-z0-9_\-]+)/);
@@ -2697,9 +2699,69 @@
 
   window.__eldrLedger = { scan: scan, version: VERSION, base: BASE, pages: Object.keys(PAGES) };
 
+  // ------------------------------------------------------------------ the Fourthwall members' page (18 Nov)
+  // member.html is an Embedded Section on a members-only page. Fourthwall adds shop_id, supporter_id, tier_id,
+  // timestamp and hmac to its address; the forge checks them (/web/fw/session) and gives this visit a session. Not
+  // linked yet: a code to type in chat (!forge CODE), then the session works like a /shard key.
+  function fwBar(text, kids) {
+    if (!FW.root) return;
+    if (!FW.bar) {
+      FW.bar = el('div', { class: 'eldr-site' });
+      FW.root.parentNode.insertBefore(FW.bar, FW.root);
+    }
+    FW.bar.innerHTML = '';
+    FW.bar.appendChild(el('div', { class: 'eldr-wrap' }, [el('section', { class: 'eldr-card' }, [el('p', { html: text, style: { margin: 0 } })].concat(kids || []))]));
+  }
+  function fwCall(path, opts) {
+    opts = opts || {};
+    opts.cache = 'no-store'; opts.credentials = 'omit';
+    return fetch(FW.api + path, opts).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, j: j || {} }; }); });
+  }
+  // pages remember "not signed in" from their first draw: start them fresh once the session is there
+  function fwRedraw() { cache = {}; Array.prototype.forEach.call(document.querySelectorAll('[data-eldr-page]'), function (r) { if (!r.__eldrMounted) return; if (r.__eldr) r.__eldr.state = {}; render(r, false); }); }
+  function fwSigned(name) {
+    fwBar('Signed in' + (name ? ' as <strong>' + esc(name) + '</strong>' : '') + ' through your eldritzh.com membership.', [
+      el('button', { class: 'eldr-chip', type: 'button', text: 'Not you? Unlink', style: { marginTop: '8px' }, onclick: function () {
+        fwCall('/web/fw/unlink', { method: 'POST', headers: { 'X-Rift-Key': FW.token || '' } }).then(function () { location.reload(); });
+      } })]);
+  }
+  function fwWait(code, until) {
+    fwBar('Link this membership to your character once: type <code>!forge ' + esc(code) + '</code> in chat on Twitch, YouTube or Kick. ' +
+      'This page notices by itself. The code works for 15 minutes.');
+    var t = setInterval(function () {
+      if (until && Date.now() / 1000 > until) { clearInterval(t); fwBar('The code ran out. Reload the page for a new one.'); return; }
+      fwCall('/web/fw/state', { headers: { 'X-Rift-Key': FW.pending || '' } }).then(function (res) {
+        if (res.status === 401) { clearInterval(t); fwBar('This visit has run out. Reload the page.'); return; }
+        if (res.j.linked) { clearInterval(t); FW.token = FW.pending; FW.pending = null; fwSigned(res.j.name); fwRedraw(); }
+      }).catch(function () {});
+    }, 4000);
+  }
+  function fwStart(root) {
+    FW.on = true; FW.root = root;
+    injectStyles();
+    var q = new URLSearchParams(location.search), params = {};
+    q.forEach(function (v, k) { if (k !== 'page') params[k] = v; });
+    if (!params.hmac) { fwBar('Open this page from eldritzh.com while signed in as a member to save from here. Everything else works without it.'); return Promise.resolve(); }
+    try { history.replaceState(null, '', location.pathname + (q.get('page') ? '?page=' + encodeURIComponent(q.get('page')) : '') + location.hash); } catch (e) {}
+    return loadOpt('site.json').then(function (site) {
+      FW.api = site && site.staffApi ? String(site.staffApi).replace(/\/+$/, '') : '';
+      if (!FW.api) { fwBar('Signing in from this page isn\u2019t set up yet.'); return; }
+      return fwCall('/web/fw/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ params: params }) }).then(function (res) {
+        if (!res.j.ok) { fwBar(esc(res.j.error || 'Signing in didn\u2019t work. Reload the page.')); return; }
+        if (res.j.linked) { FW.token = res.j.token; fwSigned(res.j.name); }
+        else { FW.pending = res.j.token; fwWait(res.j.code, res.j.codeExpires); }
+      });
+    }).catch(function () { fwBar('The forge can\u2019t be reached right now. Reload the page in a moment.'); });
+  }
+
   // Fourthwall may add sections after load (page builder, client-side navigation): watch for them.
   function start() {
     takeKeyFromUrl();
+    var fwRoot = document.querySelector('[data-eldr-fw]');
+    if (fwRoot) { fwStart(fwRoot).then(start2, start2); return; }
+    start2();
+  }
+  function start2() {
     scan();
     if (window.MutationObserver) {
       var pending = false;

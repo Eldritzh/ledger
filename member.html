@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>The Eldritch Ledger: members</title>
+<!--
+  The Fourthwall members' page (18 Nov). Put it in an Embedded Section on a members-only page of eldritzh.com:
+    https://ledger.eldritzh.com/member.html?page=talents      (or ?page=covenant)
+  Fourthwall adds the signed shop_id, supporter_id, tier_id, timestamp and hmac; embed.js trades them for a session at
+  the forge (FW_SIGNIN=on). Opened anywhere else, the page still works, read-only.
+-->
+<style>html, body { margin: 0; background: transparent; }</style>
+</head>
+<body>
+<div id="eldr-member" data-eldr-fw="1" data-eldr-nav="0"></div>
+<script>
+  (function () {
+    var p = (new URLSearchParams(location.search).get('page') || 'talents').toLowerCase();
+    if (['talents', 'investigator', 'covenant'].indexOf(p) < 0) p = 'talents';
+    document.getElementById('eldr-member').setAttribute('data-eldr-page', p);
+  })();
+</script>
+<script src="embed.js"></script>
+</body>
+</html>
