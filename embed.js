@@ -13,6 +13,7 @@
      data-eldr-refresh="5"            minutes between quiet re-checks while the page is open (0 = off)
      data-eldr-title="0"              hide the page's own header
      data-eldr-nav="0"                hide the row of links to the other pages (nav.json, from website\nav.txt)
+     data-eldr-discord="https://discord.gg/…"   the Discord invite the pages link to (default: the "discord" line of nav.txt)
 
    Data comes from ./data/ next to this file. Streamer.bot's "Website :: Publish" action
    commits it to GitHub; GitHub Pages serves it. Nothing here needs editing for new data.
@@ -24,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.10.0';
+  var VERSION = '1.11.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -845,16 +846,31 @@
     });
     return img;
   }
+  // 18 Nov: the Discord invite: data-eldr-discord on the div, or the "discord" line of website\nav.txt (nav.json)
+  function discordUrl(ctx) {
+    var u = (ctx.opts && ctx.opts.discord) || '';
+    if (!u) { var n = ((ctx.nav && ctx.nav.pages) || []).filter(function (p) { return p && p.page === 'discord'; })[0]; u = n ? n.url : ''; }
+    return /^https:\/\//.test(u || '') ? u : '';
+  }
+  function discordLink(ctx, text) {
+    var u = discordUrl(ctx);
+    return u ? el('a', { href: u, target: '_blank', rel: 'noopener', text: text }) : text;
+  }
+  // 18 Nov: partners first, then affiliates, then ads (Partners :: Core sends rank; older files fall back on the label)
+  function ptRank(p) {
+    if (typeof p.rank === 'number') return p.rank;
+    var l = String(p.label || p.type || '').toLowerCase();
+    return /^partner/.test(l) ? 0 : /^affiliate/.test(l) ? 1 : 2;
+  }
   function partners(ctx) {
     return load('partners.json').then(function (d) {
-      var list = d.partners || [];
+      var list = (d.partners || []).map(function (p, i) { return { p: p, i: i }; })
+        .sort(function (a, b) { return ptRank(a.p) - ptRank(b.p) || a.i - b.i; }).map(function (x) { return x.p; });
       var out = [head(ctx.opts, 'Patrons of the Ledger', 'Brands that signed the book',
         'Paid partnerships of the stream. Using their links and codes supports the channel.')];
-      var inquiry = el('p', {
-        class: 'eldr-note eldr-small',
-        style: { textAlign: 'center', marginTop: '24px' },
-        html: 'Want to be seen here? Contact Eldritzh at <a href="mailto:dave@eldritzh.com">dave@eldritzh.com</a> or on Discord.'
-      });
+      var inquiry = el('p', { class: 'eldr-note eldr-small', style: { textAlign: 'center', marginTop: '24px' } }, [
+        'Want to be seen here? Contact Eldritzh at ', el('a', { href: 'mailto:dave@eldritzh.com', text: 'dave@eldritzh.com' }),
+        ' or ', discordLink(ctx, 'on Discord'), '.']);
       if (!list.length) { out.push(empty('No patrons have signed the Ledger yet.'), inquiry); return out.concat(foot(d.updated)); }
       var grid = el('div', { class: 'eldr-grid' });
       list.forEach(function (p) {
@@ -1470,10 +1486,11 @@
       by[g].forEach(function (e) {
         var cost = [e.tier === 'eldritch' ? 'An Eldritch Pact' : 'A Pact'];
         if (e.ritual > 1) cost = [e.ritual + ' viewers, ' + (e.tier === 'eldritch' ? 'an Eldritch Pact' : 'a Pact') + ' each'];
+        var rite = e.rite > 1 && !(e.ritual > 1) ? el('div', { class: 'eldr-small eldr-muted' }, ['or ' + e.rite + ' viewers together, a Pact each: ', el('code', { text: '!fx ' + e.id + ' rite' })]) : null;   // 18 Nov
         var tr = el('tr', null, [
           el('td', { 'data-l': 'Effect', style: { width: '40%' } }, [el('strong', { text: e.label }), e.off || sealed ? offTag('dormant') : null,
             el('div', { class: 'eldr-muted eldr-small' }, el('code', { text: '!fx ' + e.id }))]),
-          el('td', { 'data-l': 'Costs' }, [cost[0], e.cult ? el('div', { class: 'eldr-small eldr-muted', text: 'Only for the faithful of ' + e.cult.charAt(0).toUpperCase() + e.cult.slice(1) }) : null]),
+          el('td', { 'data-l': 'Costs' }, [cost[0], rite, e.cult ? el('div', { class: 'eldr-small eldr-muted', text: 'Only for the faithful of ' + e.cult.charAt(0).toUpperCase() + e.cult.slice(1) }) : null]),
           el('td', { 'data-l': 'Where', text: (e.kind || []).map(function (k) { return FX_KIND[k] || k; }).join(' + ') })]);
         tb.appendChild(e.off || sealed ? offRow(tr) : tr);
       });
@@ -2375,7 +2392,8 @@
     ctx.opts = {
       game: root.getAttribute('data-eldr-game') || '',
       noTitle: root.getAttribute('data-eldr-title') === '0',
-      noNav: root.getAttribute('data-eldr-nav') === '0'
+      noNav: root.getAttribute('data-eldr-nav') === '0',
+      discord: root.getAttribute('data-eldr-discord') || ''
     };
     ctx.page = page;
     root.classList.add('eldr-site');
