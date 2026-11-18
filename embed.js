@@ -7,7 +7,7 @@
      <script src="https://ledger.eldritzh.com/embed.js" defer></script>
 
    Pages: hub · story · commands · pacts · circles · codex · partners · sounds · bestiary · congregation · order (or esorder) ·
-          remembrance · rift · investigator (or talents) · covenant · fishing · patchnotes · about
+          remembrance · rift · investigator (or talents) · covenant · fishing · fair · patchnotes · about
    Options on the div:
      data-eldr-game="hunt-showdown"   pacts: open on this game (default: the game on the wheel now)
      data-eldr-refresh="5"            minutes between quiet re-checks while the page is open (0 = off)
@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.12.0';
+  var VERSION = '1.13.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -2547,7 +2547,9 @@
         'Your <strong>Fishing skill</strong> grows as you catch. Deeper waters need more skill and better <strong>bait</strong>: <code>!water</code> shows where you can fish, <code>!bait</code> what is in your tackle box.',
         'Every fish comes <strong>Fine</strong>, <strong>Choice</strong> or <strong>Prime</strong>, and now and then one comes up <strong>aberrant</strong>: wrong, and worth more. Each is its own line in your journal (<code>!fishing</code>).',
         '<strong>The Wreckage:</strong> now and then the wreck of the <em>Alert</em> drifts in for a short while. Chat is told, and every cast while it is here hauls up something extra.',
-        'Sell the catch to the Merchant from Leng, or tip it into Tsathoggua: <code>!fish sell</code>, <code>!fish feed</code>.'
+        'Sell the catch to the Merchant from Leng, or tip it into Tsathoggua: <code>!fish sell</code>, <code>!fish feed</code>.',
+        '<strong>Angler ranks:</strong> your Fishing skill waits at each rank\u2019s cap until you earn the next: <em>Wharf Rat</em> (up to 75), <em>Harbour Hand</em> (150, land Wharf Eels or Grave Mudskippers on two days), <em>Deep Caster</em> (225, buy the Almanac with <code>!fish train</code>, then fish on three days) and <em>Dagon\u2019s Chosen</em> (300, fish up Captain Obed Marsh\u2019s Logbook). You keep catching while you wait. <code>!fishing</code> shows the next step.',
+        '<strong>Ultra-rares:</strong> a handful of things so rare a regular meets one once in a hundred streams or more, in the waters and in the Delve. Each is yours for good. They are named here once somebody finds them.'
       ].map(function (h) { return el('li', { html: h }); }))]));
       out.push(lookup(ctx));
       var box = el('div');
@@ -2571,12 +2573,27 @@
           });
           var hid = (tot.species || 0) - (tot.found || 0);
           if (hid > 0) box.appendChild(el('p', { class: 'eldr-empty', text: num(hid) + ' more ' + (hid === 1 ? 'thing swims' : 'things swim') + ' down there unseen. They are written here when somebody catches one.' }));
+        } else if (st.tab === 'ultras') {
+          var ul = d.ultras || [];
+          if (!ul.length) { box.appendChild(empty('Nothing that rare has been charted.')); return; }
+          var g = el('div', { class: 'eldr-grid' });
+          ul.forEach(function (u) {
+            var known = u.found > 0;
+            g.appendChild(el('article', { class: 'ci' + (known ? ' bound' : '') }, [
+              el('div', { class: 'eldr-row' }, [el('h3', { text: known ? u.name : '???' }),
+                el('span', { class: 'eldr-badge' + (known ? ' gold' : ''), text: (u.where || []).map(function (w) { return w === 'fish' ? 'Waters' : 'The Delve'; }).join(' & ') })]),
+              known ? el('p', { class: 'eldr-small', style: { fontStyle: 'italic', margin: '6px 0' }, text: u.lore }) : el('p', { class: 'eldr-small eldr-muted', text: 'Nobody has found this yet.' }),
+              known ? el('div', { class: 'eldr-small', text: (u.firstName ? 'First found by ' + u.firstName : 'Found') + (u.found > 1 ? ' · ' + num(u.found) + ' have it now' : '') }) : null]));
+          });
+          box.appendChild(el('section', { class: 'eldr-card' }, [el('div', { class: 'eldr-row' }, [el('h2', { text: 'Ultra-rares' }),
+            el('span', { class: 'eldr-badge', text: ul.filter(function (u) { return u.found > 0; }).length + ' of ' + ul.length + ' found' })]),
+            el('p', { class: 'eldr-muted eldr-small', text: 'Each turns up once in a very long while, and only once for each of us. The first in the realm to find one is written here for good.' }), g]));
         } else if (st.tab === 'anglers') {
           if (!anglers.length) { box.appendChild(empty('Nobody has cast a line yet.')); return; }
           var t = el('table', { class: 'stack cx-top' }), tb = el('tbody');
           t.appendChild(el('thead', null, el('tr', null, ['', 'Angler', 'Skill', 'Journal', 'Best catch'].map(function (x) { return el('th', { text: x }); }))));
           anglers.forEach(function (a) {
-            tb.appendChild(el('tr', null, [el('td', { text: '#' + a.rank }), el('td', null, el('strong', { text: a.name })), el('td', { text: 'Skill ' + num(a.skill) }),
+            tb.appendChild(el('tr', null, [el('td', { text: '#' + a.rank }), el('td', null, [el('strong', { text: a.name }), a.title ? el('div', { class: 'eldr-small eldr-muted', text: a.title }) : null]), el('td', { text: 'Skill ' + num(a.skill) }),
               el('td', { text: num(a.species) + (a.species === 1 ? ' kind' : ' kinds') }),
               el('td', { class: 'eldr-muted', text: a.best ? a.best.fish + ' (' + weight(a.best.grams) + ')' : '' })]));
           });
@@ -2600,9 +2617,159 @@
             el('p', { class: 'eldr-muted eldr-small', text: 'Shallowest first. “Found” is how many of a water’s fish somebody has caught so far.' }), t2]));
         }
       }
-      out.push(tabs(st, [['waters', 'Waters'], ['journal', 'The journal'], ['anglers', 'Anglers']], draw));
+      out.push(tabs(st, [['waters', 'Waters'], ['journal', 'The journal'], ['ultras', 'Ultra-rares'], ['anglers', 'Anglers']], draw));
       draw();
       out.push(box, foot(d.updated, el('div', { text: 'Type !fishing in chat to see your own journal.' })));
+      return out;
+    });
+  }
+
+
+  // ================================================================== THE ONYX FAIR (fair.json + /web/fair/*, 19 Nov)
+  // Once a month the onyx city of Inquanok holds its fair. Everyone earns Onyx Tickets on stream; signed in with the
+  // /shard key you see yours, buy at the booth (the prize plays on stream in turn, tickets come off when it plays) and ask
+  // the Veiled Priest your fortune. Nothing from here puts a line in chat except the fortune's boon.
+  var FAIR_Q = [
+    ['A stranger knocks at midnight.', 'Let them in', 'Bar the door'],
+    ['A black galley from Leng offers you passage.', 'Board it', 'Watch it sail']
+  ];
+  function fair(ctx) {
+    return load('fair.json').then(function (d) {
+      d = d || {};
+      var st = ctx.state, prizes = d.prizes || [], e = d.earn || {};
+      var api = ctx.site && ctx.site.staffApi ? String(ctx.site.staffApi).replace(/\/+$/, '') : '';
+      var KEY_GONE = 'Your key has expired or was revoked. Get a new one with /shard key in Discord.';
+      var out = [head(ctx.opts, 'The Onyx Fair', 'At the foot of Kadath, the onyx city opens its gates',
+        'Once a month the fair comes to Inquanok. Earn Onyx Tickets on stream, spend them at the booth on flares and stranger things that play on stream, and let the Veiled Priest read your fortune.')];
+      var start = d.start ? new Date(d.start * 1000) : null, end = d.end ? new Date(d.end * 1000 - 1000) : null;
+      var whenTxt = d.on ? ('In town until ' + (end ? end.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' }) : 'the week is out') + '.')
+        : (d.next ? 'The gates are shut. The fair comes back on day ' + d.next + ' of next month.' : 'The gates are shut for now.');
+      out.push(el('section', { class: 'eldr-card' }, [el('div', { class: 'eldr-row' }, [el('h2', { text: d.name ? d.name.charAt(0).toUpperCase() + d.name.slice(1) : 'The Onyx Fair' }),
+        el('span', { class: 'eldr-badge' + (d.on ? ' green' : ''), text: d.on ? 'In town' : 'Gone' })]), el('p', { text: whenTxt })]));
+      out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'How tickets come' }), el('ul', null, [
+        'Turning up: ' + num(e.turnUp || 1) + (e.turnUp === 1 ? ' ticket' : ' tickets') + ' a stream. First in chat: ' + num(e.first || 2) + ' more.',
+        'Staying: ' + num(e.stay || 1) + ' after ' + num(e.stayMins || 30) + ' minutes of chatting.',
+        'Supporting: a ticket for every ' + num(e.bitsPer || 500) + ' bits, sub or gifted sub (at most ' + num(e.supCap || 10) + ' a stream). A raid: ' + num(e.raid || 3) + '.',
+        'A whole Litany: ' + num(e.litany || 1) + '. Helping a Working: ' + num(e.working || 1) + '.',
+        'Tickets keep from one fair to the next. <code>!fair</code> shows yours, <code>!fair buy &lt;prize&gt;</code> buys in chat, <code>!fortune</code> asks the Priest.'
+      ].map(function (h) { return el('li', { html: h }); }))]));
+
+      var root = el('div');
+      function ccall(path, opts) {
+        opts = opts || {};
+        opts.headers = Object.assign({ 'X-Rift-Key': stored(RIFT_KEY) || '' }, opts.headers || {});
+        opts.cache = 'no-store'; opts.credentials = 'omit';
+        return fetch(api + path, opts).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, j: j || {} }; }); });
+      }
+      function loadMe() {
+        takeRiftKey();
+        if (!api || !stored(RIFT_KEY)) { st.fair = null; draw(); return; }
+        if (!st.fair || st.fair.err) st.fair = { busy: true };
+        ccall('/web/fair/me').then(function (res) {
+          if (res.status === 401) { store(RIFT_KEY, null); st.fair = { err: KEY_GONE }; }
+          else if (res.status !== 200 || !res.j.ok) st.fair = { err: res.j.error || 'Your account is out of reach right now.' };
+          else st.fair = res.j;
+          draw();
+        }).catch(function () { st.fair = { err: 'Your account is out of reach right now (the forge may be offline).' }; draw(); });
+      }
+      function post(path, body, btn) {
+        if (btn) btn.disabled = true;
+        body.nonce = nonce();
+        ccall(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).then(function (res) {
+          if (res.status === 401) { store(RIFT_KEY, null); st.fair = { err: KEY_GONE }; draw(); return; }
+          st.fairMsg = res.j.text || res.j.error || (res.j.ok ? 'Sent.' : 'That didn\'t work. Try again in a moment.');
+          draw();
+          if (res.j.queued) { clearTimeout(st.fairTimer); st.fairTimer = setTimeout(function () { if (document.body.contains(root)) loadMe(); }, 75000); }
+        }).catch(function () { st.fairMsg = 'The forge didn\'t answer. Try again in a moment.'; if (btn) btn.disabled = false; draw(); });
+      }
+      function signedIn() { return !!(st.fair && st.fair.ok); }
+      function freeTickets() {
+        if (!signedIn()) return 0;
+        var waiting = (st.fair.queue || []).filter(function (q) { return q.state === 'waiting'; }).reduce(function (a, q) {
+          var z = prizes.filter(function (x) { return x.name === q.prize; })[0]; return a + (z ? z.tickets : 0); }, 0);
+        return Math.max(0, (st.fair.tickets || 0) - waiting);
+      }
+      function account() {
+        if (!api) return null;
+        var a = st.fair, box = el('section', { class: 'eldr-card tt-acct' });
+        if (!a || a.err) {
+          var input = el('input', { class: 'eldr-search eldr-keyin', type: 'password', autocomplete: 'off', spellcheck: 'false', placeholder: 'rift_… or the link from Discord', 'aria-label': 'Your key' });
+          var msg = el('p', { class: 'eldr-keymsg', text: a && a.err ? a.err : '' });
+          box.appendChild(el('h2', { text: 'Sign in to visit the booth' }));
+          box.appendChild(el('p', { class: 'eldr-small', html: 'Signed in, you see your Onyx Tickets, buy prizes here and ask the Veiled Priest your fortune. In Discord, type <code>/shard key</code> (the same key as the Rift page and the talent tree) and open its link once, or paste the key here. Your Discord has to be linked first: <code>/forge link</code>.' }));
+          box.appendChild(el('form', { onsubmit: function (ev) {
+            ev.preventDefault();
+            var m = (input.value || '').trim().match(/rift_[A-Za-z0-9_\-]+/);
+            if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a key. It starts with rift_.'; return; }
+            store(RIFT_KEY, m[0]); st.fair = { busy: true }; loadMe(); draw();
+          } }, [el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Sign in' })]), msg]));
+          return box;
+        }
+        if (a.busy) { box.appendChild(el('p', { class: 'eldr-muted', text: 'Looking you up…' })); return box; }
+        box.appendChild(el('div', { class: 'eldr-keyrow', style: { justifyContent: 'space-between', margin: '0' } }, [
+          el('div', null, [el('h2', { text: 'Signed in · ' + (a.name || ''), style: { margin: '0' } }),
+            el('div', { class: 'eldr-small', text: num(a.tickets) + ' Onyx Ticket' + (a.tickets === 1 ? '' : 's') + (freeTickets() !== a.tickets ? ' (' + num(freeTickets()) + ' free, the rest on prizes waiting their turn)' : '') })]),
+          el('div', { class: 'tt-acts' }, [
+            el('button', { class: 'eldr-chip', type: 'button', text: 'Reload', onclick: function () { st.fairMsg = ''; loadMe(); } }),
+            el('button', { class: 'eldr-chip', type: 'button', text: 'Sign out', onclick: function () { store(RIFT_KEY, null); st.fair = null; st.fairMsg = ''; draw(); } })])]));
+        if (a.boon) box.appendChild(el('p', { class: 'eldr-small', style: { margin: '8px 0 0' }, text: '🔮 ' + a.boon + (a.boonUntil ? ' · until ' + new Date(a.boonUntil * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '') }));
+        if ((a.queue || []).length) {
+          box.appendChild(el('ul', { class: 'eldr-small', style: { margin: '8px 0 0' } }, a.queue.slice().reverse().map(function (q) {
+            return el('li', { text: q.prize + ': ' + (q.state === 'waiting' ? 'waiting its turn' : q.state === 'played' ? 'played' : 'turned away (not enough tickets, or the fair had gone)') });
+          })));
+        }
+        if (st.fairMsg) box.appendChild(el('p', { class: 'eldr-note', role: 'status', style: { margin: '10px 0 0' }, text: st.fairMsg }));
+        return box;
+      }
+      function booth() {
+        var grid = el('div', { class: 'eldr-grid' }), free = freeTickets();
+        prizes.forEach(function (z) {
+          var can = d.on && signedIn() && free >= z.tickets;
+          var b = signedIn() && d.on ? el('button', { type: 'button', class: 'eldr-chip' + (can ? ' tt-save' : ''), disabled: can ? null : '',
+            text: can ? 'Buy for ' + z.tickets : z.tickets + ' tickets' }) : null;
+          if (b) b.addEventListener('click', function () { post('/web/fair/buy', { prize: z.id }, b); });
+          grid.appendChild(el('article', { class: 'ci' }, [
+            el('div', { class: 'eldr-row' }, [el('h3', { text: z.name }), el('span', { class: 'eldr-badge gold', text: z.tickets + ' 🎟' })]),
+            el('div', { style: { height: '6px', borderRadius: '3px', margin: '6px 0', background: /^#[0-9a-fA-F]{6}$/.test(z.colour || '') ? z.colour : '#D4AF37' } }),
+            el('p', { class: 'eldr-small', text: z.text || '' }), b]));
+        });
+        return el('section', { class: 'eldr-card' }, [el('h2', { text: 'The booth' }),
+          el('p', { class: 'eldr-small eldr-muted', text: 'One prize plays at a time, in turn. Your tickets come off only when it plays.' }), grid]);
+      }
+      function fortune() {
+        if (!d.on) return null;
+        var box = el('section', { class: 'eldr-card' }, [el('h2', { text: 'The Veiled Priest' }),
+          el('p', { class: 'eldr-small', text: 'He reads each of us once a stream: two questions, and your answers choose a boon that lasts a while. Now and then he slips you a few tickets, too.' })]);
+        if (!signedIn()) { box.appendChild(el('p', { class: 'eldr-small eldr-muted', html: 'Sign in above, or type <code>!fortune</code> in chat.' })); return box; }
+        if (st.fair.read) { box.appendChild(el('p', { class: 'eldr-small', text: 'He has read you once tonight. He does not read twice.' })); return box; }
+        if (!st.fair.live) { box.appendChild(el('p', { class: 'eldr-small eldr-muted', text: 'He waits for the stream.' })); return box; }
+        st.fairAns = st.fairAns || ['', ''];
+        FAIR_Q.forEach(function (q, i) {
+          box.appendChild(el('p', { style: { margin: '10px 0 4px' }, text: q[0] }));
+          box.appendChild(el('div', { class: 'tt-acts' }, ['a', 'b'].map(function (k, j) {
+            var on = st.fairAns[i] === k;
+            return el('button', { type: 'button', class: 'eldr-chip' + (on ? ' tt-save' : ''), 'aria-pressed': String(on), text: q[j + 1],
+              onclick: function () { st.fairAns[i] = k; draw(); } });
+          })));
+        });
+        var go = el('button', { type: 'button', class: 'eldr-chip tt-save', style: { marginTop: '12px' }, disabled: st.fairAns[0] && st.fairAns[1] ? null : '', text: 'Ask the Priest' });
+        go.addEventListener('click', function () { post('/web/fair/fortune', { answers: st.fairAns.join('') }, go); });
+        box.appendChild(go);
+        return box;
+      }
+      function plays() {
+        var p = d.plays || [];
+        if (!p.length) return null;
+        return el('section', { class: 'eldr-card' }, [el('h2', { text: 'Lately over the square' }), el('ul', null, p.map(function (x) {
+          return el('li', { class: 'eldr-small', text: x.name + ' set off ' + x.prize + (x.at ? ' · ' + ago(x.at * 1000) : '') });
+        }))]);
+      }
+      function draw() {
+        root.innerHTML = '';
+        [account(), booth(), fortune(), plays()].forEach(function (n) { if (n) root.appendChild(n); });
+      }
+      if (st.fair === undefined) loadMe(); else draw();
+      out.push(root, foot(d.updated, el('div', { html: 'In chat: <code>!fair</code> · <code>!fair booth</code> · <code>!fair buy &lt;prize&gt;</code> · <code>!fortune</code>' })));
       return out;
     });
   }
@@ -2632,7 +2799,7 @@
   var about = mdPage('about.md', 'About the Ledger', 'Embrace the Tentacle');
 
   var PAGES = { hub: hub, rift: rift, story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance,
-    investigator: investigator, talents: investigator, covenant: covenant, fishing: fishing, patchnotes: patchnotes, about: about };
+    investigator: investigator, talents: investigator, covenant: covenant, fishing: fishing, fair: fair, patchnotes: patchnotes, about: about };
 
   // ------------------------------------------------------------------ mount
   function render(root, quiet) {
