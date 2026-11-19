@@ -20,6 +20,10 @@
 - **Dreaming.** Watching quietly is worth something now: after a while without a word you start to dream, and Dreaming XP builds up (twice as fast after `!lurk`). When you speak again you wake with it, and your chat XP counts double (the rest of your XP a little more) until it's spent. `!dreaming` shows yours.
 - **Five new Covenant talents** in The Long Night: one more rite in everyone's Litany, rites that pay more, one more Working on the board, Workings that pay more, and faster dreams.
 - New achievements for rites spoken, whole Litanies, Workings helped and time spent dreaming.
+- **Trackers.** Goals for the game on stream: *Headshots 3/10*, *Kills 7/15*, and a **Gunathon** that walks Dave through a run of weapons one kill at a time. Each game has its own goals, they light up on stream as they count, and a fulfilled goal feeds the Pact pool. See where they stand with `!tracker`.
+- **Shape them.** `!tracker up` makes a goal harder and `!tracker down` makes it easier, for Madness. `!tracker swap` trades a goal for a surprise from the pool, `!tracker pick` chooses one, and `!tracker reroll` gives the Gunathon a different weapon, for Pacts. A goal more than half done stays put.
+- **`!stabby`** is back as a tracker: anyone can count one, it shows on stream for a moment, and `!stabbings` keeps the score.
+- **New achievements** for meddling with the tally: raising and easing goals, swapping them, having the goals you shaped fulfilled, and a stream's Taskmaster of the Night. Two of them are hidden.
 
 ## 18 November 2026
 

@@ -197,6 +197,22 @@ The wheel has gold **JACKPOT** slices. Land on one and something good happens to
 | `!banrefund <id>` | Take your ban back (free until its first match) |
 | `!bans` | What's banned right now |
 
+## 🎯 Trackers *(new)*
+Goals on stream for the game Dave is playing: *Headshots 3/10*, *Kills 7/15*, a *Gunathon* weapon by weapon. Each game has its own, and some show up at the start of every stream. When a goal is fulfilled it lights up on stream and feeds the Pact pool.
+| Command | What it does |
+|---|---|
+| `!tracker` | The goals up right now |
+| `!tracker <name>` | One goal: where it stands, this stream and all time |
+| `!tracker pool` | Goals waiting to be swapped in |
+| `!tracker up <name>` | Spend Madness to make a goal harder |
+| `!tracker down <name>` | Spend Madness to make a goal easier (it costs more than making it harder) |
+| `!tracker swap <name>` | Spend 1 Pact to trade a goal for a random one from the pool |
+| `!tracker pick <new> [old]` | Spend 2 Pacts to choose the goal yourself: into a free slot, or in place of another |
+| `!tracker reroll <name>` | Spend 1 Pact on a new weapon for the Gunathon's current step, before it has started |
+| `!stabby` / `!stabbings` | Count one of Dave's stabbings / how many so far, this stream and all time |
+
+A goal more than half done can't be swapped away, and a goal that was just changed rests for a minute. What you spend goes into the Pact pool. When a goal you shaped is fulfilled, the Codex remembers.
+
 ## ⭕ Summoning Circles
 Want Dave to play a certain game? Feed its **summoning circle**. When a circle is full it is **bound**: Dave owes it time in that game before its deadline, and the clock counts by itself while he plays it. Overfill a circle and he owes it more time. If he misses the deadline, the circle breaks and everyone gets their offering back with 10% extra Madness.
 | Command | What it does |

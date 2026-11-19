@@ -1,9 +1,10 @@
 {
-  "updated": "2026-11-18T18:45:27.5319831Z",
+  "updated": "2026-11-19T19:32:46.7709412Z",
   "unlocked": [
     "toad",
     "margins",
-    "bottom"
+    "bottom",
+    "sunwait"
   ],
   "counters": {
     "checkins": 81,
@@ -12,7 +13,7 @@
     "messages": 725,
     "banishes": 56,
     "delve_bottoms": 6,
-    "sunwait_candles": 1,
+    "sunwait_candles": 2,
     "deaths": 5,
     "chants": 0,
     "rituals": 0,
@@ -21,17 +22,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 7,
+    "stream:checkins": 0,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
     "sum:goblins_grabbed": 9,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
-    "stream:messages": 50,
+    "stream:messages": 0,
     "sum:circle_top": 0,
-    "stream:banishes": 3,
-    "@moon": 81,
+    "stream:banishes": 0,
+    "@moon": 0,
     "kinds:beings_seen": 14,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -149,11 +150,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 46.7,
+      "pct": 0.0,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 7,
+          "have": 0,
           "need": 15
         }
       ],
@@ -204,11 +205,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 20.0,
+      "pct": 0.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 50,
+          "have": 0,
           "need": 250
         }
       ],
@@ -226,16 +227,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 81.2,
+      "pct": 0.0,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 7,
+          "have": 0,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 3,
+          "have": 0,
           "need": 4
         }
       ],
@@ -259,17 +260,6 @@
           "label": "Seal 75 Pacts on the wheel",
           "have": 0,
           "need": 75
-        }
-      ],
-      "wait": ""
-    },
-    "sunwait": {
-      "pct": 50.0,
-      "parts": [
-        {
-          "label": "During the Sunwait, light two of its six candles",
-          "have": 1,
-          "need": 2
         }
       ],
       "wait": ""
@@ -401,15 +391,15 @@
       "wait": ""
     },
     "longnight": {
-      "pct": 16.7,
+      "pct": 33.3,
       "parts": [
         {
           "label": "Light all six candles of the Sunwait (across the years, if it must be)",
-          "have": 1,
+          "have": 2,
           "need": 6
         }
       ],
-      "wait": "after \"Six Candles Before the Long Night\""
+      "wait": ""
     },
     "throne": {
       "pct": 0.0,
