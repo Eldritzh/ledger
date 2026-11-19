@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19T19:46:59.5785020Z",
+  "updated": "2026-11-19T19:59:16.7493465Z",
   "unlocked": [
     "toad",
     "margins",
@@ -11,7 +11,7 @@
     "checkins": 85,
     "fed": 1643989,
     "tsath_fills": 14,
-    "messages": 725,
+    "messages": 750,
     "banishes": 56,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
@@ -30,7 +30,7 @@
     "sum:goblins_grabbed": 10,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
-    "stream:messages": 0,
+    "stream:messages": 25,
     "sum:circle_top": 0,
     "stream:banishes": 0,
     "@moon": 25,
@@ -206,11 +206,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 0.0,
+      "pct": 10.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 0,
+          "have": 25,
           "need": 250
         }
       ],
