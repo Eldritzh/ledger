@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.12.0';
+  var VERSION = '1.12.1';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -2736,9 +2736,25 @@
       }).catch(function () {});
     }, 4000);
   }
+  // Fourthwall's documented message (docs.fourthwall.com/embedded-sections/messages): {type: 'resize', height}.
+  // Sent whenever the page's height changes, so the Embedded Section can be as tall as what's in it.
+  function fwResize() {
+    if (window.parent === window) return;
+    var last = 0;
+    function send() {
+      var h = Math.ceil(document.documentElement.scrollHeight || document.body.scrollHeight || 0);
+      if (!h || Math.abs(h - last) < 2) return;
+      last = h;
+      try { window.parent.postMessage({ type: 'resize', height: h }, '*'); } catch (e) {}
+    }
+    send();
+    if (window.ResizeObserver) { try { new ResizeObserver(send).observe(document.body); } catch (e) {} }
+    setInterval(send, 1500);
+  }
   function fwStart(root) {
     FW.on = true; FW.root = root;
     injectStyles();
+    fwResize();
     var q = new URLSearchParams(location.search), params = {};
     q.forEach(function (v, k) { if (k !== 'page') params[k] = v; });
     if (!params.hmac) { fwBar('Open this page from eldritzh.com while signed in as a member to save from here. Everything else works without it.'); return Promise.resolve(); }
