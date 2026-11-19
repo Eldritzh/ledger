@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-19T20:59:08Z",
+  "updated": "2026-11-19T21:31:09Z",
   "version": "1.5.0",
-  "reason": "stream end",
+  "reason": "!web push",
   "files": {
     "story_chapters.json": "2026-11-04T19:52:27Z",
     "story_state.json": "2026-11-19T20:59:08Z",
@@ -28,5 +28,6 @@
     "events.json": "2026-11-19T19:32:47Z",
     "fair.json": "2026-11-19T19:32:47Z"
   },
-  "staffApi": "https://forge-web.warden.se"
+  "staffApi": "https://forge-web.warden.se",
+  "membersPage": "/pages/sanctum"
 }
