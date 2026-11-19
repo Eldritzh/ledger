@@ -1,14 +1,15 @@
 {
-  "updated": "2026-11-19T19:32:46.7709412Z",
+  "updated": "2026-11-19T19:34:18.6590267Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom",
-    "sunwait"
+    "sunwait",
+    "faithful"
   ],
   "counters": {
-    "checkins": 81,
-    "fed": 1638739,
+    "checkins": 82,
+    "fed": 1639027,
     "tsath_fills": 13,
     "messages": 725,
     "banishes": 56,
@@ -22,7 +23,7 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 0,
+    "stream:checkins": 1,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
@@ -32,7 +33,7 @@
     "stream:messages": 0,
     "sum:circle_top": 0,
     "stream:banishes": 0,
-    "@moon": 0,
+    "@moon": 6,
     "kinds:beings_seen": 14,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -45,17 +46,17 @@
     "sum:haunts_sent": 0,
     "kinds:legend_weapons": 0,
     "episodes": 0,
-    "max:streak": 35,
+    "max:streak": 40,
     "@hand": 6,
     "stream:chants": 0
   },
   "progress": {
     "ink": {
-      "pct": 54.0,
+      "pct": 54.7,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 81,
+          "have": 82,
           "need": 150
         }
       ],
@@ -150,11 +151,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 0.0,
+      "pct": 6.7,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 0,
+          "have": 1,
           "need": 15
         }
       ],
@@ -227,11 +228,11 @@
       "wait": ""
     },
     "moon": {
-      "pct": 0.0,
+      "pct": 6.2,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 0,
+          "have": 1,
           "need": 8
         },
         {
@@ -379,17 +380,6 @@
       ],
       "wait": ""
     },
-    "faithful": {
-      "pct": 87.5,
-      "parts": [
-        {
-          "label": "One soul comes back forty streams in a row",
-          "have": 35,
-          "need": 40
-        }
-      ],
-      "wait": ""
-    },
     "longnight": {
       "pct": 33.3,
       "parts": [
@@ -444,7 +434,7 @@
       "parts": [
         {
           "label": "Signatures",
-          "have": 81,
+          "have": 82,
           "need": 2500
         },
         {
