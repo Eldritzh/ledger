@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19T18:49:03Z",
+  "updated": "2026-11-19T19:09:01Z",
   "version": "1.5.0",
   "reason": "routine",
   "files": {
@@ -8,24 +8,24 @@
     "pacts.json": "2026-11-16T18:52:35Z",
     "circles.json": "2026-11-16T21:02:40Z",
     "codex.json": "2026-11-18T19:40:34Z",
-    "partners.json": "2026-11-18T21:34:49Z",
-    "commands.md": "2026-11-12T22:06:23Z",
+    "partners.json": "2026-11-19T19:09:01Z",
+    "commands.md": "2026-11-19T19:09:01Z",
     "guide.md": "2026-11-12T15:01:53Z",
     "sounds.json": "2026-11-04T19:52:27Z",
     "bestiary.json": "2026-11-14T22:59:28Z",
     "congregation.json": "2026-11-16T19:17:37Z",
     "order.json": "2026-11-16T21:02:40Z",
     "remembrance.json": "2026-11-05T19:10:46Z",
-    "investigator.json": "2026-11-16T21:02:40Z",
-    "fishing.json": "2026-11-19T18:49:03Z",
-    "patchnotes.md": "2026-11-15T11:05:33Z",
+    "investigator.json": "2026-11-19T19:09:01Z",
+    "fishing.json": "2026-11-19T19:09:01Z",
+    "patchnotes.md": "2026-11-19T19:09:01Z",
     "about.md": "2026-11-12T10:57:17Z",
-    "nav.json": "2026-11-11T19:45:51Z",
+    "nav.json": "2026-11-19T19:09:01Z",
     "covenant.json": "2026-11-18T19:59:41Z",
     "people.json": "2026-11-16T21:02:40Z",
     "fx.json": "2026-11-18T19:26:49Z",
     "winners.json": "2026-11-19T18:49:03Z",
-    "events.json": "2026-11-19T18:49:03Z"
+    "events.json": "2026-11-19T19:09:01Z"
   },
   "staffApi": "https://forge-web.warden.se"
 }

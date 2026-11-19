@@ -18,6 +18,13 @@
 | `!character` | Your investigator in one line: level, title, lineage, occupation; `!character <name>` for someone else's |
 | `/talent`, `/occupation`, `/lineage`, `/identity`, `/pronouns`, `/character` (Discord) | The same in the forge bot (changes apply when the bot's stream side next runs); `/occupation info:` and `/lineage info:` show one in full |
 | `!rebirth` | At the top level (60): be born again at level 1 with a ✦ mark (`!rebirth confirm`) |
+| `!litany` | Your Litany: three small rites of your own this stream (speak, banish, fish, look something up …). Each pays XP and Madness, all of them a bonus and a chance at a Pact. `!litany swap` trades one rite once a stream |
+| `!workings` | The Workings: what the whole congregation works at this stream. Everyone who helps one to the end is paid when it's done; some must be done early or they fail |
+| `!dreaming` | Your Dreaming XP. Watching quietly builds it (twice as fast after `!lurk`); when you speak again your chat XP counts double until it's spent |
+| `!fish train` | Angler ranks: your Fishing skill waits at 75, 150 and 225 until you earn the next rank (Harbour Hand, Deep Caster, Dagon's Chosen). `!fish train` buys the Almanac for Deep Caster; `!fishing` shows your rank and the next step |
+| `!fair` | The Onyx Fair of Inquanok (the first week of each month): your Onyx Tickets, earned by turning up, staying, supporting and raids. `!fair booth` shows the prizes, `!fair buy <prize>` sets one off on stream in turn (also on the Ledger's Fair page) |
+| `/fair` (Discord) | The Onyx Fair from Discord: `/fair tickets`, `/fair booth`, `/fair buy`, `/fair fortune` (the two answers as choices). `/fish train` too |
+| `!fortune` | While the Onyx Fair is in town: the Veiled Priest asks two questions (answer `!fortune a` or `b`, or `!fortune a b` at once) and grants a boon for a while. Once a stream |
 | `!covenant` | Eldritzh's Awakening and the Covenant: talents for everyone, chosen by chat vote (one per Awakening level) |
 | `!codex` | Your achievements |
 | `!forget` | Take yourself off every public page on eldritzh.com: the Codex, the leaderboards and your own look-up entry. Nothing changes in the game, and `!forget undo` brings you back (`!codex hide` / `!codex show` do the same) |
@@ -292,6 +299,7 @@ Some sounds are cheaper (or free) for subs, members and the special folk. Happy 
 | `!fx <name>` | Fire an effect on stream: uses a Rift Shard you hold for it, otherwise a Pact. If the dark is busy, it waits its turn |
 | `!fx <name> pact` | Pay with a Pact even if you hold that shard |
 | `!fx roll` | Rift Roulette: one Pact for a random effect (it can bite back) |
+| `!fx <name> rite` | Wake an Eldritch effect together: 2 viewers (sight and sound) or 3 (all three) pay one Pact each. Others join with `!fx <name>` while the circle is open |
 | `!shard` | Buy a sealed Rift Shard for a Pact (`!shard 3` buys three). `!shard open` shows what it holds |
 | `!shard open` | Open your sealed shards (from bits, subs, gifts, donations, hype trains, the Merchant…) |
 | `!shard eldritch [name] [name]` | An Eldritch Pact: 3 shards from a darker pool, or choose 1 Eldritch shard or 2 Pact shards |

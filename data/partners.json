@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18T19:15:25Z",
+  "updated": "2026-11-19T18:49:46Z",
   "partners": [
     {
       "id": "g-portal",
@@ -17,6 +17,7 @@
         "!gportal",
         "!g-portal"
       ],
+      "banner": "",
       "circles": []
     },
     {
@@ -36,6 +37,7 @@
         "!store",
         "!games"
       ],
+      "banner": "",
       "circles": []
     },
     {
@@ -54,6 +56,7 @@
         "!dreadmoor",
         "!dread"
       ],
+      "banner": "",
       "circles": []
     }
   ]
