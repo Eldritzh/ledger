@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-18T21:34:49Z",
-  "version": "1.4.1",
+  "updated": "2026-11-19T18:49:03Z",
+  "version": "1.5.0",
   "reason": "routine",
   "files": {
     "story_chapters.json": "2026-11-04T19:52:27Z",
@@ -17,13 +17,15 @@
     "order.json": "2026-11-16T21:02:40Z",
     "remembrance.json": "2026-11-05T19:10:46Z",
     "investigator.json": "2026-11-16T21:02:40Z",
-    "fishing.json": "2026-11-18T19:26:49Z",
+    "fishing.json": "2026-11-19T18:49:03Z",
     "patchnotes.md": "2026-11-15T11:05:33Z",
     "about.md": "2026-11-12T10:57:17Z",
     "nav.json": "2026-11-11T19:45:51Z",
     "covenant.json": "2026-11-18T19:59:41Z",
     "people.json": "2026-11-16T21:02:40Z",
-    "fx.json": "2026-11-18T19:26:49Z"
+    "fx.json": "2026-11-18T19:26:49Z",
+    "winners.json": "2026-11-19T18:49:03Z",
+    "events.json": "2026-11-19T18:49:03Z"
   },
   "staffApi": "https://forge-web.warden.se"
 }
