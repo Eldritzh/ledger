@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.14.1';
+  var VERSION = '1.14.2';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -2645,14 +2645,19 @@
       var whenTxt = d.on ? ('In town until ' + (end ? end.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' }) : 'the week is out') + '.')
         : (d.next ? 'The gates are shut. The fair comes back on day ' + d.next + ' of next month.' : 'The gates are shut for now.');
       out.push(el('section', { class: 'eldr-card' }, [el('div', { class: 'eldr-row' }, [el('h2', { text: d.name ? d.name.charAt(0).toUpperCase() + d.name.slice(1) : 'The Onyx Fair' }),
-        el('span', { class: 'eldr-badge' + (d.on ? ' green' : ''), text: d.on ? 'In town' : 'Gone' })]), el('p', { text: whenTxt })]));
+        el('span', { class: 'eldr-badge' + (d.on ? ' green' : ''), text: d.on ? 'In town' : (d.early ? 'Opening soon' : 'Gone') })]), el('p', { text: whenTxt }),
+        // 19 Nov: members of eldritzh.com may use the booth before the fair opens
+        d.early && !d.on ? el('p', { class: 'eldr-note', html: '🏮 The booth is already open for <a href="/supporters">members of eldritzh.com</a>.' }) : null]));
       out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'How tickets come' }), el('ul', null, [
         'Turning up: ' + num(e.turnUp || 1) + (e.turnUp === 1 ? ' ticket' : ' tickets') + ' a stream. First in chat: ' + num(e.first || 2) + ' more.',
         'Staying: ' + num(e.stay || 1) + ' after ' + num(e.stayMins || 30) + ' minutes of chatting.',
         'Supporting: a ticket for every ' + num(e.bitsPer || 500) + ' bits, sub or gifted sub (at most ' + num(e.supCap || 10) + ' a stream). A raid: ' + num(e.raid || 3) + '.',
         'A whole Litany: ' + num(e.litany || 1) + '. Helping a Working: ' + num(e.working || 1) + '.',
+        (e.memberTurnUp || e.memberEarlyDays) ? '<a href="/supporters">Members of eldritzh.com</a>: ' + [e.memberTurnUp ? num(e.memberTurnUp) + ' more for turning up' : '',
+          e.memberEarlyDays ? 'the booth opens ' + (e.memberEarlyDays === 1 ? 'a day' : num(e.memberEarlyDays) + ' days') + ' early' : '',
+          prizes.some(function (z) { return z.members; }) ? 'a prize of their own' : ''].filter(Boolean).join(', ') + '.' : '',
         'Tickets keep from one fair to the next. <code>!fair</code> shows yours, <code>!fair buy &lt;prize&gt;</code> buys in chat, <code>!fortune</code> asks the Priest.'
-      ].map(function (h) { return el('li', { html: h }); }))]));
+      ].filter(Boolean).map(function (h) { return el('li', { html: h }); }))]));
 
       var root = el('div');
       function ccall(path, opts) {
@@ -2723,13 +2728,16 @@
       }
       function booth() {
         var grid = el('div', { class: 'eldr-grid' }), free = freeTickets();
+        var member = signedIn() && !!st.fair.member, open = d.on || (d.early && member);
         prizes.forEach(function (z) {
-          var can = d.on && signedIn() && free >= z.tickets;
-          var b = signedIn() && d.on ? el('button', { type: 'button', class: 'eldr-chip' + (can ? ' tt-save' : ''), disabled: can ? null : '',
-            text: can ? 'Buy for ' + z.tickets : z.tickets + ' tickets' }) : null;
+          var allowed = !z.members || member;
+          var can = open && signedIn() && allowed && free >= z.tickets;
+          var b = signedIn() && open ? el('button', { type: 'button', class: 'eldr-chip' + (can ? ' tt-save' : ''), disabled: can ? null : '',
+            text: !allowed ? 'Members only' : can ? 'Buy for ' + z.tickets : z.tickets + ' tickets' }) : null;
           if (b) b.addEventListener('click', function () { post('/web/fair/buy', { prize: z.id }, b); });
           grid.appendChild(el('article', { class: 'ci' }, [
-            el('div', { class: 'eldr-row' }, [el('h3', { text: z.name }), el('span', { class: 'eldr-badge gold', text: z.tickets + ' 🎟' })]),
+            el('div', { class: 'eldr-row' }, [el('h3', { text: z.name }), z.members ? el('span', { class: 'eldr-badge', text: 'Members' }) : null,
+              el('span', { class: 'eldr-badge gold', text: z.tickets + ' 🎟' })]),
             el('div', { style: { height: '6px', borderRadius: '3px', margin: '6px 0', background: /^#[0-9a-fA-F]{6}$/.test(z.colour || '') ? z.colour : '#D4AF37' } }),
             el('p', { class: 'eldr-small', text: z.text || '' }), b]));
         });
