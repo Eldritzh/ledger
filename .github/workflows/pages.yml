@@ -1,6 +1,10 @@
 # Publishes the whole repository to GitHub Pages on every push to main.
 # A custom workflow is used on purpose: the soft limit of 10 Pages builds per hour
 # does not apply to sites published this way, so a busy stream can never trip it.
+#
+# 19 Nov: GitHub sometimes can't find the "github-pages" artifact right after the upload
+# ("No artifacts named github-pages were found"). The upload and the deploy are now two jobs
+# (as in GitHub's own template), and the deploy tries again twice after a short wait.
 name: Publish the Ledger
 
 on:
@@ -19,16 +23,33 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url || steps.retry1.outputs.page_url || steps.retry2.outputs.page_url }}
+    steps:
       - id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - if: steps.deployment.outcome == 'failure'
+        run: sleep 20
+      - id: retry1
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - if: steps.deployment.outcome == 'failure' && steps.retry1.outcome == 'failure'
+        run: sleep 45
+      - id: retry2
+        if: steps.deployment.outcome == 'failure' && steps.retry1.outcome == 'failure'
         uses: actions/deploy-pages@v4
