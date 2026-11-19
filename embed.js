@@ -7,7 +7,7 @@
      <script src="https://ledger.eldritzh.com/embed.js" defer></script>
 
    Pages: hub · story · commands · pacts · circles · codex · partners · sounds · bestiary · congregation · order (or esorder) ·
-          remembrance · rift · investigator (or talents) · covenant · fishing · fair · patchnotes · about
+          remembrance · rift · investigator (or talents) · covenant · fishing · fair · winners (or events) · patchnotes · about
    Options on the div:
      data-eldr-game="hunt-showdown"   pacts: open on this game (default: the game on the wheel now)
      data-eldr-refresh="5"            minutes between quiet re-checks while the page is open (0 = off)
@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.13.0';
+  var VERSION = '1.14.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -2774,6 +2774,91 @@
     });
   }
 
+
+  // ================================================================== WINNERS AND SPECIAL EVENTS (19 Nov)
+  // One page for who won what and the events that come and go, each with a line on how it works. Reads events.json
+  // (the seasons, the Onyx Fair, happy hour, the Stars), winners.json (giveaways, fishing derbies, this stream's
+  // Workings) and the other feeds for Clipomania, the crowns, the Remembrance, the Old Ones and the ultra-rares.
+  var EVENT_INFO = {
+    fair: 'Once a month the onyx city at the foot of Kadath opens its fair: Onyx Tickets for turning up, staying, supporting and raids, flares and stranger things at the booth, and the Veiled Priest’s fortunes.',
+    timed: 'Running on stream right now, for a while only.',
+    season: 'A season of the stream’s calendar: it changes what happens on stream while it runs.',
+    omen: 'A Lingering Omen: a blessing or curse on the whole congregation, for a few days.'
+  };
+  function evWhen(e) {
+    var d = function (x) { return new Date(x + 'T12:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }); };
+    if (e.until) return 'until ' + new Date(e.until * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+    return e.from === e.to ? d(e.from) : d(e.from) + ' – ' + d(e.to);
+  }
+  function winners(ctx) {
+    return Promise.all(['events.json', 'winners.json', 'congregation.json', 'investigator.json', 'fishing.json', 'remembrance.json'].map(function (f) { return loadOpt(f); }))
+      .then(function (r) {
+        var ev = r[0] || {}, w = r[1] || {}, cg = r[2] || {}, inv = r[3] || {}, fi = r[4] || {}, rem = r[5] || {};
+        var today = new Date().toISOString().slice(0, 10), nowS = Date.now() / 1000;
+        var out = [head(ctx.opts, 'Winners & Special Events', 'Who won what, and what runs when',
+          'Everything the congregation can win, who won it lately, and the special events that come and go: what each one is and when it runs.')];
+
+        // ---- the events: running now, then coming up
+        var list = (ev.events || []).filter(function (e) { return e && e.name; });
+        var running = list.filter(function (e) { return e.until ? e.until > nowS : (e.from <= today && today <= e.to); });
+        var coming = list.filter(function (e) { return !e.until && e.from > today; }).sort(function (a, b) { return a.from < b.from ? -1 : 1; }).slice(0, 8);
+        var card = function (e, on) {
+          var a = (e.look && /^#[0-9a-fA-F]{3,8}$/.test(e.look.accent || '')) ? e.look.accent : '#D4AF37';
+          return el('article', { class: 'ci' + (on ? ' bound' : ''), style: { borderLeft: '3px solid ' + a } }, [
+            el('div', { class: 'eldr-row' }, [el('h3', { text: e.name, style: { color: a } }), el('span', { class: 'eldr-badge' + (on ? ' green' : ''), text: on ? 'Now' : evWhen(e) })]),
+            on ? el('div', { class: 'eldr-small eldr-muted', text: evWhen(e) }) : null,
+            el('p', { class: 'eldr-small', text: e.text || EVENT_INFO[e.kind] || '' }),
+            e.text && EVENT_INFO[e.kind] && e.kind !== 'season' ? el('p', { class: 'eldr-small eldr-muted', text: EVENT_INFO[e.kind] }) : null]);
+        };
+        out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Running now' }),
+          running.length ? el('div', { class: 'eldr-grid' }, running.map(function (e) { return card(e, true); })) : el('p', { class: 'eldr-muted', text: 'Nothing special is running right now.' })]));
+        if (coming.length) out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Coming up' }), el('div', { class: 'eldr-grid' }, coming.map(function (e) { return card(e, false); }))]));
+        out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Always there' }), el('ul', null, [
+          '<strong>Fishing derbies</strong>: a contest on the waters during a stream (the heaviest fish, the most catches, the rarest). The podium wins prizes, everyone who scores gets a little. <code>!fish derby</code>.',
+          '<strong>The Workings</strong>: three goals for the whole congregation every stream. Everyone who helps one to the end is paid. <code>!workings</code>.',
+          '<strong>Giveaways</strong>: tickets with <code>!ticket</code> while one is open; sub and member tiers weigh more. Sponsored giveaways carry the partner’s label.',
+          '<strong>Clipomania</strong>: clip the stream and post it in Discord; the top clippers of the month win Pacts.',
+          '<strong>The Remembrance</strong>: be here on enough stream days in a month and you are entered; the Heralds and the remembered win gifts.',
+          '<strong>Hype trains</strong>: when the gate is open, offerings wake a train, and the Stars may rise with it.'
+        ].map(function (h) { return el('li', { class: 'eldr-small', html: h }); }))]));
+
+        // ---- the winners
+        var table = function (title, blurb, heads, rows) {
+          if (!rows.length) return null;
+          var t = el('table', { class: 'stack' }), tb = el('tbody');
+          t.appendChild(el('thead', null, el('tr', null, heads.map(function (x) { return el('th', { text: x }); }))));
+          rows.forEach(function (r) { tb.appendChild(el('tr', null, r.map(function (c) { return el('td', { text: c == null ? '' : String(c) }); }))); });
+          t.appendChild(tb);
+          return el('section', { class: 'eldr-card' }, [el('h2', { text: title }), blurb ? el('p', { class: 'eldr-muted eldr-small', text: blurb }) : null, t]);
+        };
+        var day = function (u) { return u ? new Date(u * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''; };
+        var month = function (m) { var dt = new Date(m + '-01T12:00:00Z'); return isNaN(dt) ? m : dt.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }); };
+        var sections = [
+          table('Giveaways', 'The last winners. Sponsored giveaways name their partner.', ['When', 'Giveaway', 'Winner'],
+            (w.giveaways || []).map(function (g) { return [day(g.at), g.giveaway + (g.partner ? ' (with ' + g.partner + ')' : ''), g.winner]; })),
+          table('Fishing derbies', 'The podium of each derby.', ['When', 'Derby', 'Podium'],
+            (w.derbies || []).map(function (d) { return [day(d.at), d.name, (d.top || []).map(function (x, i) { return (i + 1) + '. ' + x.name + (x.score ? ' (' + x.score + ')' : ''); }).join('   ') || 'nobody counted']; })),
+          (w.workings || []).length ? el('section', { class: 'eldr-card' }, [el('h2', { text: 'This stream’s Workings' }),
+            el('ul', null, w.workings.map(function (x) { return el('li', { class: 'eldr-small', text: x.name + ': ' + x.text + ' · ' + num(x.helpers) + ' helped' }); }))]) : null,
+          table('Clipomania champions', 'Every month the top clippers win Pacts.', ['Month', 'Champions'],
+            (cg.clipomania || []).map(function (m) { return [month(m.month), (m.top || []).map(function (x, i) { return (i + 1) + '. ' + x.name + ' (' + x.clips + ')'; }).join('   ')]; })),
+          table('The Remembrance', rem.monthName ? rem.monthName + ': the Heralds and the remembered.' : 'The Heralds and the remembered of the last month.', ['Who', 'Gift'],
+            [].concat((rem.heralds || []).map(function (x) { return [x.name + ' (Herald)', x.gift || '']; }), (rem.winners || []).map(function (x) { return [x.name, x.gift || '']; }))),
+          table('The three crowns', 'Who has given Eldritzh’s Awakening the most.', ['Crown', 'Who'],
+            (inv.crowns || []).map(function (c) { return [CROWN[c.crown] || c.crown, c.name]; })),
+          table('Firsts of the realm', 'The first to find each ultra-rare, in the waters and in the Delve.', ['Find', 'First found by'],
+            (fi.ultras || []).filter(function (u) { return u.found > 0 && u.firstName; }).map(function (u) { return [u.name, u.firstName]; })),
+          table('Legendary fish', 'Who has landed each Legendary.', ['Fish', 'Caught by'],
+            (fi.fish || []).filter(function (f) { return f.rarity === 'legendary' && (f.caughtBy || []).length; }).map(function (f) { return [f.name, f.caughtBy.join(', ')]; })),
+          table('The Old Ones that fell', 'Driven back by the congregation when the Stars were right.', ['Old One'],
+            ((cg.stars && cg.stars.fallen) || []).map(function (n) { return [n]; }))
+        ].filter(Boolean);
+        if (sections.length) out = out.concat(sections); else out.push(empty('Nobody has won anything yet. Yet.'));
+        out.push(foot(w.updated || ev.updated));
+        return out;
+      });
+  }
+
   // ================================================================== PATCH NOTES and ABOUT (markdown pages, 11 Nov)
   function mdBlock(b) { return b.type === 'p' ? el('p', { html: inline(b.text) }) : blockNode(b); }
   function mdPage(file, title, tag, each) {
@@ -2799,7 +2884,7 @@
   var about = mdPage('about.md', 'About the Ledger', 'Embrace the Tentacle');
 
   var PAGES = { hub: hub, rift: rift, story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance,
-    investigator: investigator, talents: investigator, covenant: covenant, fishing: fishing, fair: fair, patchnotes: patchnotes, about: about };
+    investigator: investigator, talents: investigator, covenant: covenant, fishing: fishing, fair: fair, winners: winners, events: winners, patchnotes: patchnotes, about: about };
 
   // ------------------------------------------------------------------ mount
   function render(root, quiet) {

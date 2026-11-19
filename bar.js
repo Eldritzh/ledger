@@ -20,6 +20,9 @@
      data-eldr-mount="#id"       draw inside that element instead of at the top of the page
      data-eldr-next="0"          no "Next: ..." teaser for an event starting within 7 days
    Test a date: add ?eldrbar=2026-12-13 to any page address (Lucia), ?eldrbar=2026-11-24 (Yule + Moon Night).
+   1.1.0 (19 Nov): the stream's own events from Website :: Publish next to the seasons: the Onyx Fair (kind "fair",
+   a violet onyx diamond and little flares), Happy Hour and the Stars Are Right (kind "timed", with "until"), each with
+   its own small mark (look.sig: dot, diamond, ring, star) and particles (flares, coins).
    ===================================================================================== */
 (function () {
   'use strict';
@@ -27,7 +30,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.0.0';
+  var VERSION = '1.1.0';
   var OPT = function (k, d) { var v = me && me.getAttribute('data-eldr-' + k); return v == null || v === '' ? d : v; };
   var TZ = 'Europe/Stockholm';
   var GOLD = '#D4AF37', GREEN = '#52B788';
@@ -70,6 +73,11 @@
   function short(s) { var d = new Date(s + 'T12:00:00Z'); return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }); }
 
   function untilText(e, today) {
+    if (e.kind === 'timed' && e.until) {
+      var m = Math.round((e.until - nowUnix()) / 60);
+      if (m < 60) return 'on stream now · ' + Math.max(1, m) + ' min left';
+      return 'on stream now · until ' + new Date(e.until * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: TZ });
+    }
     if (e.kind === 'omen' && e.until) {
       var s = e.until - nowUnix();
       if (s < 36 * 3600) return 'lingers ' + Math.max(1, Math.round(s / 3600)) + ' more hours';
@@ -95,6 +103,7 @@
     return data.events.filter(function (e) {
       if (!e || !e.name) return false;
       if (e.kind === 'omen') return e.until ? e.until > now : (e.from <= today && today <= e.to);
+      if (e.kind === 'timed') return !!e.until && e.until > now;          // happy hour, the Stars: gone the moment they end
       if (e.from <= today && today <= e.to) return true;
       return !!(e.held && e.now && today <= addDays(e.to, 1));   // a stream that ran past midnight keeps its season
     }).sort(function (a, b) { return (b.priority || 0) - (a.priority || 0); });
@@ -102,7 +111,7 @@
   function nextEvent(data, today, running) {
     if (!data || data.enabled === false || !Array.isArray(data.events)) return null;
     var ids = running.map(function (e) { return e.id; });
-    var up = data.events.filter(function (e) { return e.kind !== 'omen' && e.from > today && daysBetween(today, e.from) <= 7 && ids.indexOf(e.id) < 0; });
+    var up = data.events.filter(function (e) { return e.kind !== 'omen' && e.kind !== 'timed' && e.from > today && daysBetween(today, e.from) <= 7 && ids.indexOf(e.id) < 0; });
     up.sort(function (a, b) { return a.from < b.from ? -1 : a.from > b.from ? 1 : (b.priority || 0) - (a.priority || 0); });
     return up[0] || null;
   }
@@ -138,6 +147,11 @@
       '.eldr-tb-row{position:relative;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 18px;max-width:1280px;margin:0 auto;padding:8px 44px 8px 16px;min-height:40px}',
       '.eldr-tb-seg{display:flex;align-items:center;gap:10px;min-width:0}',
       '.eldr-tb-sig{flex:none;width:9px;height:9px;border-radius:50%;background:var(--a);box-shadow:0 0 10px 2px var(--g)}',
+      // 1.1.0: a small mark of its own for the stream's events
+      '.eldr-tb-sig.diamond{border-radius:1px;transform:rotate(45deg);width:8px;height:8px;background:linear-gradient(135deg,#f1e9ff,var(--a) 45%,#1a1026)}',
+      '.eldr-tb-sig.ring{background:none;border:2px solid var(--a);width:10px;height:10px}',
+      '.eldr-tb-sig.star{background:none;box-shadow:none;width:auto;height:auto;border-radius:0;color:var(--a);text-shadow:0 0 8px var(--g);font-size:13px;line-height:1}',
+      '.eldr-tb-sig.star::before{content:"\\2726"}',
       '.eldr-tb-name{font-family:Cinzel,serif;font-weight:700;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--a);text-shadow:0 0 12px var(--g);white-space:nowrap}',
       '.eldr-tb-when{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#9a968b;white-space:nowrap}',
       '.eldr-tb-text{color:#d9d6cc;opacity:.9;max-width:520px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
@@ -164,6 +178,10 @@
       '.eldr-tb-fx .embers{width:2px;height:2px;background:var(--c);box-shadow:0 0 5px var(--c);bottom:-4px;animation:eldrTbRise linear infinite}',
       '.eldr-tb-fx .stars{width:2px;height:2px;background:#fff;box-shadow:0 0 4px var(--c);animation:eldrTbTwinkle ease-in-out infinite}',
       '.eldr-tb-fx .ash,.eldr-tb-fx .smoke{width:4px;height:4px;background:var(--c);filter:blur(1px);top:-6px;animation:eldrTbFall linear infinite}',
+      '.eldr-tb-fx .flares{width:3px;height:3px;background:var(--c);box-shadow:0 0 0 0 var(--c);animation:eldrTbFlare ease-out infinite}',
+      '.eldr-tb-fx .coins{width:4px;height:4px;border-radius:1px;background:var(--c);box-shadow:0 0 6px var(--c);top:-6px;animation:eldrTbCoin linear infinite}',
+      '@keyframes eldrTbFlare{0%,70%{transform:scale(.2);opacity:0;box-shadow:0 0 0 0 var(--c)}78%{opacity:1}100%{transform:scale(1);opacity:0;box-shadow:0 0 0 9px transparent,0 0 14px 4px var(--c)}}',
+      '@keyframes eldrTbCoin{0%{transform:translate(0,0) rotateY(0);opacity:0}15%{opacity:.9}100%{transform:translate(-6px,64px) rotateY(720deg);opacity:0}}',
       '@keyframes eldrTbFall{0%{transform:translate(0,0);opacity:0}15%{opacity:.8}100%{transform:translate(18px,70px);opacity:0}}',
       '@keyframes eldrTbRise{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}100%{transform:translate(-10px,-70px);opacity:0}}',
       '@keyframes eldrTbTwinkle{0%,100%{opacity:0}50%{opacity:.9}}',
@@ -217,14 +235,14 @@
   function particles(evs) {
     var fx = el('div', { class: 'eldr-tb-fx', 'aria-hidden': 'true' });
     var kinds = [];
-    evs.forEach(function (e) { var p = (e.look && e.look.particles) || ''; if (/^(snow|motes|embers|stars|ash|smoke)$/.test(p)) kinds.push({ k: p, c: color(e.look.glow, color(e.look.accent, GOLD)) }); });
+    evs.forEach(function (e) { var p = (e.look && e.look.particles) || ''; if (/^(snow|motes|embers|stars|ash|smoke|flares|coins)$/.test(p)) kinds.push({ k: p, c: color(e.look.glow, color(e.look.accent, GOLD)) }); });
     if (!kinds.length) return fx;
     var total = Math.min(26, 14 + 6 * (kinds.length - 1)), per = Math.ceil(total / kinds.length);
     kinds.forEach(function (k, ki) {
       for (var i = 0; i < per; i++) {
         var dur = 5 + Math.random() * 6, delay = -Math.random() * dur;
         var st = { left: (Math.random() * 100).toFixed(1) + '%', '--c': k.c, 'animation-duration': dur.toFixed(1) + 's', 'animation-delay': delay.toFixed(1) + 's' };
-        if (k.k === 'stars') st.top = (10 + Math.random() * 80).toFixed(0) + '%';
+        if (k.k === 'stars' || k.k === 'flares') st.top = (10 + Math.random() * 80).toFixed(0) + '%';
         fx.appendChild(el('span', { class: k.k, style: st }));
       }
     });
@@ -265,9 +283,9 @@
       var a = accents[i], g = glows[i];
       if (i > 0) row.appendChild(el('span', { class: 'eldr-tb-sep', style: { '--l': hexA(accents[i - 1], .8), '--r': hexA(a, .8) } }));
       var seg = el('div', { class: 'eldr-tb-seg' + (e.side === 'curse' ? ' eldr-tb-curse' : ''), style: { '--a': a, '--g': hexA(g, .7) } }, [
-        el('span', { class: 'eldr-tb-sig' }),
+        el('span', { class: 'eldr-tb-sig' + (/^(diamond|ring|star)$/.test(e.look && e.look.sig || '') ? ' ' + e.look.sig : '') }),
         el('span', { class: 'eldr-tb-name', text: e.name }),
-        el('span', { class: 'eldr-tb-when', text: (e.kind === 'omen' ? (e.side === 'curse' ? 'Curse · ' : 'Omen · ') : '') + untilText(e, today) })
+        el('span', { class: 'eldr-tb-when', text: (e.kind === 'omen' ? (e.side === 'curse' ? 'Curse · ' : 'Omen · ') : e.kind === 'fair' ? 'Fair · ' : '') + untilText(e, today) })
       ]);
       var cd = candles(e, today); if (cd) cd.forEach(function (n) { seg.appendChild(n); });
       if (e.text && !compact) seg.appendChild(el('span', { class: 'eldr-tb-text', title: e.text, text: e.text }));
