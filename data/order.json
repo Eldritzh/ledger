@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-19T20:19:05Z",
+  "updated": "2026-11-19T20:58:26Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -268,7 +268,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 7,
-      "rep": 1085,
+      "rep": 1102,
       "astray": false
     },
     {
@@ -278,7 +278,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 6,
-      "rep": 993,
+      "rep": 1093,
       "astray": false
     },
     {
@@ -288,7 +288,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 5,
-      "rep": 900,
+      "rep": 1000,
       "astray": false
     },
     {
@@ -298,7 +298,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 5,
-      "rep": 758,
+      "rep": 778,
       "astray": false
     },
     {
@@ -308,7 +308,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 5,
-      "rep": 666,
+      "rep": 754,
       "astray": false
     },
     {
@@ -318,7 +318,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 3,
-      "rep": 436,
+      "rep": 447,
       "astray": false
     },
     {
