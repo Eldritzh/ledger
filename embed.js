@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.14.2';
+  var VERSION = '1.14.3';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -2986,8 +2986,8 @@
       } })]);
   }
   function fwWait(code, until) {
-    fwBar('Link this membership to your character once: type <code>!forge ' + esc(code) + '</code> in chat on Twitch, YouTube or Kick. ' +
-      'This page notices by itself. The code works for 15 minutes.');
+    fwBar('Link this membership to your character once: type <code>!forge ' + esc(code) + '</code> in Twitch chat (any time), or on Kick or YouTube while the stream is on. ' +
+      'Already linked in Discord? <code>/forge site ' + esc(code) + '</code> there works too. This page notices by itself. The code works for 15 minutes.');
     var t = setInterval(function () {
       if (until && Date.now() / 1000 > until) { clearInterval(t); fwBar('The code ran out. Reload the page for a new one.'); return; }
       fwCall('/web/fw/state', { headers: { 'X-Rift-Key': FW.pending || '' } }).then(function (res) {
