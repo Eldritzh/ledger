@@ -7,7 +7,7 @@
 <title>The Eldritch Ledger: members</title>
 <!--
   The Fourthwall members' page (18 Nov). Put it in an Embedded Section on a members-only page of eldritzh.com:
-    https://ledger.eldritzh.com/member.html?page=talents      (or ?page=covenant)
+    https://ledger.eldritzh.com/member.html?page=talents      (or ?page=covenant, ?page=fair)
   Fourthwall adds the signed shop_id, supporter_id, tier_id, timestamp and hmac; embed.js trades them for a session at
   the forge (FW_SIGNIN=on). Opened anywhere else, the page still works, read-only.
 -->
@@ -18,7 +18,7 @@
 <script>
   (function () {
     var p = (new URLSearchParams(location.search).get('page') || 'talents').toLowerCase();
-    if (['talents', 'investigator', 'covenant'].indexOf(p) < 0) p = 'talents';
+    if (['talents', 'investigator', 'covenant', 'fair'].indexOf(p) < 0) p = 'talents';
     document.getElementById('eldr-member').setAttribute('data-eldr-page', p);
   })();
 </script>
