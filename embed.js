@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.14.3';
+  var VERSION = '1.14.4';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -1898,7 +1898,7 @@
           if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a key. It starts with rift_.'; return; }
           store(RIFT_KEY, m[0]); loadMe(true); draw();
         } }, [el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Load my character' })]), msg]));
-        return box;
+        return memberGate(ctx, box, 'Planning and saving a build from the site is for members of eldritzh.com. Everyone can read the trees here, and !talent build works in chat for all.');
       }
       if (a.busy) { box.appendChild(el('p', { class: 'eldr-muted', text: 'Looking up your character…' })); return box; }
       box.appendChild(el('div', { class: 'eldr-keyrow', style: { justifyContent: 'space-between', margin: '0' } }, [
@@ -2130,7 +2130,7 @@
             if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a key. It starts with rift_.'; return; }
             store(RIFT_KEY, m[0]); pkLoad(); draw();
           } }, [el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Load my character' })]), msg]));
-          return box;
+          return memberGate(ctx, box, 'Picking your ' + word + ' from the site is for members of eldritzh.com. In chat, !' + word + ' works for everyone.');
         }
         if (a.busy) { box.appendChild(el('p', { class: 'eldr-muted', text: 'Looking up your character…' })); return box; }
         var cur = kind === 'lineage' ? a.lineage : a.occupation;
@@ -2333,7 +2333,7 @@
           if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a key. It starts with rift_.'; return; }
           store(RIFT_KEY, m[0]); st.cov = { busy: true }; loadMe(); draw();
         } }, [el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Sign in' })]), msg]));
-        return box;
+        return memberGate(ctx, box, 'Pledging and voting from the site is for members of eldritzh.com. Everyone can read the tree, and !covenant works in chat for all.');
       }
       if (a.busy) { box.appendChild(el('p', { class: 'eldr-muted', text: 'Looking you up…' })); return box; }
       var mine = by[a.pledge];
@@ -2708,7 +2708,7 @@
             if (!m || m[0].length > 80) { msg.textContent = 'That doesn\'t look like a key. It starts with rift_.'; return; }
             store(RIFT_KEY, m[0]); st.fair = { busy: true }; loadMe(); draw();
           } }, [el('div', { class: 'eldr-keyrow' }, [input, el('button', { class: 'eldr-chip', type: 'submit', text: 'Sign in' })]), msg]));
-          return box;
+          return memberGate(ctx, box, 'Visiting the booth from the site is for members of eldritzh.com. In chat, !fair buy and !fortune work for everyone.');
         }
         if (a.busy) { box.appendChild(el('p', { class: 'eldr-muted', text: 'Looking you up…' })); return box; }
         box.appendChild(el('div', { class: 'eldr-keyrow', style: { justifyContent: 'space-between', margin: '0' } }, [
@@ -2963,6 +2963,22 @@
   // member.html is an Embedded Section on a members-only page. Fourthwall adds shop_id, supporter_id, tier_id,
   // timestamp and hmac to its address; the forge checks them (/web/fw/session) and gives this visit a session. Not
   // linked yet: a code to type in chat (!forge CODE), then the session works like a /shard key.
+  // 19 Nov: once the members' page is on (site.json membersPage, the setting web_membersPage), the public pages send
+  // members there; the /shard key form folds away under "Staff: sign in with a key" (the forge then takes keys from staff only).
+  function memberGate(ctx, box, what) {
+    var url = ctx && ctx.site && ctx.site.membersPage;
+    if (!url || FW.on) return box;
+    var kids = Array.prototype.slice.call(box.childNodes), head = kids.shift();
+    var msg = box.querySelector('.eldr-keymsg'), err = msg && msg.textContent;
+    var out = el('section', { class: box.className });
+    out.appendChild(head);
+    out.appendChild(el('p', { class: 'eldr-small', text: what }));
+    out.appendChild(el('a', { class: 'eldr-chip tt-save', href: url, target: '_top', text: 'Open your members\u2019 page \u2192' }));
+    if (err) out.appendChild(el('p', { class: 'eldr-keymsg', text: err }));
+    var more = el('details', { class: 'eldr-small', style: { marginTop: '12px' } }, [el('summary', { class: 'eldr-muted', text: 'Staff: sign in with a key' })].concat(kids));
+    out.appendChild(more);
+    return out;
+  }
   function fwBar(text, kids) {
     if (!FW.root) return;
     if (!FW.bar) {
