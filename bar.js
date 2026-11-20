@@ -23,6 +23,8 @@
    1.1.0 (19 Nov): the stream's own events from Website :: Publish next to the seasons: the Onyx Fair (kind "fair",
    a violet onyx diamond and little flares), Happy Hour and the Stars Are Right (kind "timed", with "until"), each with
    its own small mark (look.sig: dot, diamond, ring, star) and particles (flares, coins).
+   1.1.1 (20 Nov): the bar no longer draws over the shop's own menu, cart or pop-ups on phones (it sat on top of the
+   menu drawer). It stays on its own low layer, and steps out of sight while the shop has an overlay open.
    ===================================================================================== */
 (function () {
   'use strict';
@@ -30,7 +32,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.1.0';
+  var VERSION = '1.1.1';
   var OPT = function (k, d) { var v = me && me.getAttribute('data-eldr-' + k); return v == null || v === '' ? d : v; };
   var TZ = 'Europe/Stockholm';
   var GOLD = '#D4AF37', GREEN = '#52B788';
@@ -138,7 +140,7 @@
       document.head.appendChild(f);
     }
     var css = [
-      '.eldr-tb{all:initial;display:block;position:relative;z-index:60;font:300 13px/1.45 Montserrat,system-ui,sans-serif;color:#d9d6cc;-webkit-font-smoothing:antialiased}',
+      '.eldr-tb{all:initial;display:block;position:relative;z-index:0;isolation:isolate;font:300 13px/1.45 Montserrat,system-ui,sans-serif;color:#d9d6cc;-webkit-font-smoothing:antialiased}',
       '.eldr-tb *,.eldr-tb *::before,.eldr-tb *::after{box-sizing:border-box}',
       // the event strip
       '.eldr-tb-ev{position:relative;overflow:hidden;background:#07080a;border-bottom:1px solid #1f2328}',
@@ -221,6 +223,8 @@
       ' .eldr-tb-go{margin-left:auto}',
       ' .eldr-tb-bn:has(> :only-child) .eldr-tb-card{flex-basis:100%}',
       '}',
+      // 1.1.1: while the shop has its menu, cart or a pop-up open (it locks the page's scrolling), keep out of the way
+      '.eldr-tb.eldr-tb-under{visibility:hidden}',
       '@media (prefers-reduced-motion:reduce){.eldr-tb-fx{display:none}.eldr-tb-glow{animation:none}}'
     ].join('\n');
     document.head.appendChild(el('style', { id: 'eldr-tb-style', text: css }));
@@ -373,6 +377,7 @@
     while (r.firstChild) r.removeChild(r.firstChild);
     if (!evs.length && !bns.length) { r.style.display = 'none'; return; }
     r.style.display = '';
+    r.classList.toggle('eldr-tb-under', overlayOpen());
     if (evs.length) r.appendChild(drawEvents(evs, nxt, today));
     if (bns.length) r.appendChild(el('div', { class: 'eldr-tb-bnwrap', role: 'region', 'aria-label': 'Charity and sponsors' },
       el('div', { class: 'eldr-tb-bn' }, bns.map(function (b) { return drawBanner(b, today); }))));
@@ -385,8 +390,28 @@
       .catch(function (e) { if (window.console) console.warn('[eldr bar]', e); });
   }
 
+  // 1.1.1: Fourthwall locks the page's scrolling while its menu drawer, cart or a pop-up is open. The bar sits on the
+  // lowest layer already; this also hides it then, in case a theme draws its drawer underneath the page.
+  function overlayOpen() {
+    try {
+      var b = getComputedStyle(document.body), h = getComputedStyle(document.documentElement);
+      return b.overflow === 'hidden' || b.overflowY === 'hidden' || h.overflow === 'hidden' || h.overflowY === 'hidden' || b.position === 'fixed';
+    } catch (e) { return false; }
+  }
+  function watchOverlays() {
+    var sync = function () { if (root) root.classList.toggle('eldr-tb-under', overlayOpen()); };
+    if (window.MutationObserver) {
+      var mo = new MutationObserver(sync);
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style'] });
+      mo.observe(document.body, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+    window.addEventListener('resize', sync);
+    sync();
+  }
+
   function start() {
     refresh();
+    watchOverlays();
     // Fourthwall swaps the page on its own navigation: put the bar back from the last data when it goes missing
     var t = null;
     if (window.MutationObserver) new MutationObserver(function () {
