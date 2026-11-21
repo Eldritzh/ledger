@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T10:51:35Z",
+  "updated": "2026-11-21T11:11:35Z",
   "version": "1.5.0",
   "reason": "routine",
   "files": {
@@ -25,8 +25,8 @@
     "people.json": "2026-11-21T10:51:35Z",
     "fx.json": "2026-11-18T19:26:49Z",
     "winners.json": "2026-11-19T20:59:08Z",
-    "events.json": "2026-11-21T10:51:35Z",
-    "fair.json": "2026-11-19T19:32:47Z"
+    "events.json": "2026-11-21T11:11:35Z",
+    "fair.json": "2026-11-21T11:11:35Z"
   },
   "staffApi": "https://forge-web.warden.se",
   "membersPage": "https://eldritzh.com/pages/sanctum"
