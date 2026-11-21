@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T20:14:23.0258318Z",
+  "updated": "2026-11-21T20:31:01.6322765Z",
   "unlocked": [
     "toad",
     "margins",
@@ -9,14 +9,14 @@
     "bestiary"
   ],
   "counters": {
-    "checkins": 91,
+    "checkins": 92,
     "fed": 1649501,
     "tsath_fills": 15,
-    "messages": 825,
+    "messages": 850,
     "banishes": 60,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
-    "deaths": 6,
+    "deaths": 9,
     "chants": 0,
     "rituals": 0,
     "expeditions": 0,
@@ -24,17 +24,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 4,
+    "stream:checkins": 5,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
     "sum:goblins_grabbed": 11,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
-    "stream:messages": 50,
+    "stream:messages": 75,
     "sum:circle_top": 0,
     "stream:banishes": 2,
-    "@moon": 50,
+    "@moon": 56,
     "kinds:beings_seen": 15,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -53,11 +53,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 60.7,
+      "pct": 61.3,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 91,
+          "have": 92,
           "need": 150
         }
       ],
@@ -75,11 +75,11 @@
       "wait": ""
     },
     "deaths": {
-      "pct": 6.0,
+      "pct": 9.0,
       "parts": [
         {
           "label": "The Keeper must fall 100 times",
-          "have": 6,
+          "have": 9,
           "need": 100
         }
       ],
@@ -152,11 +152,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 26.7,
+      "pct": 33.3,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 4,
+          "have": 5,
           "need": 15
         }
       ],
@@ -207,11 +207,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 20.0,
+      "pct": 30.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 50,
+          "have": 75,
           "need": 250
         }
       ],
@@ -229,11 +229,11 @@
       "wait": ""
     },
     "moon": {
-      "pct": 50.0,
+      "pct": 56.2,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 4,
+          "have": 5,
           "need": 8
         },
         {
@@ -349,11 +349,11 @@
       "wait": ""
     },
     "graves": {
-      "pct": 1.2,
+      "pct": 1.8,
       "parts": [
         {
           "label": "The Keeper must fall 500 times",
-          "have": 6,
+          "have": 9,
           "need": 500
         }
       ],
@@ -424,7 +424,7 @@
       "parts": [
         {
           "label": "Signatures",
-          "have": 91,
+          "have": 92,
           "need": 2500
         },
         {

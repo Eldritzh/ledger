@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-21T20:04:51Z",
+  "updated": "2026-11-21T20:36:37Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -272,6 +272,26 @@
       "astray": false
     },
     {
+      "name": "revenantmessiah",
+      "platform": "twitch",
+      "rank": 2,
+      "rankName": "Listener",
+      "circle": 1,
+      "days": 7,
+      "rep": 1193,
+      "astray": false
+    },
+    {
+      "name": "First_NaPaLm",
+      "platform": "twitch",
+      "rank": 2,
+      "rankName": "Listener",
+      "circle": 1,
+      "days": 7,
+      "rep": 954,
+      "astray": false
+    },
+    {
       "name": "datduckhs",
       "platform": "twitch",
       "rank": 2,
@@ -282,16 +302,6 @@
       "astray": false
     },
     {
-      "name": "revenantmessiah",
-      "platform": "twitch",
-      "rank": 2,
-      "rankName": "Listener",
-      "circle": 1,
-      "days": 6,
-      "rep": 1093,
-      "astray": false
-    },
-    {
       "name": "PithyPlinth",
       "platform": "twitch",
       "rank": 2,
@@ -299,16 +309,6 @@
       "circle": 1,
       "days": 6,
       "rep": 878,
-      "astray": false
-    },
-    {
-      "name": "First_NaPaLm",
-      "platform": "twitch",
-      "rank": 2,
-      "rankName": "Listener",
-      "circle": 1,
-      "days": 6,
-      "rep": 854,
       "astray": false
     },
     {
