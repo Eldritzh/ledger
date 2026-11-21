@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T22:32:41.2937179Z",
+  "updated": "2026-11-21T22:49:15.6027532Z",
   "unlocked": [
     "toad",
     "margins",
@@ -13,7 +13,7 @@
     "fed": 1649501,
     "tsath_fills": 15,
     "messages": 1050,
-    "banishes": 64,
+    "banishes": 65,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
     "deaths": 13,
@@ -33,7 +33,7 @@
     "count:streams_attended": 32,
     "stream:messages": 275,
     "sum:circle_top": 0,
-    "stream:banishes": 6,
+    "stream:banishes": 7,
     "@moon": 100,
     "kinds:beings_seen": 15,
     "pacts": 0,
@@ -429,7 +429,7 @@
         },
         {
           "label": "Banishments",
-          "have": 64,
+          "have": 65,
           "need": 500
         },
         {
