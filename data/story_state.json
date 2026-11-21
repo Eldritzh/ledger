@@ -1,18 +1,19 @@
 {
-  "updated": "2026-11-21T22:49:15.6027532Z",
+  "updated": "2026-11-21T23:05:00.2861904Z",
   "unlocked": [
     "toad",
     "margins",
     "bottom",
     "sunwait",
     "faithful",
-    "bestiary"
+    "bestiary",
+    "vigil"
   ],
   "counters": {
     "checkins": 99,
     "fed": 1649501,
     "tsath_fills": 15,
-    "messages": 1050,
+    "messages": 1075,
     "banishes": 65,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
@@ -31,7 +32,7 @@
     "sum:goblins_grabbed": 14,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 32,
-    "stream:messages": 275,
+    "stream:messages": 300,
     "sum:circle_top": 0,
     "stream:banishes": 7,
     "@moon": 100,
@@ -205,17 +206,6 @@
         }
       ],
       "wait": ""
-    },
-    "vigil": {
-      "pct": 100.0,
-      "parts": [
-        {
-          "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 250,
-          "need": 250
-        }
-      ],
-      "wait": "only between 00:00 and 04:00"
     },
     "circles": {
       "pct": 0.0,
