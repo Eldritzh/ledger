@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T20:05:04.2262490Z",
+  "updated": "2026-11-21T20:14:23.0258318Z",
   "unlocked": [
     "toad",
     "margins",
@@ -12,11 +12,11 @@
     "checkins": 91,
     "fed": 1649501,
     "tsath_fills": 15,
-    "messages": 800,
+    "messages": 825,
     "banishes": 60,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
-    "deaths": 5,
+    "deaths": 6,
     "chants": 0,
     "rituals": 0,
     "expeditions": 0,
@@ -31,7 +31,7 @@
     "sum:goblins_grabbed": 11,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
-    "stream:messages": 25,
+    "stream:messages": 50,
     "sum:circle_top": 0,
     "stream:banishes": 2,
     "@moon": 50,
@@ -75,11 +75,11 @@
       "wait": ""
     },
     "deaths": {
-      "pct": 5.0,
+      "pct": 6.0,
       "parts": [
         {
           "label": "The Keeper must fall 100 times",
-          "have": 5,
+          "have": 6,
           "need": 100
         }
       ],
@@ -207,11 +207,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 10.0,
+      "pct": 20.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 25,
+          "have": 50,
           "need": 250
         }
       ],
@@ -349,11 +349,11 @@
       "wait": ""
     },
     "graves": {
-      "pct": 1.0,
+      "pct": 1.2,
       "parts": [
         {
           "label": "The Keeper must fall 500 times",
-          "have": 5,
+          "have": 6,
           "need": 500
         }
       ],
