@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19T20:54:19.6211590Z",
+  "updated": "2026-11-21T19:51:27.2136544Z",
   "unlocked": [
     "toad",
     "margins",
@@ -8,9 +8,9 @@
     "faithful"
   ],
   "counters": {
-    "checkins": 87,
-    "fed": 1643989,
-    "tsath_fills": 14,
+    "checkins": 89,
+    "fed": 1649501,
+    "tsath_fills": 15,
     "messages": 775,
     "banishes": 58,
     "delve_bottoms": 6,
@@ -23,17 +23,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 6,
+    "stream:checkins": 2,
     "sum:merchant_buys": 2,
     "gilded_merchants": 0,
     "@leng": 5,
     "sum:goblins_grabbed": 10,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
-    "stream:messages": 50,
+    "stream:messages": 0,
     "sum:circle_top": 0,
-    "stream:banishes": 2,
-    "@moon": 62,
+    "stream:banishes": 0,
+    "@moon": 12,
     "kinds:beings_seen": 14,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -52,11 +52,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 58.0,
+      "pct": 59.3,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 87,
+          "have": 89,
           "need": 150
         }
       ],
@@ -151,11 +151,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 40.0,
+      "pct": 13.3,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 6,
+          "have": 2,
           "need": 15
         }
       ],
@@ -206,11 +206,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 20.0,
+      "pct": 0.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 50,
+          "have": 0,
           "need": 250
         }
       ],
@@ -228,16 +228,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 62.5,
+      "pct": 12.5,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 6,
+          "have": 2,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 2,
+          "have": 0,
           "need": 4
         }
       ],
@@ -304,11 +304,11 @@
       "wait": ""
     },
     "dreams": {
-      "pct": 56.0,
+      "pct": 60.0,
       "parts": [
         {
           "label": "Fill Tsathoggua to sleeping 25 times",
-          "have": 14,
+          "have": 15,
           "need": 25
         }
       ],
@@ -434,7 +434,7 @@
       "parts": [
         {
           "label": "Signatures",
-          "have": 87,
+          "have": 89,
           "need": 2500
         },
         {

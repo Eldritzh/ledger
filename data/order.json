@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-19T20:58:26Z",
+  "updated": "2026-11-21T19:51:33Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -112,7 +112,7 @@
       "rep": 8000,
       "name": "Adept",
       "circle": 2,
-      "weeklyPacts": 0,
+      "weeklyPacts": 1,
       "monthlyEldritch": 0
     },
     {
@@ -121,7 +121,7 @@
       "rep": 9600,
       "name": "Scribe of the Forbidden",
       "circle": 2,
-      "weeklyPacts": 0,
+      "weeklyPacts": 1,
       "monthlyEldritch": 0
     },
     {
@@ -130,7 +130,7 @@
       "rep": 11400,
       "name": "Reader of the Pnakotic",
       "circle": 3,
-      "weeklyPacts": 0,
+      "weeklyPacts": 1,
       "monthlyEldritch": 0
     },
     {
@@ -139,7 +139,7 @@
       "rep": 13200,
       "name": "Sigil-Warden",
       "circle": 3,
-      "weeklyPacts": 0,
+      "weeklyPacts": 1,
       "monthlyEldritch": 0
     },
     {
@@ -272,6 +272,16 @@
       "astray": false
     },
     {
+      "name": "datduckhs",
+      "platform": "twitch",
+      "rank": 2,
+      "rankName": "Listener",
+      "circle": 1,
+      "days": 6,
+      "rep": 1121,
+      "astray": false
+    },
+    {
       "name": "revenantmessiah",
       "platform": "twitch",
       "rank": 2,
@@ -282,13 +292,13 @@
       "astray": false
     },
     {
-      "name": "datduckhs",
+      "name": "First_NaPaLm",
       "platform": "twitch",
       "rank": 2,
       "rankName": "Listener",
       "circle": 1,
-      "days": 5,
-      "rep": 1000,
+      "days": 6,
+      "rep": 854,
       "astray": false
     },
     {
@@ -299,16 +309,6 @@
       "circle": 1,
       "days": 5,
       "rep": 778,
-      "astray": false
-    },
-    {
-      "name": "First_NaPaLm",
-      "platform": "twitch",
-      "rank": 2,
-      "rankName": "Listener",
-      "circle": 1,
-      "days": 5,
-      "rep": 754,
       "astray": false
     },
     {
