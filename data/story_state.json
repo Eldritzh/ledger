@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T23:36:34.0526742Z",
+  "updated": "2026-11-21T23:51:15.9880510Z",
   "unlocked": [
     "toad",
     "margins",
@@ -13,8 +13,8 @@
     "checkins": 99,
     "fed": 1649501,
     "tsath_fills": 15,
-    "messages": 1100,
-    "banishes": 66,
+    "messages": 1125,
+    "banishes": 67,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
     "deaths": 15,
@@ -32,9 +32,9 @@
     "sum:goblins_grabbed": 14,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 32,
-    "stream:messages": 325,
+    "stream:messages": 350,
     "sum:circle_top": 0,
-    "stream:banishes": 8,
+    "stream:banishes": 9,
     "@moon": 100,
     "kinds:beings_seen": 15,
     "pacts": 0,
@@ -419,7 +419,7 @@
         },
         {
           "label": "Banishments",
-          "have": 66,
+          "have": 67,
           "need": 500
         },
         {
