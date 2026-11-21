@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T20:31:01.6322765Z",
+  "updated": "2026-11-21T20:49:50.9344955Z",
   "unlocked": [
     "toad",
     "margins",
@@ -12,11 +12,11 @@
     "checkins": 92,
     "fed": 1649501,
     "tsath_fills": 15,
-    "messages": 850,
-    "banishes": 60,
+    "messages": 875,
+    "banishes": 61,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
-    "deaths": 9,
+    "deaths": 10,
     "chants": 0,
     "rituals": 0,
     "expeditions": 0,
@@ -25,16 +25,16 @@
     "nemeses_slain": 0,
     "warchiefs": 0,
     "stream:checkins": 5,
-    "sum:merchant_buys": 2,
+    "sum:merchant_buys": 3,
     "gilded_merchants": 0,
-    "@leng": 5,
+    "@leng": 7,
     "sum:goblins_grabbed": 11,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 26,
-    "stream:messages": 75,
+    "stream:messages": 100,
     "sum:circle_top": 0,
-    "stream:banishes": 2,
-    "@moon": 56,
+    "stream:banishes": 3,
+    "@moon": 68,
     "kinds:beings_seen": 15,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -75,11 +75,11 @@
       "wait": ""
     },
     "deaths": {
-      "pct": 9.0,
+      "pct": 10.0,
       "parts": [
         {
           "label": "The Keeper must fall 100 times",
-          "have": 9,
+          "have": 10,
           "need": 100
         }
       ],
@@ -163,11 +163,11 @@
       "wait": ""
     },
     "leng": {
-      "pct": 5.0,
+      "pct": 7.5,
       "parts": [
         {
           "label": "Purchases from the Merchant or the Gilded Merchant",
-          "have": 2,
+          "have": 3,
           "need": 40
         }
       ],
@@ -207,11 +207,11 @@
       "wait": ""
     },
     "vigil": {
-      "pct": 30.0,
+      "pct": 40.0,
       "parts": [
         {
           "label": "Keep the vigil: 250 messages in one stream, and still talking after midnight (Stockholm time)",
-          "have": 75,
+          "have": 100,
           "need": 250
         }
       ],
@@ -229,7 +229,7 @@
       "wait": ""
     },
     "moon": {
-      "pct": 56.2,
+      "pct": 68.8,
       "parts": [
         {
           "label": "Souls signed tonight",
@@ -238,7 +238,7 @@
         },
         {
           "label": "Beings banished tonight",
-          "have": 2,
+          "have": 3,
           "need": 4
         }
       ],
@@ -349,11 +349,11 @@
       "wait": ""
     },
     "graves": {
-      "pct": 1.8,
+      "pct": 2.0,
       "parts": [
         {
           "label": "The Keeper must fall 500 times",
-          "have": 9,
+          "have": 10,
           "need": 500
         }
       ],
@@ -429,7 +429,7 @@
         },
         {
           "label": "Banishments",
-          "have": 60,
+          "have": 61,
           "need": 500
         },
         {
