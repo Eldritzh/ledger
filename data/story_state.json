@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T21:27:19.1440551Z",
+  "updated": "2026-11-21T21:40:42.4309693Z",
   "unlocked": [
     "toad",
     "margins",
@@ -13,7 +13,7 @@
     "fed": 1649501,
     "tsath_fills": 15,
     "messages": 950,
-    "banishes": 61,
+    "banishes": 62,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
     "deaths": 12,
@@ -28,13 +28,13 @@
     "sum:merchant_buys": 3,
     "gilded_merchants": 0,
     "@leng": 7,
-    "sum:goblins_grabbed": 11,
+    "sum:goblins_grabbed": 12,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 28,
     "stream:messages": 175,
     "sum:circle_top": 0,
-    "stream:banishes": 3,
-    "@moon": 81,
+    "stream:banishes": 4,
+    "@moon": 93,
     "kinds:beings_seen": 15,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -174,11 +174,11 @@
       "wait": ""
     },
     "goblins": {
-      "pct": 44.0,
+      "pct": 48.0,
       "parts": [
         {
           "label": "Grab 25 treasure goblins",
-          "have": 11,
+          "have": 12,
           "need": 25
         }
       ],
@@ -229,7 +229,7 @@
       "wait": ""
     },
     "moon": {
-      "pct": 81.2,
+      "pct": 93.8,
       "parts": [
         {
           "label": "Souls signed tonight",
@@ -238,7 +238,7 @@
         },
         {
           "label": "Beings banished tonight",
-          "have": 3,
+          "have": 4,
           "need": 4
         }
       ],
@@ -429,7 +429,7 @@
         },
         {
           "label": "Banishments",
-          "have": 61,
+          "have": 62,
           "need": 500
         },
         {
