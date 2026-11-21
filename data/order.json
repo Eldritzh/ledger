@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-21T20:36:37Z",
+  "updated": "2026-11-21T21:11:46Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -409,6 +409,26 @@
       "circle": 1,
       "days": 1,
       "rep": 131,
+      "astray": false
+    },
+    {
+      "name": "guenniversaldonor",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "KillerKilo91",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
       "astray": false
     }
   ]
