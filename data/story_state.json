@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T22:15:20.5200408Z",
+  "updated": "2026-11-21T22:32:41.2937179Z",
   "unlocked": [
     "toad",
     "margins",
@@ -12,8 +12,8 @@
     "checkins": 99,
     "fed": 1649501,
     "tsath_fills": 15,
-    "messages": 1025,
-    "banishes": 63,
+    "messages": 1050,
+    "banishes": 64,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
     "deaths": 13,
@@ -28,12 +28,12 @@
     "sum:merchant_buys": 3,
     "gilded_merchants": 0,
     "@leng": 7,
-    "sum:goblins_grabbed": 12,
+    "sum:goblins_grabbed": 14,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 32,
-    "stream:messages": 250,
+    "stream:messages": 275,
     "sum:circle_top": 0,
-    "stream:banishes": 5,
+    "stream:banishes": 6,
     "@moon": 100,
     "kinds:beings_seen": 15,
     "pacts": 0,
@@ -174,11 +174,11 @@
       "wait": ""
     },
     "goblins": {
-      "pct": 48.0,
+      "pct": 56.0,
       "parts": [
         {
           "label": "Grab 25 treasure goblins",
-          "have": 12,
+          "have": 14,
           "need": 25
         }
       ],
@@ -420,7 +420,7 @@
       "wait": ""
     },
     "hand": {
-      "pct": 8.1,
+      "pct": 8.2,
       "parts": [
         {
           "label": "Signatures",
@@ -429,7 +429,7 @@
         },
         {
           "label": "Banishments",
-          "have": 63,
+          "have": 64,
           "need": 500
         },
         {
