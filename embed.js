@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.14.4';
+  var VERSION = '1.15.1';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -2544,7 +2544,7 @@
       ]));
       out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'How it works' }), el('ul', null, [
         '<code>!fish</code> casts a line, and so does the <em>Go Fishing</em> channel point reward. The bite comes a little later and the catch reels itself in. In Discord: <code>/fish</code>.',
-        'Your <strong>Fishing skill</strong> grows as you catch. Deeper waters need more skill and better <strong>bait</strong>: <code>!water</code> shows where you can fish, <code>!bait</code> what is in your tackle box.',
+        'Your <strong>Fishing skill</strong> grows as you catch. Deeper waters need more skill and better <strong>bait</strong>: <code>!water</code> shows where you can fish, <code>!bait</code> what is in your tackle box. The <strong>Onyx Lure</strong>, sold only at the Merchant\u2019s stall during the Onyx Fair, fishes the abyss, lasts 20 casts and draws rarer fish.',
         'Every fish comes <strong>Fine</strong>, <strong>Choice</strong> or <strong>Prime</strong>, and now and then one comes up <strong>aberrant</strong>: wrong, and worth more. Each is its own line in your journal (<code>!fishing</code>).',
         '<strong>The Wreckage:</strong> now and then the wreck of the <em>Alert</em> drifts in for a short while. Chat is told, and every cast while it is here hauls up something extra.',
         'Sell the catch to the Merchant from Leng, or tip it into Tsathoggua: <code>!fish sell</code>, <code>!fish feed</code>.',
@@ -2656,7 +2656,8 @@
         (e.memberTurnUp || e.memberEarlyDays) ? '<a href="/supporters">Members of eldritzh.com</a>: ' + [e.memberTurnUp ? num(e.memberTurnUp) + ' more for turning up' : '',
           e.memberEarlyDays ? 'the booth opens ' + (e.memberEarlyDays === 1 ? 'a day' : num(e.memberEarlyDays) + ' days') + ' early' : '',
           prizes.some(function (z) { return z.members; }) ? 'a prize of their own' : ''].filter(Boolean).join(', ') + '.' : '',
-        'Tickets keep from one fair to the next. <code>!fair</code> shows yours, <code>!fair buy &lt;prize&gt;</code> buys in chat, <code>!fortune</code> asks the Priest.'
+        'Tickets keep from one fair to the next. <code>!fair</code> shows yours, <code>!fair buy &lt;prize&gt;</code> buys in chat, <code>!fair wares</code> and <code>!fair trade &lt;#&gt;</code> deal with the Merchant, <code>!fortune</code> asks the Priest.',
+        'Hold an <strong>Onyx Key</strong> (behind doors that weren\u2019t there, on the galleys of Celephaïs)? <code>!fair key</code> opens the booth for you before the fair, or buys a second fortune during it.'
       ].filter(Boolean).map(function (h) { return el('li', { html: h }); }))]));
 
       var root = el('div');
@@ -2701,7 +2702,7 @@
           var input = el('input', { class: 'eldr-search eldr-keyin', type: 'password', autocomplete: 'off', spellcheck: 'false', placeholder: 'rift_… or the link from Discord', 'aria-label': 'Your key' });
           var msg = el('p', { class: 'eldr-keymsg', text: a && a.err ? a.err : '' });
           box.appendChild(el('h2', { text: 'Sign in to visit the booth' }));
-          box.appendChild(el('p', { class: 'eldr-small', html: 'Signed in, you see your Onyx Tickets, buy prizes here and ask the Veiled Priest your fortune. In Discord, type <code>/shard key</code> (the same key as the Rift page and the talent tree) and open its link once, or paste the key here. Your Discord has to be linked first: <code>/forge link</code>.' }));
+          box.appendChild(el('p', { class: 'eldr-small', html: 'Signed in, you see your Onyx Tickets, buy prizes and trade with the Merchant here, and ask the Veiled Priest your fortune. In Discord, type <code>/shard key</code> (the same key as the Rift page and the talent tree) and open its link once, or paste the key here. Your Discord has to be linked first: <code>/forge link</code>.' }));
           box.appendChild(el('form', { onsubmit: function (ev) {
             ev.preventDefault();
             var m = (input.value || '').trim().match(/rift_[A-Za-z0-9_\-]+/);
@@ -2744,6 +2745,32 @@
         return el('section', { class: 'eldr-card' }, [el('h2', { text: 'The booth' }),
           el('p', { class: 'eldr-small eldr-muted', text: 'One prize plays at a time, in turn. Your tickets come off only when it plays.' }), grid]);
       }
+      // 20 Nov: the Merchant from Leng's stall: today's wares (fair.json, or the fresher list from /web/fair/me when signed in)
+      var GROUP_NAME = { fishing: 'Fishing', delve: 'Delve', relic: 'Relics', shard: 'Rift Shards', pact: 'Pacts' };
+      var FAIR_ONLY = { onyx: 1 };   // 20 Nov: wares nobody else sells (the Onyx Lure)
+      function stall() {
+        var wares = signedIn() && st.fair.stall && st.fair.stall.length ? st.fair.stall : (d.stall || []);
+        if (!wares.length) return null;
+        var member = signedIn() && !!st.fair.member, open = d.on || (d.early && member), free = freeTickets();
+        var per = (signedIn() && st.fair.stallPerDay) || d.stallPerDay || 0, traded = signedIn() ? (st.fair.stallTraded || 0) : 0;
+        var grid = el('div', { class: 'eldr-grid' });
+        wares.forEach(function (w) {
+          var can = open && signedIn() && w.left > 0 && free >= w.tickets && (!per || traded < per);
+          var b = signedIn() && open ? el('button', { type: 'button', class: 'eldr-chip' + (can ? ' tt-save' : ''), disabled: can ? null : '',
+            text: w.left <= 0 ? 'Sold out' : per && traded >= per ? 'Come back tomorrow' : can ? 'Trade for ' + w.tickets : w.tickets + ' tickets' }) : null;
+          if (b) b.addEventListener('click', function () { post('/web/fair/trade', { ware: w.id }, b); });
+          grid.appendChild(el('article', { class: 'ci' }, [
+            el('div', { class: 'eldr-row' }, [el('h3', { text: (w.qty > 1 ? w.qty + '× ' : '') + w.name }),
+              w.rare ? el('span', { class: 'eldr-badge green', text: 'Rare find' }) : FAIR_ONLY[w.id] ? el('span', { class: 'eldr-badge green', text: 'Only at the fair' })
+                : el('span', { class: 'eldr-badge', text: GROUP_NAME[w.group] || w.group || 'Wares' }),
+              el('span', { class: 'eldr-badge gold', text: w.tickets + ' 🎟' })]),
+            el('p', { class: 'eldr-small', text: w.text || '' }),
+            el('p', { class: 'eldr-small eldr-muted', text: w.left <= 0 ? 'Sold out for today.' : w.left === 1 ? 'The last one.' : num(w.left) + ' on his rug.' }), b]));
+        });
+        return el('section', { class: 'eldr-card' }, [el('h2', { text: 'The Merchant from Leng\u2019s stall' }),
+          el('p', { class: 'eldr-small eldr-muted', text: 'He lays out a different rug every day of the fair (at midnight): bait, Delve tools, relics, shards and Pacts, and now and then something rarer. Paid in Onyx Tickets, straight into your satchel or your purse. Look out for the Onyx Lure: carved in Inquanok and sold nowhere else, it fishes the abyss, lasts 20 casts and draws rarer fish in every water.'
+            + (per ? ' Everyone shares his stock; each of us trades with him at most ' + per + ' times a day' + (signedIn() ? ' (you: ' + traded + ').' : '.') : '') }), grid]);
+      }
       function fortune() {
         if (!d.on) return null;
         var box = el('section', { class: 'eldr-card' }, [el('h2', { text: 'The Veiled Priest' }),
@@ -2774,10 +2801,10 @@
       }
       function draw() {
         root.innerHTML = '';
-        [account(), booth(), fortune(), plays()].forEach(function (n) { if (n) root.appendChild(n); });
+        [account(), booth(), stall(), fortune(), plays()].forEach(function (n) { if (n) root.appendChild(n); });
       }
       if (st.fair === undefined) loadMe(); else draw();
-      out.push(root, foot(d.updated, el('div', { html: 'In chat: <code>!fair</code> · <code>!fair booth</code> · <code>!fair buy &lt;prize&gt;</code> · <code>!fortune</code>' })));
+      out.push(root, foot(d.updated, el('div', { html: 'In chat: <code>!fair</code> · <code>!fair booth</code> · <code>!fair buy &lt;prize&gt;</code> · <code>!fair wares</code> · <code>!fair trade &lt;#&gt;</code> · <code>!fortune</code>' })));
       return out;
     });
   }
@@ -2788,7 +2815,7 @@
   // (the seasons, the Onyx Fair, happy hour, the Stars), winners.json (giveaways, fishing derbies, this stream's
   // Workings) and the other feeds for Clipomania, the crowns, the Remembrance, the Old Ones and the ultra-rares.
   var EVENT_INFO = {
-    fair: 'Once a month the onyx city at the foot of Kadath opens its fair: Onyx Tickets for turning up, staying, supporting and raids, flares and stranger things at the booth, and the Veiled Priest’s fortunes.',
+    fair: 'Once a month the onyx city at the foot of Kadath opens its fair: Onyx Tickets for turning up, staying, supporting and raids, flares and stranger things at the booth, the Merchant from Leng’s stall (bait, Delve tools, relics, Pacts, sometimes an Eldritch Pact), and the Veiled Priest’s fortunes.',
     timed: 'Running on stream right now, for a while only.',
     season: 'A season of the stream’s calendar: it changes what happens on stream while it runs.',
     omen: 'A Lingering Omen: a blessing or curse on the whole congregation, for a few days.'
