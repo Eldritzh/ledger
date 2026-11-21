@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-21T21:11:46Z",
+  "updated": "2026-11-21T22:21:42Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -423,6 +423,56 @@
     },
     {
       "name": "KillerKilo91",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "Steelcutter",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "Abbiesolutely",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "fastl3ga",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "Floson",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "MrDustyJones",
       "platform": "twitch",
       "rank": 1,
       "rankName": "Seeker",
