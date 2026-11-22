@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T23:51:15.9880510Z",
+  "updated": "2026-11-21T23:54:28.1566042Z",
   "unlocked": [
     "toad",
     "margins",
@@ -17,7 +17,7 @@
     "banishes": 67,
     "delve_bottoms": 6,
     "sunwait_candles": 2,
-    "deaths": 15,
+    "deaths": 17,
     "chants": 0,
     "rituals": 0,
     "expeditions": 0,
@@ -76,11 +76,11 @@
       "wait": ""
     },
     "deaths": {
-      "pct": 15.0,
+      "pct": 17.0,
       "parts": [
         {
           "label": "The Keeper must fall 100 times",
-          "have": 15,
+          "have": 17,
           "need": 100
         }
       ],
@@ -339,11 +339,11 @@
       "wait": ""
     },
     "graves": {
-      "pct": 3.0,
+      "pct": 3.4,
       "parts": [
         {
           "label": "The Keeper must fall 500 times",
-          "have": 15,
+          "have": 17,
           "need": 500
         }
       ],
