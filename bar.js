@@ -25,6 +25,10 @@
    its own small mark (look.sig: dot, diamond, ring, star) and particles (flares, coins).
    1.1.1 (20 Nov): the bar no longer draws over the shop's own menu, cart or pop-ups on phones (it sat on top of the
    menu drawer). It stays on its own low layer, and steps out of sight while the shop has an overlay open.
+   1.2.0 (25 Nov): "The Ledger" in the shop's own menu (desktop header and the phone drawer) gets a soft green glow
+   with a slow pulse, so it stands out on every page. Found by its address (any link to a page whose address has
+   "ledger" in it) or its text ("The Ledger"); never the other menu items. data-eldr-glow="0" turns it off,
+   data-eldr-glow="<text>" matches that address part instead. Respects "reduce motion" (no pulse then).
    ===================================================================================== */
 (function () {
   'use strict';
@@ -32,7 +36,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.1.1';
+  var VERSION = '1.2.0';
   var OPT = function (k, d) { var v = me && me.getAttribute('data-eldr-' + k); return v == null || v === '' ? d : v; };
   var TZ = 'Europe/Stockholm';
   var GOLD = '#D4AF37', GREEN = '#52B788';
@@ -409,12 +413,41 @@
     sync();
   }
 
+  // 1.2.0: the green shine on "The Ledger" in Fourthwall's menu
+  function glowStyles() {
+    if (document.getElementById('eldr-glow-style')) return;
+    var st = document.createElement('style'); st.id = 'eldr-glow-style';
+    st.textContent = [
+      'a.eldr-glow,a.eldr-glow *{color:' + GREEN + ' !important;text-shadow:0 0 6px rgba(82,183,136,.55),0 0 14px rgba(82,183,136,.25);transition:text-shadow .3s ease}',
+      'a.eldr-glow:hover,a.eldr-glow:focus-visible,a.eldr-glow:hover *{text-shadow:0 0 8px rgba(82,183,136,.8),0 0 20px rgba(82,183,136,.4)}',
+      '@keyframes eldr-glow-pulse{0%,100%{text-shadow:0 0 5px rgba(82,183,136,.45),0 0 12px rgba(82,183,136,.2)}50%{text-shadow:0 0 8px rgba(82,183,136,.75),0 0 20px rgba(82,183,136,.35)}}',
+      '@media (prefers-reduced-motion:no-preference){a.eldr-glow{animation:eldr-glow-pulse 3.6s ease-in-out infinite}}'
+    ].join('\n');
+    document.head.appendChild(st);
+  }
+  function markGlow() {
+    var opt = OPT('glow', '1');
+    if (opt === '0') return;
+    var part = (opt === '1' ? 'ledger' : opt).toLowerCase();
+    var links = document.querySelectorAll('header a[href], nav a[href], [class*="header"] a[href], [class*="menu"] a[href], [class*="drawer"] a[href], [class*="nav"] a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      if (a.classList.contains('eldr-glow') || (root && root.contains(a))) continue;
+      var href = (a.getAttribute('href') || '').toLowerCase(), txt = (a.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      var hit = (href.indexOf('/pages/') >= 0 && href.indexOf(part) >= 0) || txt === 'the ledger' || txt === 'the eldritch ledger';
+      if (hit && txt.length < 40) { glowStyles(); a.classList.add('eldr-glow'); }
+    }
+  }
+
   function start() {
     refresh();
+    markGlow();
     watchOverlays();
     // Fourthwall swaps the page on its own navigation: put the bar back from the last data when it goes missing
     var t = null;
+    var g = null;
     if (window.MutationObserver) new MutationObserver(function () {
+      if (!g) g = setTimeout(function () { g = null; markGlow(); }, 200);   // menus drawn or swapped later (the phone drawer)
       if (t || !lastData || (root && root.isConnected)) return;
       t = setTimeout(function () { t = null; if (root && !root.isConnected) { lastSig = ''; root = null; render(lastData[0], lastData[1]); } }, 150);
     }).observe(document.body, { childList: true, subtree: true });
