@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.15.1';
+  var VERSION = '1.16.0';
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -2849,6 +2849,7 @@
           running.length ? el('div', { class: 'eldr-grid' }, running.map(function (e) { return card(e, true); })) : el('p', { class: 'eldr-muted', text: 'Nothing special is running right now.' })]));
         if (coming.length) out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Coming up' }), el('div', { class: 'eldr-grid' }, coming.map(function (e) { return card(e, false); }))]));
         out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Always there' }), el('ul', null, [
+          '<strong>The Miskatonic’s Wanted</strong>: one WANTED poster at a time, from the Shallows down to the Old Ones. Put Madness on its bounty with <code>!wanted pay</code> (bits and subs add to it too); when it’s paid, Dave calls the hunt and every chat message is a blow. Everyone who fought is paid XP, Madness and the horror’s spoils. <code>!wanted</code>.',
           '<strong>Fishing derbies</strong>: a contest on the waters during a stream (the heaviest fish, the most catches, the rarest). The podium wins prizes, everyone who scores gets a little. <code>!fish derby</code>.',
           '<strong>The Workings</strong>: three goals for the whole congregation every stream. Everyone who helps one to the end is paid. <code>!workings</code>.',
           '<strong>Giveaways</strong>: tickets with <code>!ticket</code> while one is open; sub and member tiers weigh more. Sponsored giveaways carry the partner’s label.',
@@ -2868,7 +2869,19 @@
         };
         var day = function (u) { return u ? new Date(u * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''; };
         var month = function (m) { var dt = new Date(m + '-01T12:00:00Z'); return isNaN(dt) ? m : dt.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }); };
+        var wt = w.wanted, wp = wt && wt.poster;
+        var wantedCard = wt ? el('section', { class: 'eldr-card' }, [
+          el('div', { class: 'eldr-row' }, [el('h2', { text: 'The Miskatonic’s Wanted' }),
+            el('span', { class: 'eldr-badge' + (wp && wp.state !== 'open' ? ' green' : ''), text: wp ? (wp.state === 'hunt' ? 'The hunt is on' : wp.state === 'ready' ? 'Bounty paid' : 'Poster ' + wp.n + ' of ' + wt.total) : 'Board clear' })]),
+          wp ? el('h3', { text: 'WANTED: ' + wp.name }) : el('p', { text: 'Every horror on the board has been brought in.' }),
+          wp ? el('div', { class: 'eldr-small eldr-muted', text: 'Threat ' + wp.threat + (wp.group ? ' · ' + wp.group : '') + ' · ' + num(wt.claimed) + ' of ' + num(wt.total) + ' brought in so far' }) : null,
+          wp ? bar(Math.max(0, Math.min(100, Number(wp.pct || 0)))) : null,
+          wp ? el('p', { class: 'eldr-small', html: wp.state === 'open' ? 'Put Madness on the bounty with <code>!wanted pay</code>. When it’s paid, Dave calls the hunt.' : 'The bounty is paid: be in chat when Dave calls the hunt. Paying now goes on the next poster.' }) : null
+        ].concat((wt.log || []).length ? [table('Brought in', '', ['When', 'Horror', 'Hunters', 'Fiercest'],
+          wt.log.map(function (x) { return [day(x.at), x.name + ' (Threat ' + x.threat + ')', num(x.hunters), x.fiercest || '']; }))] : [])) : null;
+        if (wantedCard) wantedCard.querySelectorAll('section.eldr-card section.eldr-card').forEach(function (n) { n.classList.remove('eldr-card'); });
         var sections = [
+          wantedCard,
           table('Giveaways', 'The last winners. Sponsored giveaways name their partner.', ['When', 'Giveaway', 'Winner'],
             (w.giveaways || []).map(function (g) { return [day(g.at), g.giveaway + (g.partner ? ' (with ' + g.partner + ')' : ''), g.winner]; })),
           table('Fishing derbies', 'The podium of each derby.', ['When', 'Derby', 'Podium'],
