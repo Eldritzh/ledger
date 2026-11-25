@@ -25,7 +25,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.15.1';
+  var VERSION = '1.16.0';   // 1.16.0 (25 Nov): the Skills panel on every investigator (fishing, the Delve, Discord, the Onyx Fair)
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -285,6 +285,13 @@
     '.eldr-site .lk-card .eldr-row h3{margin:0;font-size:19px}',
     '.eldr-site .lk-tal{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px}',
     '.eldr-site .lk-t{white-space:nowrap}',
+    // 25 Nov: the Skills panel, one colour per kind of levelling so it never reads as the Investigator level (gold)
+    '.eldr-site .lk-skills{display:grid;gap:8px;margin-top:2px}',
+    '.eldr-site .lk-sk{--sk:#2fb8a6;border-left:3px solid var(--sk);padding:4px 0 4px 10px;font-size:14px}',
+    '.eldr-site .lk-sk b{color:var(--sk);font-weight:600;letter-spacing:.02em;margin-right:6px}',
+    '.eldr-site .lk-sk .lk-bar{height:5px;border-radius:3px;background:rgba(255,255,255,.09);margin-top:5px;overflow:hidden}',
+    '.eldr-site .lk-sk .lk-bar i{display:block;height:100%;background:var(--sk)}',
+    '.eldr-site .lk-sk.fish{--sk:#2fb8a6}.eldr-site .lk-sk.delve{--sk:#e0803a}.eldr-site .lk-sk.discord{--sk:#8a8ff0}.eldr-site .lk-sk.fair{--sk:#c59cf2}',
     '.eldr-site ol.cg-stars{margin:0 0 1em;padding-left:1.6em;columns:2;column-gap:28px}',
     '.eldr-site ol.cg-stars li{break-inside:avoid;margin:0 0 .3em}',
     /* 11 Nov: the talent tree */
@@ -1694,10 +1701,26 @@
       kids.push(el('h3', { text: 'Elites banished' }));
       kids.push(el('div', { class: 'eldr-small', text: p.banished.join(', ') }));
     }
-    var f = p.fishing;
+    var f = p.fishing, sk = p.skills || {};
+    // 25 Nov: the Skills panel: other kinds of levelling, each in its own colour beside the gold Investigator level
+    if (f || sk.delve || sk.discord || sk.fair) {
+      var skill = function (cls, label, text, frac, tip) {
+        var row = el('div', { class: 'lk-sk ' + cls, title: tip || '' }, [el('b', { text: label }), text]);
+        if (typeof frac === 'number' && isFinite(frac)) row.appendChild(el('div', { class: 'lk-bar' }, [el('i', { style: 'width:' + Math.round(Math.max(0.03, Math.min(1, frac)) * 100) + '%' })]));
+        return row;
+      };
+      var rows = [];
+      if (f) rows.push(skill('fish', 'Night Fishing', 'skill ' + num(f.skill) + (f.rank ? ' · ' + f.rank : ''), f.skill / 300, 'Fishing skill goes to 300; angler ranks open the way (!fishing)'));
+      if (sk.delve) rows.push(skill('delve', 'The Delve', 'Delver Rank ' + num(sk.delve.rank) + (sk.delve.deepest ? ' · deepest ' + num(sk.delve.deepest) : '') + (sk.delve.descents ? ' · ' + num(sk.delve.descents) + ' descents' : ''), null, '!delve rank in chat'));
+      if (sk.discord) rows.push(skill('discord', 'Discord', (sk.discord.title || 'Not yet ranked') + ' · ' + num(sk.discord.messages) + ' messages' + (sk.discord.next ? ' · ' + sk.discord.next + ' at ' + num(sk.discord.nextAt) : ''),
+        sk.discord.nextAt ? sk.discord.messages / sk.discord.nextAt : 1, 'Messages in the Discord (linked accounts, one a minute counts)'));
+      if (sk.fair) rows.push(skill('fair', 'The Onyx Fair', sk.fair.title + ' · standing ' + num(sk.fair.standing), null, 'Standing at the Onyx Fair: tickets earned and spent, fortunes, visits (!fair)'));
+      kids.push(el('h3', { text: 'Skills' }));
+      kids.push(el('div', { class: 'lk-skills' }, rows));
+    }
     if (f) {
       kids.push(el('h3', { text: 'Night Fishing' }));
-      kids.push(el('div', { class: 'eldr-small', text: ['Fishing skill ' + num(f.skill), num(f.species) + (f.species === 1 ? ' kind of fish' : ' kinds of fish') + ' in the journal', f.water ? 'fishing ' + f.water : ''].filter(Boolean).join(' · ') }));
+      kids.push(el('div', { class: 'eldr-small', text: [num(f.species) + (f.species === 1 ? ' kind of fish' : ' kinds of fish') + ' in the journal', f.water ? 'fishing ' + f.water : ''].filter(Boolean).join(' · ') }));
       if (f.best) kids.push(el('div', { class: 'eldr-small', text: 'Best catch: ' + f.best.fish + ' (' + weight(f.best.grams) + ')' }));
       if ((f.legendaries || []).length) kids.push(el('div', { class: 'eldr-small' }, [el('span', { class: 'eldr-badge gold', text: 'Legendary' }), ' ' + f.legendaries.join(', ')]));
     }
