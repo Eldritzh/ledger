@@ -11,10 +11,10 @@
 - **Only where we're live.** Announcements and other lines for everyone now go only to the platforms Dave is live on, so Kick or YouTube chat no longer gets lines from a stream that isn't there. Answers to your commands always come back to the platform you typed on.
 - **Sponsored streams.** On a stream made with a sponsor, other partners' lines and our own ad-like reminders (shop, codes, links) wait until it's over. Everything else, your commands, games and thanks, works as usual, and a charity we're raising for keeps going.
 - The stream-start "Tonight" line now carries each announcement once. It used to repeat the Merchant and the Sunwait candle once for every platform.
-- `!litany` and other Codex commands (`!level`, `!codex`, `!talent` …) no longer go unanswered when you type them while chat is busy. Achievement progress that was lost the same way now counts again.
+- `!litany` and other Codex commands (`!level`, `!codex`, `!talent` …) no longer go unanswered when you type them while chat is busy, and achievement progress no longer gets lost the same way. The same fix went into every other system, so a busy moment can't mix up two commands anywhere.
 - Outside sponsored streams, partner lines, charity and the timed messages work as before.
 
-**Developers' notes:** The Codex runs every call on one shared copy of itself, and a call that had to wait its turn could end up reading the next call's instructions, or none. On 26 Nov that dropped 87 calls between 19:58 and 23:03, `!litany` among them. Each call now keeps its own.
+**Developers' notes:** Streamer.bot runs every call of an action on one shared copy of it, and a call that had to wait its turn could end up reading the next call's instructions, or none. On 26 Nov that dropped 87 Codex calls between 19:58 and 23:03, `!litany` among them, and 14 of our actions ran calls side by side that day. Every system now keeps each call's own instructions.
 
 Until now only a dozen systems went through the Herald; the rest posted straight to chat, so they could still flood it in a busy moment. With every line in one place, the Herald can now also decide which platforms get a line and keep a sponsored stream quiet, without touching each game.
 
