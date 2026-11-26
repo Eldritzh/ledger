@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T22:47:22Z",
+  "updated": "2026-11-26T23:02:22Z",
   "version": "1.6.0",
   "reason": "routine",
   "files": {
@@ -25,7 +25,7 @@
     "people.json": "2026-11-26T21:52:16Z",
     "fx.json": "2026-11-21T19:34:25Z",
     "winners.json": "2026-11-26T19:21:55Z",
-    "events.json": "2026-11-26T19:06:54Z",
+    "events.json": "2026-11-26T23:02:22Z",
     "fair.json": "2026-11-26T18:26:51Z"
   },
   "staffApi": "https://forge-web.warden.se",
