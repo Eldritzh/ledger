@@ -5,31 +5,35 @@
 ## 📜 Your Ledger
 | Command | What it does |
 |---|---|
-| `!madness` | Your Madness, Pacts, Eldritch Pacts and rank |
+| `!madness` (`!points`) | Your Madness, Pacts, Eldritch Pacts and rank |
 | `!pacts` | Your Pacts and Eldritch Pacts |
+| `!buypact` | Buy Pacts with Madness (`!buypact 3` for three) |
 | `!rank` | Your place on the Madness leaderboard |
 | `!relics` | Every relic you carry: Wards, Elder Signs, Pages, Keys and more |
 | `!satchel` | Your forge materials, lures, keys, charms and infusions |
-| `!level` | Your investigator level, title and XP to the next level (everything you do earns XP); `!level <name>` for someone else's |
-| `!talent` | Your talent points (one a level from level 5): `!talent tree scholar`, `!talent <name>` to take one, `!talent info <name>` for what it does and what it needs first, `!talent reset` to start over. Plan a whole build on the site's talent tree and paste the `!talent build …` line it writes |
+| `!level` (`!lvl`) | Your investigator level, title and XP to the next level (everything you do earns XP); `!level <name>` for someone else's |
+| `!talent` (`!talents`) | Your talent points (one a level from level 5): `!talent tree scholar`, `!talent <name>` to take one, `!talent info <name>` for what it does and what it needs first, `!talent reset` to start over. Plan a whole build on the site's talent tree and paste the `!talent build …` line it writes |
 | `!occupation` | Pick your occupation (Antiquarian, Journalist, Private Eye, Professor, Dilettante, Occultist, Sailor, Doctor). Each is good at some fights, foes and waters and bad at others; `!occupation info <name>` explains one |
 | `!lineage` | What you are: pick a lineage, good at some things and bad at others (in descents, raids, the Delve, banishing and fishing). `!lineage locked` lists the ones that wait behind deeds; `!lineage info <name>` explains one |
 | `!identity`, `!pronouns` | Who you are, if you want to say: `!identity non-binary`, `!pronouns they` (or `none`). Free, changes nothing in play, change it whenever you like |
 | `!character` | Your investigator in one line: level, title, lineage, occupation; `!character <name>` for someone else's |
 | `/talent`, `/occupation`, `/lineage`, `/identity`, `/pronouns`, `/character` (Discord) | The same in the forge bot (changes apply when the bot's stream side next runs); `/occupation info:` and `/lineage info:` show one in full |
-| `!rebirth` | At the top level (60): be born again at level 1 with a ✦ mark (`!rebirth confirm`) |
-| `!litany` | Your Litany: three small rites of your own this stream (speak, banish, fish, look something up …). Each pays XP and Madness, all of them a bonus and a chance at a Pact. `!litany swap` trades one rite once a stream |
-| `!workings` | The Workings: what the whole congregation works at this stream. Everyone who helps one to the end is paid when it's done; some must be done early or they fail |
-| `!dreaming` | Your Dreaming XP. Watching quietly builds it (twice as fast after `!lurk`); when you speak again your chat XP counts double until it's spent |
+| `!rebirth` (`!reborn`) | At the top level (60): be born again at level 1 with a ✦ mark (`!rebirth confirm`) |
+| `!litany` (`!dailies`) | Your Litany: three small rites of your own this stream (speak, banish, fish, look something up …). Each pays XP and Madness, all of them a bonus and a chance at a Pact. On stream it shows as a card with your rites for about 10 s (cards take turns); `!litany text` answers in chat. `!litany swap` trades one rite once a stream. Discord `/litany` |
+| `!workings` (`!working`) | The Workings: what the whole congregation works at this stream. Everyone who helps one to the end is paid when it's done; some must be done early or they fail |
+| `!dreaming` (`!dreams`) | Your Dreaming XP. Watching quietly builds it (twice as fast after `!lurk`); when you speak again your chat XP counts double until it's spent |
+| `!lurk` / `!unlurk` | Slip into the dark to watch quietly (your dreams come twice as fast), or step back out |
 | `!fish train` | Angler ranks: your Fishing skill waits at 75, 150 and 225 until you earn the next rank (Harbour Hand, Deep Caster, Dagon's Chosen). `!fish train` buys the Almanac for Deep Caster; `!fishing` shows your rank and the next step |
-| `!fair` | The Onyx Fair of Inquanok (the first week of each month): your Onyx Tickets, earned by turning up, staying, supporting and raids. `!fair booth` shows the prizes, `!fair buy <prize>` sets one off on stream in turn (also on the Ledger's Fair page) |
+| `!fish craft [bait] [n]` | Forge bait from what the Delve brings up: Pickled Eel, Deep One Scale Spinner, Shoggoth Jelly, Mi-Go Brain Chum, Star-Spawn Roe. With no bait it lists them and what you can make now; Discord `/fish craft` or `/forge craft` (Fishing) |
+| `!coffer` / `!coffer open <wrack\|sunken\|leng> [n]` | Coffers: a Bundle of Wrack, a Sunken Coffer or a Reliquary of Leng holds a random mix of bait, Delve tools, materials and Madness, with a small chance of candles, Wards, Rift Shards and Pacts (the Reliquary rarely an Eldritch Pact). Won in fishing derbies and other prizes; Discord `/coffer` |
+| `!fair` (`!onyx`) | The Onyx Fair of Inquanok (the first week of each month): your Onyx Tickets, earned by turning up, staying, supporting and raids. `!fair booth` shows the prizes, `!fair buy <prize>` sets one off on stream in turn (also on the Ledger's Fair page). `!fair wares` shows the Merchant from Leng's stall (bait, Delve tools, relics, Pacts, the fair-only Onyx Lure, now and then an Eldritch Pact; new wares every day of the fair) and `!fair trade <#>` buys with tickets (`!fair trade <#> madness` pays a ware's Madness price instead). Next to the stall, a **rare-goods shelf** turns over every six hours (`!fair shelf`): Pnakotic Fragments and Folios (read for XP), the Inquanok Balm, keys and leaves from Celephaïs, curios, an Onyx Key for Friends of Inquanok; one of each per person a turn. Hold an **Onyx Key**? `!fair key` opens the booth for you before the fair, or buys a second fortune during it. Your **standing** at the fair (Stranger at the Gate … Trusted of the Merchant from Leng) rises with every ticket earned or spent and every fortune, and brings perks |
 | `/fair` (Discord) | The Onyx Fair from Discord: `/fair tickets`, `/fair booth`, `/fair buy`, `/fair fortune` (the two answers as choices). `/fish train` too |
 | `!fortune` | While the Onyx Fair is in town: the Veiled Priest asks two questions (answer `!fortune a` or `b`, or `!fortune a b` at once) and grants a boon for a while. Once a stream |
 | `!covenant` | Eldritzh's Awakening and the Covenant: talents for everyone, chosen by chat vote (one per Awakening level) |
 | `!codex` | Your achievements |
 | `!forget` | Take yourself off every public page on eldritzh.com: the Codex, the leaderboards and your own look-up entry. Nothing changes in the game, and `!forget undo` brings you back (`!codex hide` / `!codex show` do the same) |
 | `!title` | Show or pick a title you've earned (`!title <name>`, `!title off`). Slaying a nemesis adds its *Slayer of …* title here too |
-| `!link` | Link your Twitch, Kick and YouTube accounts into one ledger |
+| `!link` | Link your Twitch, Kick and YouTube accounts into one ledger. `!unlink` splits them again |
 | `!forge <code>` | Link your Discord account (get the code with `/forge link` in Discord) |
 
 Your first message each stream signs the ledger automatically. You get a check-in reward, a chance at an **omen** (a boon or a curse), and milestone rewards at check-in #10, #25, #50, #100 and #200.
@@ -38,7 +42,7 @@ Your first message each stream signs the ledger automatically. You get a check-i
 | Command | What it does |
 |---|---|
 | `!tempt 500` / `!gamble 500` | Gamble Madness (also `40%`, `1.5k` or `all`). A roll of 1 costs dearly |
-| `!rite @user 500` / `!duel` | Challenge someone to a duel. They `!answer` to accept or `!flee` to refuse |
+| `!rite @user 500` / `!duel` | Challenge someone to a duel. They `!answer` (`!accept`) to accept or `!flee` (`!decline`) to refuse. When Dave allows it, `!wield <weapon>` names your own weapon |
 | `!boon` | Spend 1 Pact on a random eldritch boon for your duel. Each boon has its own twist |
 | `!boons` | The boon table and the duel curses (`!boons leech` shows one) |
 | `!infuse golden` / `!infuse eldritch` | During a duel: spend a forge Infusion to turn your weapon Golden (+4%) or Eldritch (+5%) |
@@ -52,7 +56,7 @@ Your first message each stream signs the ledger automatically. You get a check-i
 | (raids) | Every summoning comes under an **aura**: a Feast, a Famine, a Blood Tide, Martyrdom, the Sacrifice … read the summon line before you swear. A boon on your oath is a Banner for the whole raid, a Vanguard (+15% of your share if it wins) or a Shieldbearer (keep 15% if it falls) |
 | `!offer grave 3` / `!offer chitin` | Offer lure fragments or legend lures to the next raid. The most-offered type decides the horror |
 | `!offering` | The current raid offering |
-| `!craze @user 250` | Gift Madness to someone |
+| `!craze @user 250` (`!give`, `!infect`) | Gift Madness to someone |
 
 You can also `!descend` (and `!delve`) in the Discord **#descent** channel, even while the stream is offline. Out of Pacts? There, a boon costs 7,500 Madness instead.
 
@@ -69,7 +73,7 @@ A run into the dark that lasts: push deeper five depths at a time, carry your ha
 | `!push boon` / `!push charm:aegis` | A boon for this push (1 Pact, or a Charm): Steady, Greed, Aegis, Pathfinder or Second Wind. It may also turn your weapon legendary or Golden for the rest of the run. `!delve boons` explains them |
 | `!surface` | Climb out with your stake and everything you found |
 | `!delve` | Your run: depth, wounds, haul, oil. Without a run: your oil and waystones |
-| `!delve use salve` / `!delve use oil` | Heal a wound, or refill your lantern |
+| `!delve use salve` / `!delve use balm` / `!delve use oil` / `!delve use quill` | Heal a wound (an Inquanok Balm heals them all), refill your lantern, or loose a Shantak Quill at the hype train's Old One (in the Delve it's used by itself on a boss; one quill lasts 3 uses) |
 | `!delve deep 2000 from 40` | Start at a waystone you've reached (one every 10 depths, yours forever) |
 | `!delve shallow 500 lure:grave` | Bring a lure: mostly that enemy type, more of its materials, and its lord waits at the bottom |
 | `!deepest` | The deepest delvers, and who has broken the Bottom |
@@ -128,7 +132,7 @@ The nemesis with the most victims becomes the **Warchief**. Once a month the str
 ## 🛡 Wards, Ichor & Beings
 | Command | What it does |
 |---|---|
-| `!ward` | Your Wards. They soften your losses in gambles and duels automatically |
+| `!ward` (`!wards`) | Your Wards. They soften your losses in gambles and duels automatically |
 | `!ward off` / `!ward on` | Keep your Wards in the satchel, or let them work again |
 | `!ward buy` | 1 Pact buys 1 Ward |
 | `!ward buy lesser` | 1 Pact buys 3 Lesser Wards |
@@ -144,11 +148,14 @@ The nemesis with the most victims becomes the **Warchief**. Once a month the str
 |---|---|
 | `!rites` | The list of rites |
 | `!sign` | Your Elder Signs. They turn aside curses, binds and hostile spells by themselves. `!sign use` burns away your curses now |
-| `!read` | Your Necronomicon Pages. `!read tome` binds 13 pages into the book for great rewards |
+| `!read` (`!tome`) | Your Necronomicon Pages. `!read tome` binds 13 pages into the book for great rewards |
 | `!whisper` | Spend a Page for a word from the void, and a gift |
 | `!ritual` | Open a ritual circle (3 Ritual Candles) |
 | `!light 3` | Light your candles in the circle. Complete it and the whole chat gets a happy hour |
 | `!key queue` | Use a Silver Key to jump to the front of the viewer queue |
+| `!door` | Turn a Silver Key in empty air and step through a door that wasn't there: coins, Wards, Rift Shards, a Turquoise or Onyx Key, a Pact from Randolph Carter, or teeth *(new)* |
+| `!key return` | **Carter's Return**: lost a gamble or a duel in the last minute? Turn a Silver Key and half of it comes back. Once a stream *(new)* |
+| `!key give @user` | Hand someone a Silver Key *(new)* |
 | `!key descend` | Use a Silver Key to descend again without resting |
 | `!bargain use` | Spend a Tsathoggua's Favour (or a Pact) on 15 minutes of double Madness, just for you |
 | `!ascend` | Bind 5 Pacts into 1 Eldritch Pact |
@@ -201,7 +208,7 @@ The wheel has gold **JACKPOT** slices. Land on one and something good happens to
 Goals on stream for the game Dave is playing: *Headshots 3/10*, *Kills 7/15*, a *Gunathon* weapon by weapon. Each game has its own, and some show up at the start of every stream. When a goal is fulfilled it lights up on stream and feeds the Pact pool.
 | Command | What it does |
 |---|---|
-| `!tracker` | The goals up right now |
+| `!tracker` (`!trackers`) | The goals up right now |
 | `!tracker <name>` | One goal: where it stands, this stream and all time |
 | `!tracker pool` | Goals waiting to be swapped in |
 | `!tracker up <name>` | Spend Madness to make a goal harder |
@@ -210,6 +217,7 @@ Goals on stream for the game Dave is playing: *Headshots 3/10*, *Kills 7/15*, a 
 | `!tracker pick <new> [old]` | Spend 2 Pacts to choose the goal yourself: into a free slot, or in place of another |
 | `!tracker reroll <name>` | Spend 1 Pact on a new weapon for the Gunathon's current step, before it has started |
 | `!stabby` / `!stabbings` | Count one of Dave's stabbings / how many so far, this stream and all time |
+| `!execution` / `!executions` | Count one of Dave's executions / how many so far, this stream and all time |
 
 A goal more than half done can't be swapped away, and a goal that was just changed rests for a minute. What you spend goes into the Pact pool. When a goal you shaped is fulfilled, the Codex remembers.
 
@@ -249,6 +257,15 @@ If Dave holds a challenge to the end, the Pact Wheel pool grows. If he breaks it
 
 During a happy hour it's a **gold rush**: goblins everywhere, and every catch pays double.
 
+## 📜 The Miskatonic's Wanted *(new)*
+| Command | What it does |
+|---|---|
+| `!wanted` | The WANTED poster up now, how dangerous it is (Threat I to VII) and how far its bounty is |
+| `!wanted pay 500` | Put Madness on the bounty (up to 5,000 a day each, so it takes all of us). `!wanted 500` works too |
+| `!wanted next` | The next three posters |
+
+Miskatonic University posts one horror at a time, from the cultists and Ghouls of the Shallows down to Azathoth himself. Fill the bounty together (bits and subs add to it too) and Dave calls the hunt when the moment is right: then **every chat message is a blow** from you, one every 5 seconds however much you type, so no need to spam. Bring it in and everyone who fought gets XP, Madness and the horror's spoils for the forge; the fiercest gets a Ward and the rare spoil. Paid but missed the hunt? You still get half the XP. If it gets away, the bounty stands and the hunt goes on another time.
+
 ## 🕯 The Remembrance *(new)*
 | Command | What it does |
 |---|---|
@@ -257,10 +274,32 @@ During a happy hour it's a **gold rush**: goblins everywhere, and every catch pa
 | `!devotion gifts` | The gifts of the Old Ones |
 | `/devotion` (Discord) | Your stream days this month and the current Heralds, in the forge bot |
 | `/level [name]` (Discord) | Your investigator level (or someone's), as of Streamer.bot's last mirror |
+| `/litany [swap]` (Discord) | Your Litany this stream; `swap:<n>` trades a rite (applied when Streamer.bot next runs, live only) |
+| `/workings` (Discord) | The congregation's Workings this stream |
+| `/codex` (Discord) | Your Revelations: how many, your title, the last three and what's next |
+| `/balance` (Discord) | Your Madness, Pacts, Wards, keys and the rest, as Streamer.bot last told the forge |
+| `/bounties` (Discord) | The bounty board and its pools |
+| `/season` (Discord) | The season or special event running now, and a lingering omen |
+| `/story` (Discord) | The Eldritch Ledger: pages open, the latest, and what opens next |
+| `/nemesis` (Discord) | The nemeses that hunt you, your trophies and titles, and the Warchief |
+| `/deaths` (Discord) | Eldritzh's deaths this stream and in all, and the longest life |
+| `/relics` (Discord) | Everything you carry: Wards, Elder Signs, pages, Ichor, Candles, Silver Keys, Tsathoggua's Favour and nemesis trophies |
+| `/rank` (Discord) | All your ranks in one place: Delver Rank, angler rank and Fishing skill, Discord rank, the Order and your standing at the fair |
+| `/sunwait` (Discord) | The Sunwait candles before Yule's longest night: how many are lit, this week's rune, the next candle |
+| `/cults` (Discord) | The cults' glory this month, who reigns, and your own cult and glory |
+| `/rites` (Discord) | Your Discord rites: two daily and one weekly challenge done in the Discord (talk, fish, Delve, the fair). Each pays Madness and XP |
 | `/order` (Discord) | Your rank and reputation in the Order |
 | `/awakening` (Discord) | Eldritzh's own level, the Covenant and the three crowns |
 
 Keep showing up and the Old Ones notice. Chat on **3 different stream days** in a month and you are *devoted*: when the next month begins, every devoted soul gets Madness, the three most devoted become **Heralds of the Old Ones** for the month with a rare gift, and a quarter of the rest win a gift (a free Pact, a Ward, Ichor, a Ritual Candle, a Madness blessing…). Subs, gifted subs, bits, raids and super chats count as devotion too and add extra chances, never a bigger gift. Gifts that bless your Madness or luck wait for you and wake the next time you chat while we're live.
+
+## 🜏 The Benison
+Subs, YouTube members and eldritzh.com members get Pacts and Rift Shards every week. Subs get theirs on the first stream they come to each week; members every week, even when they can't make it. Both? The better of the two plus a Rift Shard.
+
+| Command | What it does |
+|---|---|
+| `!benison` | What your Benison is and whether this week's has come |
+| `/benison` (Discord) | Your eldritzh.com member Benison |
 
 ## 🐙 The Esoteric Order of the Tentacle *(new)*
 | Command | What it does |
@@ -297,7 +336,8 @@ Some sounds are cheaper (or free) for subs, members and the special folk. Happy 
 | `!leave` | Leave the queue (you get refunded) |
 | `!spot` | Your place in the queue |
 | `!ticket` | Enter the giveaway (`!ticket 5`, `!ticket max` or `!ticket pact`) |
-| `!gwinfo` | The current giveaway and your odds |
+| `!gwinfo` (`!info`) | The current giveaway and your odds |
+| `!confirm` | Won a giveaway? Type it in time to claim your prize |
 
 ## 👁 Omens & Curses
 | Command | What it does |
@@ -314,6 +354,7 @@ Some sounds are cheaper (or free) for subs, members and the special folk. Happy 
 |---|---|
 | `!fx <name>` | Fire an effect on stream: uses a Rift Shard you hold for it, otherwise a Pact. If the dark is busy, it waits its turn |
 | `!fx <name> pact` | Pay with a Pact even if you hold that shard |
+| *Cheer / tip / Super Chat / KICKs* | Name an effect in the message (`Cheer500 !fx eye`, `fx eye`, `#eye`) and it comes through once the amount reaches its price (300 bits for most, 1000 for the Eldritch ones), or cheer an effect's own number (666 bits: The Watching Eye) |
 | `!fx roll` | Rift Roulette: one Pact for a random effect (it can bite back) |
 | `!fx <name> rite` | Wake an Eldritch effect together: 2 viewers (sight and sound) or 3 (all three) pay one Pact each. Others join with `!fx <name>` while the circle is open |
 | `!shard` | Buy a sealed Rift Shard for a Pact (`!shard 3` buys three). `!shard open` shows what it holds |
@@ -323,7 +364,7 @@ Some sounds are cheaper (or free) for subs, members and the special folk. Happy 
 | `!shards` | The shards you hold. In Discord: `/shards`, `/shard open`, `/shard give` |
 | Discord `/shard key` | A private link to the Rift page on eldritzh.com, where you see your shards and open your sealed ones. It can't give, buy or fire anything. `/shard key revoke:True` kills it |
 | `!seal` | Spend an Elder Sign to stop an Eldritch effect before it lands |
-| `!claim <code>` | Bind a Ko-fi or Fourthwall offering to your account |
+| `!claim <code>` | Bind a Ko-fi or Fourthwall offering to your account (any account you've linked with `!link` works). Put `@twitchname`, `kick:name`, `yt:name` or `discord:name` (after `/forge link`) in your Ko-fi note to skip the code |
 | `!partners` | The stream's current partners and their commands |
 | `!charity` | The cause we're raising for right now: how much is in, the goal and where to give |
 | `!stirring` | How close the stars are to a hype train |
@@ -370,7 +411,9 @@ On Twitch, prophecies also appear as a **Twitch prediction** (bet Sanity there) 
 ## 🌙 Dreams, Haunts & the Old Words
 | Command | What it does |
 |---|---|
-| `!expedition 1000` | Send your dreamer into the Dreamlands. Speak in chat after about 12 hours to hear what they found |
+| `!expedition 1000` (`!dream`) | Send your dreamer into the Dreamlands. Speak in chat after about 12 hours to hear what they found |
+| `!board 1000` | **Galley Night** (the new moon): when a galley of Celephaïs comes down out of the clouds, go aboard for Serannian and come back richer, or fall through a cloud. `!board key` with a Turquoise Key sails free *(new)* |
+| `!feast` | Kuranes invites the congregation to a feast now and then on Galley Nights and in the Timeless Hours: join in time for Madness and a personal happy hour *(new)* |
 | `!haunt @user <message>` | 1 Pact: a whisper that finds them the next time they speak |
 | {off} `!riddle` / `!riddle hint` | The lore riddle hanging in the air. Type the answer in chat. A dreamer who Seeks sometimes brings back a **riddle hint**: `!riddle hint` while a riddle is open tells you the answer's length and first letter |
 | `Iä! Iä!` | Chant the old words in chat. When enough voices chant together, something answers |
@@ -387,7 +430,7 @@ On Twitch, prophecies also appear as a **Twitch prediction** (bet Sanity there) 
 
 | Command | What it does |
 |---|---|
-| `!fish` | Cast a line (100 Madness, or the **Go Fishing** channel point reward). The catch bites a few seconds later. `!fish <water>` to try another water |
+| `!fish` | Cast a line (100 Madness, or the **Go Fishing** channel point reward). The catch bites a few seconds later. `!fish <water>` to try another water. The **Sky-Sea of Serannian** is sealed: open on Galley Nights, any other time a cast there turns a Silver Key |
 | `!fish reel` | Reel in right away instead of waiting for the bite. On Twitch you can also click your own bobber on the stream (Heat extension, with your identity shared) |
 | `!fishing` | Your Fishing skill, your journal and your best catches |
 | `!water` | The waters open to you; `!water <name>` to move there (deeper waters need skill and better bait) |
@@ -405,6 +448,21 @@ Over a hundred fish in 25 waters, some straight from Booty Bay, Skyrim, the Lost
 | `!stars` | How much might it has left, or which Old One rises next. A hype train wakes the next one |
 | `!banished` | The Elite Beings you helped drive back (when an Elite comes through, every message you send is a blow) |
 | `/stars`, `/banished` (Discord) | The same, in the forge bot |
+
+## 🎲 Odds and Ends
+| Command | What it does |
+|---|---|
+| `!watchtime` (`!wt`) | How long you've watched. `!watchtimeleaderboard` (`!wtleaderboard`, `!leaderboardwatchtime`, `!leaderboardwt`) for the top watchers |
+| `!deaths` | How often Dave has died in this game. `!totaldeaths` across every game, `!deathboard` the deadliest games |
+| `!followage` / `!accountage` | How long you've followed, how old your account is |
+| `!clip` | Clip the last moments of the stream and get the link |
+| `!yt` | Dave's newest YouTube video |
+| `!time` | What time it is where Dave is |
+| `!translate <text>` | Translate a message into English |
+| `!8ball <question>` | Ask the eight-ball |
+| `!flipcoin` | Flip a coin |
+| `!russianroulette` | One chamber in six. Feeling lucky? |
+| `!sacrifice` | Give yourself for the greater good |
 
 ## ⚒ The Gibbering Forge (Discord)
 In **#gibbering-forge**: `/forge satchel`, `/forge recipes`, `/forge craft <recipe>`, `/forge salvage <item>`, `/forge link`, and `/pickman`. Crafted Wards, Elder Signs and Candles arrive in your stream relics within a minute.
