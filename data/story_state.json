@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T20:33:24.8883423Z",
+  "updated": "2026-11-26T20:48:22.7356365Z",
   "unlocked": [
     "toad",
     "margins",
@@ -7,7 +7,8 @@
     "sunwait",
     "faithful",
     "bestiary",
-    "vigil"
+    "vigil",
+    "leng"
   ],
   "counters": {
     "checkins": 107,
@@ -18,6 +19,7 @@
     "delve_bottoms": 7,
     "sunwait_candles": 3,
     "deaths": 17,
+    "gilded_merchants": 1,
     "chants": 0,
     "rituals": 0,
     "expeditions": 0,
@@ -27,8 +29,7 @@
     "warchiefs": 0,
     "stream:checkins": 8,
     "sum:merchant_buys": 3,
-    "gilded_merchants": 0,
-    "@leng": 7,
+    "@leng": 100,
     "sum:goblins_grabbed": 14,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 36,
@@ -159,17 +160,6 @@
           "label": "Fifteen souls sign the Ledger in a single stream",
           "have": 8,
           "need": 15
-        }
-      ],
-      "wait": ""
-    },
-    "leng": {
-      "pct": 7.5,
-      "parts": [
-        {
-          "label": "Purchases from the Merchant or the Gilded Merchant",
-          "have": 3,
-          "need": 40
         }
       ],
       "wait": ""
