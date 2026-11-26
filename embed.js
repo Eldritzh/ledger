@@ -6,8 +6,9 @@
      <div data-eldr-page="story"></div>
      <script src="https://ledger.eldritzh.com/embed.js" defer></script>
 
-   Pages: hub · story · commands · pacts · circles · codex · partners · sounds · bestiary · congregation · order (or esorder) ·
-          remembrance · rift · investigator (or talents) · covenant · fishing · fair · winners (or events) · patchnotes · about
+   Pages: hub · story · commands · pacts · circles · codex · partners · charity (or causes) · sounds · bestiary · congregation ·
+          order (or esorder) · remembrance · rift · investigator (or talents, lineages, occupations) · covenant · fishing · fair ·
+          winners (or events) · patchnotes · about
    Options on the div:
      data-eldr-game="hunt-showdown"   pacts: open on this game (default: the game on the wheel now)
      data-eldr-refresh="5"            minutes between quiet re-checks while the page is open (0 = off)
@@ -25,7 +26,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.18.0';   // 1.18.0 (26 Nov): the Miskatonic's Wanted on the Winners & Events page; 1.17.0 (25 Nov): Covenant pledge cards (what it opens, the next vote, Most pledged), the fair's standing and rare-goods shelf; 1.16.0: the Skills panel
+  var VERSION = '1.19.0';   // 1.19.0 (26 Nov): the Charity page (the running cause and the ones before), charities off the Patrons page, member.html ?page=lineages / occupations; 1.18.0 (26 Nov): the Miskatonic's Wanted on the Winners & Events page; 1.17.0 (25 Nov): Covenant pledge cards (what it opens, the next vote, Most pledged), the fair's standing and rare-goods shelf; 1.16.0: the Skills panel
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -243,6 +244,15 @@
     '.eldr-site .pt-plate img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}',
     '.eldr-site .pt-plate.art{height:140px;padding:0;overflow:hidden}',
     '.eldr-site .pt-plate.art img{width:100%;height:100%;object-fit:cover}',
+    /* 26 Nov: the Charity page */
+    '.eldr-site .ch-point{display:flex;flex-wrap:wrap;gap:.4rem;align-items:baseline;justify-content:center;text-align:center;border-color:rgba(82,183,136,.45)}',
+    '.eldr-site .ch-now{border-color:rgba(82,183,136,.55)}',
+    '.eldr-site .ch-plate{height:120px;margin:0 0 12px}',
+    '.eldr-site .ch-goal{margin:14px 0 18px}',
+    '.eldr-site .ch-goal .eldr-bar i{background:linear-gradient(90deg,#2f7a58,var(--green,#52B788))}',
+    '.eldr-site .ch-goal .n{font:700 .9rem/1 Cinzel,Georgia,serif;color:var(--green,#52B788)}',
+    '.eldr-site .ch-act{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:12px}',
+    '.eldr-site .ch-past .pt h3{margin:.2rem 0}',
     '.eldr-site .pt-plate .nm{font-family:Cinzel,Georgia,serif;font-weight:700;font-size:22px;color:var(--gold);text-align:center;line-height:1.15}',
     '.eldr-site .pt-cos{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:0 0 2px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}',
     '.eldr-site .pt-co{flex:1 1 0;min-width:96px;display:grid;grid-template-rows:56px auto;justify-items:center;align-items:center;gap:6px;padding:10px 12px}',
@@ -887,10 +897,18 @@
   }
   function partners(ctx) {
     return load('partners.json').then(function (d) {
-      var list = (d.partners || []).map(function (p, i) { return { p: p, i: i }; })
+      // 26 Nov: causes have their own page (charity); here only a pointer to it
+      var causes = (d.partners || []).filter(isCause);
+      var list = (d.partners || []).filter(function (p) { return !isCause(p); }).map(function (p, i) { return { p: p, i: i }; })
         .sort(function (a, b) { return ptRank(a.p) - ptRank(b.p) || a.i - b.i; }).map(function (x) { return x.p; });
       var out = [head(ctx.opts, 'Patrons of the Ledger', 'Brands that signed the book',
         'Paid partnerships of the stream. Using their links and codes supports the channel.')];
+      if (causes.length) {
+        var cp = pageLink(ctx, 'charity');
+        out.push(el('section', { class: 'eldr-card ch-point' }, [
+          el('span', { text: 'We’re raising for ' + causes.map(function (c) { return c.name; }).join(' and ') + '. ' }),
+          cp ? el('a', { href: cp, text: 'See how far we are →' }) : el('span', { class: 'eldr-muted', html: 'Type <code>!charity</code> in chat.' })]));
+      }
       var inquiry = el('p', { class: 'eldr-note eldr-small', style: { textAlign: 'center', marginTop: '24px' } }, [
         'Want to be seen here? Contact Eldritzh at ', el('a', { href: 'mailto:dave@eldritzh.com', text: 'dave@eldritzh.com' }),
         ' or ', discordLink(ctx, 'on Discord'), '.']);
@@ -929,6 +947,67 @@
       });
       out.push(grid, inquiry, foot(d.updated));
       return out;
+    });
+  }
+
+  // ================================================================== 26 Nov: CHARITY (partners.json: type "charity" + causes)
+  // Partners :: Core writes the running causes into partners[] (type charity, with a charity block of totals) and the ones
+  // before into causes[] (ended, switched off or archived). Totals only: no donor names ever reach this file.
+  function isCause(p) { return p && (p.type === 'charity' || p.charity); }
+  function pageLink(ctx, page) {
+    var p = navPages(ctx).filter(function (x) { return x.page === page; })[0];
+    return p ? navHref(p) : (PREVIEW ? '?page=' + page : '');
+  }
+  function charity(ctx) {
+    return load('partners.json').then(function (d) {
+      var now = (d.partners || []).filter(isCause), before = d.causes || [];
+      var out = [head(ctx.opts, 'The Charity Ledger', 'What the congregation gives to',
+        'Now and then the stream raises money for a cause instead of for itself. Gifts go straight to the cause, never through the stream, and what the congregation has given is kept here.')];
+      if (!now.length) out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'No fundraiser right now' }),
+        el('p', { html: 'When one starts, it shows up here with how far we are, and <code>!charity</code> in chat says where to give.' })]));
+      now.forEach(function (p) {
+        var c = p.charity || {}, src = logoUrl(p.logo), has = c.pct != null && c.pct >= 0 && c.goal;
+        var stats = el('div', { class: 'eldr-stats' }, [
+          el('div', { class: 'eldr-stat' }, [el('b', { text: c.raised || '0' }), el('span', { text: 'Raised' })]),
+          c.donors ? el('div', { class: 'eldr-stat' }, [el('b', { text: num(c.donors) }), el('span', { text: c.donors === 1 ? 'Giver' : 'Givers' })]) : null,
+          c.donations ? el('div', { class: 'eldr-stat' }, [el('b', { text: num(c.donations) }), el('span', { text: c.donations === 1 ? 'Gift' : 'Gifts' })]) : null,
+          c.matched ? el('div', { class: 'eldr-stat' }, [el('b', { text: c.matched }), el('span', { text: 'Matched' })]) : null]);
+        var dates = p.start && p.end ? 'Runs ' + day(p.start) + ' – ' + day(p.end) + '.' : p.start ? 'Running since ' + day(p.start) + '.' : p.end ? 'Runs until ' + day(p.end) + '.' : '';
+        out.push(el('section', { class: 'eldr-card ch-now' }, [
+          src ? el('div', { class: 'pt-plate ch-plate' }, logoImg(src, p.name + ' logo')) : null,
+          el('div', { class: 'eldr-row' }, [el('h2', { text: p.name }), el('span', { class: 'eldr-badge gold', text: 'Raising now' })]),
+          p.blurb ? el('p', { text: p.blurb }) : null,
+          has ? el('div', { class: 'ch-goal' }, [bar(Math.min(100, c.pct)), el('div', { class: 'eldr-row eldr-small' }, [
+            el('span', { text: c.raised + ' of ' + c.goal }), el('span', { class: 'n', text: c.pct + '%' + (c.pct >= 100 ? ', the goal is met!' : '') })])]) : null,
+          stats,
+          dates ? el('div', { class: 'eldr-small eldr-muted', text: dates }) : null,
+          el('div', { class: 'ch-act' }, [
+            /^https?:\/\//i.test(p.link || '') ? el('a', { class: 'eldr-chip', href: p.link, target: '_blank', rel: 'noopener', text: 'Give to ' + p.name + ' →' }) : null,
+            el('span', { class: 'eldr-small eldr-muted' }, ['In chat: '].concat(['!charity'].concat(p.commands || []).filter(function (w, i, a) { return a.indexOf(w) === i; })
+              .map(function (w, i) { return [i ? ' ' : '', el('code', { text: w })]; }).reduce(function (a, b) { return a.concat(b); }, [])))])
+        ]));
+      });
+      if (before.length) {
+        var given = {};
+        before.forEach(function (b) { if (b.currency) given[b.currency] = (given[b.currency] || 0) + Number(b.raisedMinor || 0); });
+        out.push(el('section', { class: 'eldr-card' }, [
+          el('div', { class: 'eldr-row' }, [el('h2', { text: 'Causes we raised for before' }),
+            el('span', { class: 'eldr-badge', text: before.length + (before.length === 1 ? ' cause' : ' causes') })]),
+          el('div', { class: 'eldr-grid ch-past' }, before.map(function (b) {
+            var u = logoUrl(b.logo), when = [b.first, b.last].filter(Boolean).map(day).filter(function (x, i, a) { return a.indexOf(x) === i; }).join(' – ');
+            return el('article', { class: 'pt' }, [
+              u ? el('div', { class: 'pt-plate' }, logoImg(u, b.name + ' logo')) : null,
+              el('h3', { text: b.name }),
+              el('div', { class: 'eldr-row eldr-small' }, [el('b', { text: b.raised + (b.goal ? ' of ' + b.goal : '') }),
+                el('span', { class: 'eldr-muted', text: [b.donors ? num(b.donors) + (b.donors === 1 ? ' giver' : ' givers') : '', b.matched ? b.matched + ' matched' : ''].filter(Boolean).join(' · ') })]),
+              when ? el('div', { class: 'eldr-small eldr-muted', text: when }) : null,
+              /^https?:\/\//i.test(b.link || '') ? el('a', { href: b.link, target: '_blank', rel: 'noopener', text: 'Visit ' + b.name + ' →' }) : null]);
+          }))]));
+      }
+      out.push(el('p', { class: 'eldr-note eldr-small', style: { textAlign: 'center', marginTop: '24px' } }, [
+        'Know a cause the congregation should raise for? Tell Eldritzh at ', el('a', { href: 'mailto:dave@eldritzh.com', text: 'dave@eldritzh.com' }),
+        ' or ', discordLink(ctx, 'on Discord'), '.']));
+      return out.concat(foot(d.updated));
     });
   }
 
@@ -2099,7 +2178,8 @@
     return load('investigator.json').then(function (d) {
       d = d || {};
       var st = ctx.state, trees = d.trees || [], occs = d.occupations || [], lins = d.lineages || [], board = d.board || [];
-      if (!st.tab) st.tab = ctx.page === 'talents' && trees.length ? 'talents' : 'levels';
+      if (!st.tab) st.tab = ctx.page === 'talents' && trees.length ? 'talents' : ctx.page === 'lineages' && lins.length ? 'lineages'
+        : ctx.page === 'occupations' && occs.length ? 'occupations' : 'levels';   // 26 Nov: lineages / occupations open their tab
       var out = [head(ctx.opts, 'The Investigator', 'Everything you do is written down',
         'Turn up, play and support, and your investigator climbs: levels, titles, talents, and a lineage and an occupation of your own.')];
       var aw = d.awakening;
@@ -3021,8 +3101,8 @@
   });
   var about = mdPage('about.md', 'About the Ledger', 'Embrace the Tentacle');
 
-  var PAGES = { hub: hub, rift: rift, story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance,
-    investigator: investigator, talents: investigator, covenant: covenant, fishing: fishing, fair: fair, winners: winners, events: winners, patchnotes: patchnotes, about: about };
+  var PAGES = { hub: hub, rift: rift, story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, charity: charity, causes: charity, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance,
+    investigator: investigator, talents: investigator, lineages: investigator, occupations: investigator, covenant: covenant, fishing: fishing, fair: fair, winners: winners, events: winners, patchnotes: patchnotes, about: about };
 
   // ------------------------------------------------------------------ mount
   function render(root, quiet) {
