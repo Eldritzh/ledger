@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T20:08:55.2850215Z",
+  "updated": "2026-11-26T20:21:37.3127149Z",
   "unlocked": [
     "toad",
     "margins",
@@ -10,11 +10,11 @@
     "vigil"
   ],
   "counters": {
-    "checkins": 106,
+    "checkins": 107,
     "fed": 1655288,
     "tsath_fills": 16,
-    "messages": 1150,
-    "banishes": 68,
+    "messages": 1175,
+    "banishes": 69,
     "delve_bottoms": 7,
     "sunwait_candles": 3,
     "deaths": 17,
@@ -25,17 +25,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 7,
+    "stream:checkins": 8,
     "sum:merchant_buys": 3,
     "gilded_merchants": 0,
     "@leng": 7,
     "sum:goblins_grabbed": 14,
     "sum:hg_challenges_held": 0,
-    "count:streams_attended": 35,
-    "stream:messages": 25,
+    "count:streams_attended": 36,
+    "stream:messages": 50,
     "sum:circle_top": 0,
-    "stream:banishes": 1,
-    "@moon": 56,
+    "stream:banishes": 2,
+    "@moon": 75,
     "kinds:beings_seen": 15,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -49,16 +49,16 @@
     "kinds:legend_weapons": 0,
     "episodes": 0,
     "max:streak": 40,
-    "@hand": 8,
+    "@hand": 9,
     "stream:chants": 0
   },
   "progress": {
     "ink": {
-      "pct": 70.7,
+      "pct": 71.3,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 106,
+          "have": 107,
           "need": 150
         }
       ],
@@ -153,11 +153,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 46.7,
+      "pct": 53.3,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 7,
+          "have": 8,
           "need": 15
         }
       ],
@@ -197,11 +197,11 @@
       "wait": ""
     },
     "census": {
-      "pct": 35.0,
+      "pct": 36.0,
       "parts": [
         {
           "label": "One hundred different souls sign the Ledger",
-          "have": 35,
+          "have": 36,
           "need": 100
         }
       ],
@@ -219,16 +219,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 56.2,
+      "pct": 75.0,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 7,
+          "have": 8,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 1,
+          "have": 2,
           "need": 4
         }
       ],
@@ -410,16 +410,16 @@
       "wait": ""
     },
     "hand": {
-      "pct": 8.8,
+      "pct": 9.0,
       "parts": [
         {
           "label": "Signatures",
-          "have": 106,
+          "have": 107,
           "need": 2500
         },
         {
           "label": "Banishments",
-          "have": 68,
+          "have": 69,
           "need": 500
         },
         {
@@ -429,7 +429,7 @@
         },
         {
           "label": "Souls",
-          "have": 35,
+          "have": 36,
           "need": 200
         }
       ],

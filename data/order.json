@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-26T20:11:53Z",
+  "updated": "2026-11-26T20:27:04Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -503,6 +503,16 @@
     },
     {
       "name": "St_Eldritch",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "NalleVonSlampa",
       "platform": "twitch",
       "rank": 1,
       "rankName": "Seeker",
