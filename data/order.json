@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-26T19:19:37Z",
+  "updated": "2026-11-26T19:36:56Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -317,8 +317,8 @@
       "rank": 1,
       "rankName": "Seeker",
       "circle": 1,
-      "days": 3,
-      "rep": 447,
+      "days": 4,
+      "rep": 547,
       "astray": false
     },
     {
@@ -479,6 +479,16 @@
       "circle": 1,
       "days": 1,
       "rep": 126,
+      "astray": false
+    },
+    {
+      "name": "Genin85",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
       "astray": false
     }
   ]
