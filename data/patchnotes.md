@@ -10,6 +10,7 @@
 - **Every system speaks through the Herald.** The Pact Wheel, the Hourglass, Nemesis, Tsathoggua, the Rites, Wagers, the Summonings, Clipomania, the Goblins, duels, the Beings, the seasons and the rest now share the Herald's chat budget, like fishing and the Delve already did. Answers to your commands still come straight away; when chat is busy, game results fold into one line and progress moves to the on-stream popups.
 - **Only where we're live.** Announcements and other lines for everyone now go only to the platforms Dave is live on, so Kick or YouTube chat no longer gets lines from a stream that isn't there. Answers to your commands always come back to the platform you typed on.
 - **Sponsored streams.** On a stream made with a sponsor, other partners' lines and our own ad-like reminders (shop, codes, links) wait until it's over. Everything else, your commands, games and thanks, works as usual, and a charity we're raising for keeps going.
+- The stream-start "Tonight" line now carries each announcement once. It used to repeat the Merchant and the Sunwait candle once for every platform.
 - Outside sponsored streams, partner lines, charity and the timed messages work as before.
 
 **Developers' notes:** Until now only a dozen systems went through the Herald; the rest posted straight to chat, so they could still flood it in a busy moment. With every line in one place, the Herald can now also decide which platforms get a line and keep a sponsored stream quiet, without touching each game.
