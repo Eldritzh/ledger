@@ -6,8 +6,9 @@
      <div data-eldr-page="story"></div>
      <script src="https://ledger.eldritzh.com/embed.js" defer></script>
 
-   Pages: hub · story · commands · pacts · circles · codex · partners · sounds · bestiary · congregation · order (or esorder) ·
-          remembrance · rift · investigator (or talents) · covenant · fishing · fair · winners (or events) · patchnotes · about
+   Pages: hub · story · commands · pacts · circles · codex · partners · charity (or causes) · sounds · bestiary · congregation ·
+          order (or esorder) · remembrance · rift · investigator (or talents, lineages, occupations) · covenant · fishing · fair ·
+          winners (or events) · patchnotes · about
    Options on the div:
      data-eldr-game="hunt-showdown"   pacts: open on this game (default: the game on the wheel now)
      data-eldr-refresh="5"            minutes between quiet re-checks while the page is open (0 = off)
@@ -25,7 +26,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.15.1';
+  var VERSION = '1.19.0';   // 1.19.0 (26 Nov): the Charity page (the running cause and the ones before), charities off the Patrons page, member.html ?page=lineages / occupations; 1.18.0 (26 Nov): the Miskatonic's Wanted on the Winners & Events page; 1.17.0 (25 Nov): Covenant pledge cards (what it opens, the next vote, Most pledged), the fair's standing and rare-goods shelf; 1.16.0: the Skills panel
 
   // ------------------------------------------------------------------ tiny helpers
   // 12 Nov: a lineage's or occupation's words carry its boons, then "Bane: ..." / "Banes: ...". Shown as two lines.
@@ -243,6 +244,15 @@
     '.eldr-site .pt-plate img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}',
     '.eldr-site .pt-plate.art{height:140px;padding:0;overflow:hidden}',
     '.eldr-site .pt-plate.art img{width:100%;height:100%;object-fit:cover}',
+    /* 26 Nov: the Charity page */
+    '.eldr-site .ch-point{display:flex;flex-wrap:wrap;gap:.4rem;align-items:baseline;justify-content:center;text-align:center;border-color:rgba(82,183,136,.45)}',
+    '.eldr-site .ch-now{border-color:rgba(82,183,136,.55)}',
+    '.eldr-site .ch-plate{height:120px;margin:0 0 12px}',
+    '.eldr-site .ch-goal{margin:14px 0 18px}',
+    '.eldr-site .ch-goal .eldr-bar i{background:linear-gradient(90deg,#2f7a58,var(--green,#52B788))}',
+    '.eldr-site .ch-goal .n{font:700 .9rem/1 Cinzel,Georgia,serif;color:var(--green,#52B788)}',
+    '.eldr-site .ch-act{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:12px}',
+    '.eldr-site .ch-past .pt h3{margin:.2rem 0}',
     '.eldr-site .pt-plate .nm{font-family:Cinzel,Georgia,serif;font-weight:700;font-size:22px;color:var(--gold);text-align:center;line-height:1.15}',
     '.eldr-site .pt-cos{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:0 0 2px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}',
     '.eldr-site .pt-co{flex:1 1 0;min-width:96px;display:grid;grid-template-rows:56px auto;justify-items:center;align-items:center;gap:6px;padding:10px 12px}',
@@ -285,6 +295,13 @@
     '.eldr-site .lk-card .eldr-row h3{margin:0;font-size:19px}',
     '.eldr-site .lk-tal{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px}',
     '.eldr-site .lk-t{white-space:nowrap}',
+    // 25 Nov: the Skills panel, one colour per kind of levelling so it never reads as the Investigator level (gold)
+    '.eldr-site .lk-skills{display:grid;gap:8px;margin-top:2px}',
+    '.eldr-site .lk-sk{--sk:#2fb8a6;border-left:3px solid var(--sk);padding:4px 0 4px 10px;font-size:14px}',
+    '.eldr-site .lk-sk b{color:var(--sk);font-weight:600;letter-spacing:.02em;margin-right:6px}',
+    '.eldr-site .lk-sk .lk-bar{height:5px;border-radius:3px;background:rgba(255,255,255,.09);margin-top:5px;overflow:hidden}',
+    '.eldr-site .lk-sk .lk-bar i{display:block;height:100%;background:var(--sk)}',
+    '.eldr-site .lk-sk.fish{--sk:#2fb8a6}.eldr-site .lk-sk.delve{--sk:#e0803a}.eldr-site .lk-sk.discord{--sk:#8a8ff0}.eldr-site .lk-sk.fair{--sk:#c59cf2}',
     '.eldr-site ol.cg-stars{margin:0 0 1em;padding-left:1.6em;columns:2;column-gap:28px}',
     '.eldr-site ol.cg-stars li{break-inside:avoid;margin:0 0 .3em}',
     /* 11 Nov: the talent tree */
@@ -321,6 +338,14 @@
     '.eldr-site .tt-node.ro{cursor:help}',
     '.eldr-site .tt-node.mine .tt-ring{box-shadow:0 0 0 3px rgba(47,179,168,.6),0 0 14px rgba(47,179,168,.35)}',
     '.eldr-site .tt-node.ballot .tt-ring{animation:eldr-ballot 2.4s ease-in-out infinite}',
+    '.eldr-site li.eldr-here{color:var(--gold)}',
+    '.eldr-site .cv-facts{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}',
+    '.eldr-site .cv-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:8px}',
+    '.eldr-site .cv-card{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:10px 12px;border:1px solid rgba(212,175,55,.22);border-radius:10px;background:rgba(255,255,255,.02);color:inherit;font:inherit}',
+    '.eldr-site .cv-card:hover,.eldr-site .cv-card:focus-visible,.eldr-site .cv-card.sel{border-color:rgba(212,175,55,.6);background:rgba(212,175,55,.05)}',
+    '.eldr-site .cv-card-h{display:flex;justify-content:space-between;gap:8px;align-items:baseline}',
+    '.eldr-site .cv-card .cv-n{color:var(--teal);font-size:12px;font-weight:600}',
+    '.eldr-site .cv-card .eldr-badge{align-self:flex-start;white-space:normal;max-width:100%;box-sizing:border-box;letter-spacing:.06em;line-height:1.35}',
     '@keyframes eldr-ballot{0%,100%{box-shadow:0 0 0 2px rgba(82,183,136,.25)}50%{box-shadow:0 0 0 5px rgba(82,183,136,.55),0 0 18px rgba(82,183,136,.4)}}',
     '.eldr-site .cv-pl{position:absolute;left:-12px;top:-6px;font-size:10px;font-weight:600;line-height:1;padding:3px 6px;border-radius:999px;background:#0b0d0f;border:1px solid rgba(47,179,168,.55);color:var(--teal);white-space:nowrap}',
     '.eldr-site section.cv-vote{border-top-color:var(--green)}',
@@ -872,10 +897,18 @@
   }
   function partners(ctx) {
     return load('partners.json').then(function (d) {
-      var list = (d.partners || []).map(function (p, i) { return { p: p, i: i }; })
+      // 26 Nov: causes have their own page (charity); here only a pointer to it
+      var causes = (d.partners || []).filter(isCause);
+      var list = (d.partners || []).filter(function (p) { return !isCause(p); }).map(function (p, i) { return { p: p, i: i }; })
         .sort(function (a, b) { return ptRank(a.p) - ptRank(b.p) || a.i - b.i; }).map(function (x) { return x.p; });
       var out = [head(ctx.opts, 'Patrons of the Ledger', 'Brands that signed the book',
         'Paid partnerships of the stream. Using their links and codes supports the channel.')];
+      if (causes.length) {
+        var cp = pageLink(ctx, 'charity');
+        out.push(el('section', { class: 'eldr-card ch-point' }, [
+          el('span', { text: 'We’re raising for ' + causes.map(function (c) { return c.name; }).join(' and ') + '. ' }),
+          cp ? el('a', { href: cp, text: 'See how far we are →' }) : el('span', { class: 'eldr-muted', html: 'Type <code>!charity</code> in chat.' })]));
+      }
       var inquiry = el('p', { class: 'eldr-note eldr-small', style: { textAlign: 'center', marginTop: '24px' } }, [
         'Want to be seen here? Contact Eldritzh at ', el('a', { href: 'mailto:dave@eldritzh.com', text: 'dave@eldritzh.com' }),
         ' or ', discordLink(ctx, 'on Discord'), '.']);
@@ -914,6 +947,67 @@
       });
       out.push(grid, inquiry, foot(d.updated));
       return out;
+    });
+  }
+
+  // ================================================================== 26 Nov: CHARITY (partners.json: type "charity" + causes)
+  // Partners :: Core writes the running causes into partners[] (type charity, with a charity block of totals) and the ones
+  // before into causes[] (ended, switched off or archived). Totals only: no donor names ever reach this file.
+  function isCause(p) { return p && (p.type === 'charity' || p.charity); }
+  function pageLink(ctx, page) {
+    var p = navPages(ctx).filter(function (x) { return x.page === page; })[0];
+    return p ? navHref(p) : (PREVIEW ? '?page=' + page : '');
+  }
+  function charity(ctx) {
+    return load('partners.json').then(function (d) {
+      var now = (d.partners || []).filter(isCause), before = d.causes || [];
+      var out = [head(ctx.opts, 'The Charity Ledger', 'What the congregation gives to',
+        'Now and then the stream raises money for a cause instead of for itself. Gifts go straight to the cause, never through the stream, and what the congregation has given is kept here.')];
+      if (!now.length) out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'No fundraiser right now' }),
+        el('p', { html: 'When one starts, it shows up here with how far we are, and <code>!charity</code> in chat says where to give.' })]));
+      now.forEach(function (p) {
+        var c = p.charity || {}, src = logoUrl(p.logo), has = c.pct != null && c.pct >= 0 && c.goal;
+        var stats = el('div', { class: 'eldr-stats' }, [
+          el('div', { class: 'eldr-stat' }, [el('b', { text: c.raised || '0' }), el('span', { text: 'Raised' })]),
+          c.donors ? el('div', { class: 'eldr-stat' }, [el('b', { text: num(c.donors) }), el('span', { text: c.donors === 1 ? 'Giver' : 'Givers' })]) : null,
+          c.donations ? el('div', { class: 'eldr-stat' }, [el('b', { text: num(c.donations) }), el('span', { text: c.donations === 1 ? 'Gift' : 'Gifts' })]) : null,
+          c.matched ? el('div', { class: 'eldr-stat' }, [el('b', { text: c.matched }), el('span', { text: 'Matched' })]) : null]);
+        var dates = p.start && p.end ? 'Runs ' + day(p.start) + ' – ' + day(p.end) + '.' : p.start ? 'Running since ' + day(p.start) + '.' : p.end ? 'Runs until ' + day(p.end) + '.' : '';
+        out.push(el('section', { class: 'eldr-card ch-now' }, [
+          src ? el('div', { class: 'pt-plate ch-plate' }, logoImg(src, p.name + ' logo')) : null,
+          el('div', { class: 'eldr-row' }, [el('h2', { text: p.name }), el('span', { class: 'eldr-badge gold', text: 'Raising now' })]),
+          p.blurb ? el('p', { text: p.blurb }) : null,
+          has ? el('div', { class: 'ch-goal' }, [bar(Math.min(100, c.pct)), el('div', { class: 'eldr-row eldr-small' }, [
+            el('span', { text: c.raised + ' of ' + c.goal }), el('span', { class: 'n', text: c.pct + '%' + (c.pct >= 100 ? ', the goal is met!' : '') })])]) : null,
+          stats,
+          dates ? el('div', { class: 'eldr-small eldr-muted', text: dates }) : null,
+          el('div', { class: 'ch-act' }, [
+            /^https?:\/\//i.test(p.link || '') ? el('a', { class: 'eldr-chip', href: p.link, target: '_blank', rel: 'noopener', text: 'Give to ' + p.name + ' →' }) : null,
+            el('span', { class: 'eldr-small eldr-muted' }, ['In chat: '].concat(['!charity'].concat(p.commands || []).filter(function (w, i, a) { return a.indexOf(w) === i; })
+              .map(function (w, i) { return [i ? ' ' : '', el('code', { text: w })]; }).reduce(function (a, b) { return a.concat(b); }, [])))])
+        ]));
+      });
+      if (before.length) {
+        var given = {};
+        before.forEach(function (b) { if (b.currency) given[b.currency] = (given[b.currency] || 0) + Number(b.raisedMinor || 0); });
+        out.push(el('section', { class: 'eldr-card' }, [
+          el('div', { class: 'eldr-row' }, [el('h2', { text: 'Causes we raised for before' }),
+            el('span', { class: 'eldr-badge', text: before.length + (before.length === 1 ? ' cause' : ' causes') })]),
+          el('div', { class: 'eldr-grid ch-past' }, before.map(function (b) {
+            var u = logoUrl(b.logo), when = [b.first, b.last].filter(Boolean).map(day).filter(function (x, i, a) { return a.indexOf(x) === i; }).join(' – ');
+            return el('article', { class: 'pt' }, [
+              u ? el('div', { class: 'pt-plate' }, logoImg(u, b.name + ' logo')) : null,
+              el('h3', { text: b.name }),
+              el('div', { class: 'eldr-row eldr-small' }, [el('b', { text: b.raised + (b.goal ? ' of ' + b.goal : '') }),
+                el('span', { class: 'eldr-muted', text: [b.donors ? num(b.donors) + (b.donors === 1 ? ' giver' : ' givers') : '', b.matched ? b.matched + ' matched' : ''].filter(Boolean).join(' · ') })]),
+              when ? el('div', { class: 'eldr-small eldr-muted', text: when }) : null,
+              /^https?:\/\//i.test(b.link || '') ? el('a', { href: b.link, target: '_blank', rel: 'noopener', text: 'Visit ' + b.name + ' →' }) : null]);
+          }))]));
+      }
+      out.push(el('p', { class: 'eldr-note eldr-small', style: { textAlign: 'center', marginTop: '24px' } }, [
+        'Know a cause the congregation should raise for? Tell Eldritzh at ', el('a', { href: 'mailto:dave@eldritzh.com', text: 'dave@eldritzh.com' }),
+        ' or ', discordLink(ctx, 'on Discord'), '.']));
+      return out.concat(foot(d.updated));
     });
   }
 
@@ -1694,10 +1788,26 @@
       kids.push(el('h3', { text: 'Elites banished' }));
       kids.push(el('div', { class: 'eldr-small', text: p.banished.join(', ') }));
     }
-    var f = p.fishing;
+    var f = p.fishing, sk = p.skills || {};
+    // 25 Nov: the Skills panel: other kinds of levelling, each in its own colour beside the gold Investigator level
+    if (f || sk.delve || sk.discord || sk.fair) {
+      var skill = function (cls, label, text, frac, tip) {
+        var row = el('div', { class: 'lk-sk ' + cls, title: tip || '' }, [el('b', { text: label }), text]);
+        if (typeof frac === 'number' && isFinite(frac)) row.appendChild(el('div', { class: 'lk-bar' }, [el('i', { style: 'width:' + Math.round(Math.max(0.03, Math.min(1, frac)) * 100) + '%' })]));
+        return row;
+      };
+      var rows = [];
+      if (f) rows.push(skill('fish', 'Night Fishing', 'skill ' + num(f.skill) + (f.rank ? ' · ' + f.rank : ''), f.skill / 300, 'Fishing skill goes to 300; angler ranks open the way (!fishing)'));
+      if (sk.delve) rows.push(skill('delve', 'The Delve', 'Delver Rank ' + num(sk.delve.rank) + (sk.delve.deepest ? ' · deepest ' + num(sk.delve.deepest) : '') + (sk.delve.descents ? ' · ' + num(sk.delve.descents) + ' descents' : ''), null, '!delve rank in chat'));
+      if (sk.discord) rows.push(skill('discord', 'Discord', (sk.discord.title || 'Not yet ranked') + ' · ' + num(sk.discord.messages) + ' messages' + (sk.discord.next ? ' · ' + sk.discord.next + ' at ' + num(sk.discord.nextAt) : ''),
+        sk.discord.nextAt ? sk.discord.messages / sk.discord.nextAt : 1, 'Messages in the Discord (linked accounts, one a minute counts)'));
+      if (sk.fair) rows.push(skill('fair', 'The Onyx Fair', sk.fair.title + ' · standing ' + num(sk.fair.standing), null, 'Standing at the Onyx Fair: tickets earned and spent, fortunes, visits (!fair)'));
+      kids.push(el('h3', { text: 'Skills' }));
+      kids.push(el('div', { class: 'lk-skills' }, rows));
+    }
     if (f) {
       kids.push(el('h3', { text: 'Night Fishing' }));
-      kids.push(el('div', { class: 'eldr-small', text: ['Fishing skill ' + num(f.skill), num(f.species) + (f.species === 1 ? ' kind of fish' : ' kinds of fish') + ' in the journal', f.water ? 'fishing ' + f.water : ''].filter(Boolean).join(' · ') }));
+      kids.push(el('div', { class: 'eldr-small', text: [num(f.species) + (f.species === 1 ? ' kind of fish' : ' kinds of fish') + ' in the journal', f.water ? 'fishing ' + f.water : ''].filter(Boolean).join(' · ') }));
       if (f.best) kids.push(el('div', { class: 'eldr-small', text: 'Best catch: ' + f.best.fish + ' (' + weight(f.best.grams) + ')' }));
       if ((f.legendaries || []).length) kids.push(el('div', { class: 'eldr-small' }, [el('span', { class: 'eldr-badge gold', text: 'Legendary' }), ' ' + f.legendaries.join(', ')]));
     }
@@ -2068,7 +2178,8 @@
     return load('investigator.json').then(function (d) {
       d = d || {};
       var st = ctx.state, trees = d.trees || [], occs = d.occupations || [], lins = d.lineages || [], board = d.board || [];
-      if (!st.tab) st.tab = ctx.page === 'talents' && trees.length ? 'talents' : 'levels';
+      if (!st.tab) st.tab = ctx.page === 'talents' && trees.length ? 'talents' : ctx.page === 'lineages' && lins.length ? 'lineages'
+        : ctx.page === 'occupations' && occs.length ? 'occupations' : 'levels';   // 26 Nov: lineages / occupations open their tab
       var out = [head(ctx.opts, 'The Investigator', 'Everything you do is written down',
         'Turn up, play and support, and your investigator climbs: levels, titles, talents, and a lineage and an occupation of your own.')];
       var aw = d.awakening;
@@ -2431,6 +2542,8 @@
       var r = rank(t.id), b = blocks(t), open = isOpen(t), a = st.cov && st.cov.ok ? st.cov : null;
       var needs = t.needs.map(function (n) { var p = by[n.id]; return p ? p.name + (n.rank > 1 ? ' at rank ' + n.rank : '') : ''; }).filter(Boolean);
       if (t.points > 0) needs.push(t.points + ' ranks in ' + t.treeName);
+      // 1.17.0 (25 Nov): the pledge card shows what it opens and where it stands with the next vote
+      var opens = order.filter(function (o) { return o.needs.some(function (n) { return n.id === t.id; }); }).map(function (o) { return o.name; });
       var acts = [];
       var v = a && a.vote, opt = v && v.options.filter(function (o) { return o.id === t.id; })[0];
       if (opt && member()) {
@@ -2454,6 +2567,11 @@
           el('div', null, [el('h3', { text: t.name }), el('div', { class: 'eldr-small eldr-muted', text: t.treeName + (t.capstone ? ' · Capstone' : '') + (t.pledges ? ' · ' + t.pledges + (t.pledges === 1 ? ' pledge' : ' pledges') : '') })]),
           el('div', { class: 'tt-step' }, [pips(r, t.ranks)])]),
         el('p', { text: String(t.text || '').replace(/^Capstone:\s*/i, '').replace(/^./, function (c) { return c.toUpperCase(); }) + (/[.!?]$/.test(t.text || '') ? '' : '.') }),
+        el('div', { class: 'cv-facts' }, [
+          el('span', { class: 'eldr-badge', text: r + ' of ' + t.ranks + (t.ranks === 1 ? ' rank' : ' ranks') + ' taken' }),
+          el('span', { class: 'eldr-badge' + (t.pledges ? ' gold' : ''), text: '✦ ' + (t.pledges || 0) + (t.pledges === 1 ? ' pledge' : ' pledges') }),
+          ballotBadge(t)]),
+        opens.length ? el('div', { class: 'eldr-small eldr-muted', text: 'Taking it opens ' + opens.join(', ') + '.' }) : null,
         r >= t.ranks ? el('div', { class: 'eldr-small tt-met', text: 'Taken as far as it goes, for everyone.' })
           : needs.length ? el('div', { class: 'eldr-small ' + (b.length ? 'tt-need' : 'tt-met'), text: b.length ? 'The congregation needs ' + b.join(' and ') + ' first.' : 'Opened by ' + needs.join(' and ') + '.' })
           : el('div', { class: 'eldr-small tt-met', text: 'Open from the start: any vote may offer it.' }),
@@ -2467,6 +2585,36 @@
         el('div', null, [el('span', { class: 'tt-total', text: taken + ' of ' + all + ' ranks' }), el('span', { class: 'eldr-small eldr-muted', text: '  taken for everyone · ' + openN + ' talents open to the next vote' })]),
         d.waiting > 0 ? el('span', { class: 'eldr-badge gold', text: d.waiting + (d.waiting === 1 ? ' point' : ' points') + ' waiting' }) : null])]);
     }
+    // where a talent stands with the vote: on the ballot now (signed in), sure to be on the next one (one of the
+    // pledgeSlots most-pledged open talents), may be drawn, or not yet open
+    function sure() {
+      var n = d.pledgeSlots == null ? 2 : d.pledgeSlots;
+      return order.filter(function (t) { return isOpen(t) && t.pledges > 0 && rank(t.id) < t.ranks; })
+        .sort(function (x, y) { return y.pledges - x.pledges; }).slice(0, n).map(function (t) { return t.id; });
+    }
+    function ballotBadge(t) {
+      var v = st.cov && st.cov.ok && st.cov.vote;
+      if (v && v.options.some(function (o) { return o.id === t.id; })) return el('span', { class: 'eldr-badge green', text: 'On the ballot now' });
+      if (rank(t.id) >= t.ranks) return el('span', { class: 'eldr-badge', text: 'Complete' });
+      if (!isOpen(t)) return el('span', { class: 'eldr-badge', text: 'Not open yet' });
+      if (sure().indexOf(t.id) >= 0) return el('span', { class: 'eldr-badge green', text: 'Sure to be on the next vote' });
+      return el('span', { class: 'eldr-badge', text: 'May be drawn for the next vote' });
+    }
+    function pledgeBoard() {
+      var top = order.filter(function (t) { return t.pledges > 0; }).sort(function (x, y) { return y.pledges - x.pledges; }).slice(0, 6);
+      if (!top.length) return null;
+      return el('section', { class: 'eldr-card cv-board' }, [
+        el('div', { class: 'eldr-row' }, [el('h2', { text: 'Most pledged' }), el('span', { class: 'eldr-small eldr-muted', text: 'the ' + (d.pledgeSlots == null ? 2 : d.pledgeSlots) + ' most-pledged open talents are always on the next vote' })]),
+        el('div', { class: 'cv-cards' }, top.map(function (t) {
+          var c = el('button', { type: 'button', class: 'cv-card' + (st.covSel === t.id ? ' sel' : '') }, [
+            el('div', { class: 'cv-card-h' }, [el('strong', { text: t.name }), el('span', { class: 'cv-n', text: '✦' + t.pledges })]),
+            el('div', { class: 'eldr-small eldr-muted', text: t.treeName + ' · ' + rank(t.id) + '/' + t.ranks }),
+            el('div', { class: 'eldr-small', text: String(t.text || '').replace(/^Capstone:\s*/i, '') }),
+            ballotBadge(t)]);
+          c.addEventListener('click', function () { st.covSel = t.id; draw(); });
+          return c;
+        }))]);
+    }
     var focusId = null;
     function draw() {
       var had = focusId; focusId = null;
@@ -2475,6 +2623,7 @@
       var vc = voteCard(); if (vc) root.appendChild(vc);
       root.appendChild(summary());
       root.appendChild(el('section', { class: 'eldr-card tt-pick' }, [detail()]));
+      var pb = pledgeBoard(); if (pb) root.appendChild(pb);
       var grid = el('div', { class: 'tt-grid' });
       branches.forEach(function (br) { if (order.some(function (t) { return t.tree === br.id; })) grid.appendChild(branchCard(br)); });
       root.appendChild(grid);
@@ -2746,7 +2895,7 @@
           el('p', { class: 'eldr-small eldr-muted', text: 'One prize plays at a time, in turn. Your tickets come off only when it plays.' }), grid]);
       }
       // 20 Nov: the Merchant from Leng's stall: today's wares (fair.json, or the fresher list from /web/fair/me when signed in)
-      var GROUP_NAME = { fishing: 'Fishing', delve: 'Delve', relic: 'Relics', shard: 'Rift Shards', pact: 'Pacts' };
+      var GROUP_NAME = { fishing: 'Fishing', delve: 'Delve', relic: 'Relics', shard: 'Rift Shards', pact: 'Pacts', shelf: 'Rare goods' };
       var FAIR_ONLY = { onyx: 1 };   // 20 Nov: wares nobody else sells (the Onyx Lure)
       function stall() {
         var wares = signedIn() && st.fair.stall && st.fair.stall.length ? st.fair.stall : (d.stall || []);
@@ -2763,13 +2912,34 @@
             el('div', { class: 'eldr-row' }, [el('h3', { text: (w.qty > 1 ? w.qty + '× ' : '') + w.name }),
               w.rare ? el('span', { class: 'eldr-badge green', text: 'Rare find' }) : FAIR_ONLY[w.id] ? el('span', { class: 'eldr-badge green', text: 'Only at the fair' })
                 : el('span', { class: 'eldr-badge', text: GROUP_NAME[w.group] || w.group || 'Wares' }),
-              el('span', { class: 'eldr-badge gold', text: w.tickets + ' 🎟' })]),
+              el('span', { class: 'eldr-badge gold', text: w.tickets + ' 🎟' + (w.madness ? ' · ' + num(w.madness) + ' Madness' : '') })]),
             el('p', { class: 'eldr-small', text: w.text || '' }),
+            w.standing ? el('p', { class: 'eldr-small eldr-muted', text: 'Only for those who are ' + standingName(w.standing) + ' or more.' }) : null,
             el('p', { class: 'eldr-small eldr-muted', text: w.left <= 0 ? 'Sold out for today.' : w.left === 1 ? 'The last one.' : num(w.left) + ' on his rug.' }), b]));
         });
         return el('section', { class: 'eldr-card' }, [el('h2', { text: 'The Merchant from Leng\u2019s stall' }),
           el('p', { class: 'eldr-small eldr-muted', text: 'He lays out a different rug every day of the fair (at midnight): bait, Delve tools, relics, shards and Pacts, and now and then something rarer. Paid in Onyx Tickets, straight into your satchel or your purse. Look out for the Onyx Lure: carved in Inquanok and sold nowhere else, it fishes the abyss, lasts 20 casts and draws rarer fish in every water.'
-            + (per ? ' Everyone shares his stock; each of us trades with him at most ' + per + ' times a day' + (signedIn() ? ' (you: ' + traded + ').' : '.') : '') }), grid]);
+            + (per ? ' Everyone shares his stock; each of us trades with him at most ' + per + ' times a day' + (signedIn() ? ' (you: ' + traded + ').' : '.') : '')
+            + (wares.some(function (w) { return w.group === 'shelf'; }) ? ' The rare goods change every six hours' + (d.shelfTurns || (signedIn() && st.fair.shelfTurns) ? ' (next in ' + (signedIn() && st.fair.shelfTurns || d.shelfTurns) + ')' : '') + '; each of us takes one of each.' : '')
+            + (wares.some(function (w) { return w.madness; }) ? ' Some can be paid in Madness in chat: !fair trade <#> madness.' : '') }), grid]);
+      }
+      // 25 Nov: standing with the fair: the tiers, what they bring, where you stand, and the five who stand highest
+      function standingName(n) { var t = ((d.standing || {}).tiers || [])[n]; return t ? t.name : 'trusted'; }
+      function standing() {
+        var sd = d.standing || {}, tiers = sd.tiers || [];
+        if (!tiers.length) return null;
+        var mine = signedIn() ? (st.fair.standing || 0) : null, idx = -1;
+        tiers.forEach(function (t, i) { if (mine != null && mine >= t.at) idx = i; });
+        var next = idx >= 0 && idx + 1 < tiers.length ? tiers[idx + 1] : null;
+        return el('section', { class: 'eldr-card' }, [
+          el('div', { class: 'eldr-row' }, [el('h2', { text: 'Standing with the fair' }),
+            mine != null ? el('span', { class: 'eldr-badge gold', text: (st.fair.standingTitle || (idx >= 0 ? tiers[idx].name : '')) + ' · ' + num(mine) }) : null]),
+          el('p', { class: 'eldr-small eldr-muted', text: 'Every Onyx Ticket you earn or spend, every fortune, and every day you visit the site while the fair is in town raises your standing.'
+            + (next ? ' You need ' + num(next.at - mine) + ' more for ' + next.name + '.' : '') }),
+          el('ul', { class: 'eldr-small' }, tiers.map(function (t, i) {
+            return el('li', { class: i === idx ? 'eldr-here' : '', html: '<strong>' + esc(t.name) + '</strong> (' + num(t.at) + ')' + (t.perk ? ': ' + esc(t.perk) : '') });
+          })),
+          (sd.top || []).length ? el('p', { class: 'eldr-small', html: 'Standing highest: ' + sd.top.map(function (x) { return esc(x.name) + ' <span class="eldr-muted">(' + esc(x.title) + ')</span>'; }).join(', ') }) : null]);
       }
       function fortune() {
         if (!d.on) return null;
@@ -2801,7 +2971,7 @@
       }
       function draw() {
         root.innerHTML = '';
-        [account(), booth(), stall(), fortune(), plays()].forEach(function (n) { if (n) root.appendChild(n); });
+        [account(), booth(), stall(), standing(), fortune(), plays()].forEach(function (n) { if (n) root.appendChild(n); });
       }
       if (st.fair === undefined) loadMe(); else draw();
       out.push(root, foot(d.updated, el('div', { html: 'In chat: <code>!fair</code> · <code>!fair booth</code> · <code>!fair buy &lt;prize&gt;</code> · <code>!fair wares</code> · <code>!fair trade &lt;#&gt;</code> · <code>!fortune</code>' })));
@@ -2849,6 +3019,7 @@
           running.length ? el('div', { class: 'eldr-grid' }, running.map(function (e) { return card(e, true); })) : el('p', { class: 'eldr-muted', text: 'Nothing special is running right now.' })]));
         if (coming.length) out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Coming up' }), el('div', { class: 'eldr-grid' }, coming.map(function (e) { return card(e, false); }))]));
         out.push(el('section', { class: 'eldr-card' }, [el('h2', { text: 'Always there' }), el('ul', null, [
+          '<strong>The Miskatonic’s Wanted</strong>: one WANTED poster at a time, from the Shallows down to the Old Ones. Put Madness on its bounty with <code>!wanted pay</code> (bits and subs add to it too); when it’s paid, Dave calls the hunt and every chat message is a blow. Everyone who fought is paid XP, Madness and the horror’s spoils. <code>!wanted</code>.',
           '<strong>Fishing derbies</strong>: a contest on the waters during a stream (the heaviest fish, the most catches, the rarest). The podium wins prizes, everyone who scores gets a little. <code>!fish derby</code>.',
           '<strong>The Workings</strong>: three goals for the whole congregation every stream. Everyone who helps one to the end is paid. <code>!workings</code>.',
           '<strong>Giveaways</strong>: tickets with <code>!ticket</code> while one is open; sub and member tiers weigh more. Sponsored giveaways carry the partner’s label.',
@@ -2868,7 +3039,19 @@
         };
         var day = function (u) { return u ? new Date(u * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''; };
         var month = function (m) { var dt = new Date(m + '-01T12:00:00Z'); return isNaN(dt) ? m : dt.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }); };
+        var wt = w.wanted, wp = wt && wt.poster;
+        var wantedCard = wt ? el('section', { class: 'eldr-card' }, [
+          el('div', { class: 'eldr-row' }, [el('h2', { text: 'The Miskatonic’s Wanted' }),
+            el('span', { class: 'eldr-badge' + (wp && wp.state !== 'open' ? ' green' : ''), text: wp ? (wp.state === 'hunt' ? 'The hunt is on' : wp.state === 'ready' ? 'Bounty paid' : 'Poster ' + wp.n + ' of ' + wt.total) : 'Board clear' })]),
+          wp ? el('h3', { text: 'WANTED: ' + wp.name }) : el('p', { text: 'Every horror on the board has been brought in.' }),
+          wp ? el('div', { class: 'eldr-small eldr-muted', text: 'Threat ' + wp.threat + (wp.group ? ' · ' + wp.group : '') + ' · ' + num(wt.claimed) + ' of ' + num(wt.total) + ' brought in so far' }) : null,
+          wp ? bar(Math.max(0, Math.min(100, Number(wp.pct || 0)))) : null,
+          wp ? el('p', { class: 'eldr-small', html: wp.state === 'open' ? 'Put Madness on the bounty with <code>!wanted pay</code>. When it’s paid, Dave calls the hunt.' : 'The bounty is paid: be in chat when Dave calls the hunt. Paying now goes on the next poster.' }) : null
+        ].concat((wt.log || []).length ? [table('Brought in', '', ['When', 'Horror', 'Hunters', 'Fiercest'],
+          wt.log.map(function (x) { return [day(x.at), x.name + ' (Threat ' + x.threat + ')', num(x.hunters), x.fiercest || '']; }))] : [])) : null;
+        if (wantedCard) wantedCard.querySelectorAll('section.eldr-card section.eldr-card').forEach(function (n) { n.classList.remove('eldr-card'); });
         var sections = [
+          wantedCard,
           table('Giveaways', 'The last winners. Sponsored giveaways name their partner.', ['When', 'Giveaway', 'Winner'],
             (w.giveaways || []).map(function (g) { return [day(g.at), g.giveaway + (g.partner ? ' (with ' + g.partner + ')' : ''), g.winner]; })),
           table('Fishing derbies', 'The podium of each derby.', ['When', 'Derby', 'Podium'],
@@ -2918,8 +3101,8 @@
   });
   var about = mdPage('about.md', 'About the Ledger', 'Embrace the Tentacle');
 
-  var PAGES = { hub: hub, rift: rift, story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance,
-    investigator: investigator, talents: investigator, covenant: covenant, fishing: fishing, fair: fair, winners: winners, events: winners, patchnotes: patchnotes, about: about };
+  var PAGES = { hub: hub, rift: rift, story: story, commands: commands, pacts: pacts, circles: circles, codex: codex, partners: partners, charity: charity, causes: charity, sounds: sounds, bestiary: bestiary, congregation: congregation, order: order, esorder: order, remembrance: remembrance,
+    investigator: investigator, talents: investigator, lineages: investigator, occupations: investigator, covenant: covenant, fishing: fishing, fair: fair, winners: winners, events: winners, patchnotes: patchnotes, about: about };
 
   // ------------------------------------------------------------------ mount
   function render(root, quiet) {

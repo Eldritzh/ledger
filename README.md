@@ -22,7 +22,9 @@ Site design → Layout → choose or create the page → Add page section → **
 <script src="https://ledger.eldritzh.com/embed.js" defer></script>
 ```
 
-Pages: `hub`, `story`, `commands`, `patchnotes`, `pacts`, `circles`, `sounds`, `rift`, `investigator` (or `talents`: the same page opened on the talent trees), `codex`, `order`, `fishing`, `covenant`, `congregation`, `bestiary`, `remembrance`, `partners`, `about`.
+Pages: `hub`, `story`, `commands`, `patchnotes`, `pacts`, `circles`, `sounds`, `rift`, `investigator` (or `talents`, `lineages`, `occupations`: the same page opened on that tab), `codex`, `order`, `fishing`, `covenant`, `congregation`, `bestiary`, `remembrance`, `partners`, `charity` (or `causes`), `about`.
+
+**The Charity page (1.19.0, 26 Nov)** reads `partners.json`: the running causes (charity partner files, with their totals) and `causes` (the ones before: ended, switched off or archived). Totals only; no donor names reach the site. Causes are no longer listed among the patrons; the Partners page points to the Charity page while one runs.
 
 Every page shows a row of links to the others, read from `data/nav.json` (Streamer.bot's `website\nav.txt`: page, label, address on eldritzh.com). `hub` is the page that lists them all, so the shop's own menu needs one entry.
 
