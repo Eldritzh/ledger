@@ -11,9 +11,12 @@
 - **Only where we're live.** Announcements and other lines for everyone now go only to the platforms Dave is live on, so Kick or YouTube chat no longer gets lines from a stream that isn't there. Answers to your commands always come back to the platform you typed on.
 - **Sponsored streams.** On a stream made with a sponsor, other partners' lines and our own ad-like reminders (shop, codes, links) wait until it's over. Everything else, your commands, games and thanks, works as usual, and a charity we're raising for keeps going.
 - The stream-start "Tonight" line now carries each announcement once. It used to repeat the Merchant and the Sunwait candle once for every platform.
+- `!litany` and other Codex commands (`!level`, `!codex`, `!talent` …) no longer go unanswered when you type them while chat is busy. Achievement progress that was lost the same way now counts again.
 - Outside sponsored streams, partner lines, charity and the timed messages work as before.
 
-**Developers' notes:** Until now only a dozen systems went through the Herald; the rest posted straight to chat, so they could still flood it in a busy moment. With every line in one place, the Herald can now also decide which platforms get a line and keep a sponsored stream quiet, without touching each game.
+**Developers' notes:** The Codex runs every call on one shared copy of itself, and a call that had to wait its turn could end up reading the next call's instructions, or none. On 26 Nov that dropped 87 calls between 19:58 and 23:03, `!litany` among them. Each call now keeps its own.
+
+Until now only a dozen systems went through the Herald; the rest posted straight to chat, so they could still flood it in a busy moment. With every line in one place, the Herald can now also decide which platforms get a line and keep a sponsored stream quiet, without touching each game.
 
 ### Ko-fi and the shop
 - **One donor, every account.** If you've linked your accounts with `!link`, you can `!claim` a Ko-fi or Fourthwall offering from any of them, not just the one whose name matches. A bare `!claim` binds every offering waiting under your names, so you don't need the code if you gave under your own name.

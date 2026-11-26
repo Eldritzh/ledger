@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-26T22:20:26Z",
+  "updated": "2026-11-26T22:27:20Z",
   "version": "1.6.0",
-  "reason": "stream end",
+  "reason": "routine",
   "files": {
     "story_chapters.json": "2026-11-04T19:52:27Z",
     "story_state.json": "2026-11-26T22:07:18Z",
@@ -18,7 +18,7 @@
     "remembrance.json": "2026-11-05T19:10:46Z",
     "investigator.json": "2026-11-26T22:20:26Z",
     "fishing.json": "2026-11-26T21:37:13Z",
-    "patchnotes.md": "2026-11-26T19:06:54Z",
+    "patchnotes.md": "2026-11-26T22:27:20Z",
     "about.md": "2026-11-12T10:57:17Z",
     "nav.json": "2026-11-26T18:46:50Z",
     "covenant.json": "2026-11-26T22:20:26Z",
