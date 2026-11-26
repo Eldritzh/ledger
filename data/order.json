@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-22T00:02:09Z",
+  "updated": "2026-11-26T19:19:37Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -297,8 +297,8 @@
       "rank": 2,
       "rankName": "Listener",
       "circle": 1,
-      "days": 7,
-      "rep": 1074,
+      "days": 8,
+      "rep": 1174,
       "astray": false
     },
     {
@@ -307,8 +307,8 @@
       "rank": 2,
       "rankName": "Listener",
       "circle": 1,
-      "days": 6,
-      "rep": 910,
+      "days": 7,
+      "rep": 1010,
       "astray": false
     },
     {

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T18:58:59.2599681Z",
+  "updated": "2026-11-26T19:15:33.5672472Z",
   "unlocked": [
     "toad",
     "margins",
@@ -10,7 +10,7 @@
     "vigil"
   ],
   "counters": {
-    "checkins": 99,
+    "checkins": 101,
     "fed": 1649501,
     "tsath_fills": 15,
     "messages": 1125,
@@ -25,7 +25,7 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 0,
+    "stream:checkins": 2,
     "sum:merchant_buys": 3,
     "gilded_merchants": 0,
     "@leng": 7,
@@ -35,7 +35,7 @@
     "stream:messages": 0,
     "sum:circle_top": 0,
     "stream:banishes": 0,
-    "@moon": 0,
+    "@moon": 12,
     "kinds:beings_seen": 15,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -54,11 +54,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 66.0,
+      "pct": 67.3,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 99,
+          "have": 101,
           "need": 150
         }
       ],
@@ -153,11 +153,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 0.0,
+      "pct": 13.3,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 0,
+          "have": 2,
           "need": 15
         }
       ],
@@ -219,11 +219,11 @@
       "wait": ""
     },
     "moon": {
-      "pct": 0.0,
+      "pct": 12.5,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 0,
+          "have": 2,
           "need": 8
         },
         {
@@ -410,11 +410,11 @@
       "wait": ""
     },
     "hand": {
-      "pct": 8.3,
+      "pct": 8.4,
       "parts": [
         {
           "label": "Signatures",
-          "have": 99,
+          "have": 101,
           "need": 2500
         },
         {
