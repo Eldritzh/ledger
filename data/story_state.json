@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T21:12:57.8899846Z",
+  "updated": "2026-11-26T21:44:29.8362881Z",
   "unlocked": [
     "toad",
     "margins",
@@ -11,7 +11,7 @@
     "leng"
   ],
   "counters": {
-    "checkins": 107,
+    "checkins": 108,
     "fed": 1655288,
     "tsath_fills": 16,
     "messages": 1225,
@@ -27,7 +27,7 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 8,
+    "stream:checkins": 9,
     "sum:merchant_buys": 3,
     "@leng": 100,
     "sum:goblins_grabbed": 14,
@@ -55,11 +55,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 71.3,
+      "pct": 72.0,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 107,
+          "have": 108,
           "need": 150
         }
       ],
@@ -154,11 +154,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 53.3,
+      "pct": 60.0,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 8,
+          "have": 9,
           "need": 15
         }
       ],
@@ -404,7 +404,7 @@
       "parts": [
         {
           "label": "Signatures",
-          "have": 107,
+          "have": 108,
           "need": 2500
         },
         {

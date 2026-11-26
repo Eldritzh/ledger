@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-26T20:48:25Z",
+  "updated": "2026-11-26T21:44:28Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -513,6 +513,16 @@
     },
     {
       "name": "NalleVonSlampa",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "ChopChop_the_antipaladin",
       "platform": "twitch",
       "rank": 1,
       "rankName": "Seeker",
