@@ -19,7 +19,7 @@
 | `!character` | Your investigator in one line: level, title, lineage, occupation; `!character <name>` for someone else's |
 | `/talent`, `/occupation`, `/lineage`, `/identity`, `/pronouns`, `/character` (Discord) | The same in the forge bot (changes apply when the bot's stream side next runs); `/occupation info:` and `/lineage info:` show one in full |
 | `!rebirth` (`!reborn`) | At the top level (60): be born again at level 1 with a ✦ mark (`!rebirth confirm`) |
-| `!litany` (`!dailies`) | Your Litany: three small rites of your own this stream (speak, banish, fish, look something up …). Each pays XP and Madness, all of them a bonus and a chance at a Pact. On stream it shows as a card with your rites for about 10 s (cards take turns); `!litany text` answers in chat. `!litany swap` trades one rite once a stream. Discord `/litany` |
+| `!litany` (`!dailies`, `!daily`) | Your Litany: three small rites of your own this stream (speak, banish, fish, look something up …). Each pays XP and Madness, all of them a bonus and a chance at a Pact. On stream it shows as a card with your rites for about 10 s (cards take turns); `!litany text` answers in chat. `!litany swap` trades one rite once a stream. Discord `/litany` |
 | `!workings` (`!working`) | The Workings: what the whole congregation works at this stream. Everyone who helps one to the end is paid when it's done; some must be done early or they fail |
 | `!dreaming` (`!dreams`) | Your Dreaming XP. Watching quietly builds it (twice as fast after `!lurk`); when you speak again your chat XP counts double until it's spent |
 | `!lurk` / `!unlurk` | Slip into the dark to watch quietly (your dreams come twice as fast), or step back out |
