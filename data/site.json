@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T17:46:47Z",
+  "updated": "2026-11-26T18:11:45Z",
   "version": "1.5.0",
   "reason": "routine",
   "files": {
@@ -7,7 +7,7 @@
     "story_state.json": "2026-11-26T17:46:47Z",
     "pacts.json": "2026-11-21T11:31:35Z",
     "circles.json": "2026-11-22T00:02:50Z",
-    "codex.json": "2026-11-22T00:02:50Z",
+    "codex.json": "2026-11-26T18:11:45Z",
     "partners.json": "2026-11-19T19:09:01Z",
     "commands.md": "2026-11-19T19:32:47Z",
     "guide.md": "2026-11-12T15:01:53Z",
@@ -16,7 +16,7 @@
     "congregation.json": "2026-11-21T20:56:47Z",
     "order.json": "2026-11-22T00:02:50Z",
     "remembrance.json": "2026-11-05T19:10:46Z",
-    "investigator.json": "2026-11-26T17:46:47Z",
+    "investigator.json": "2026-11-26T18:11:45Z",
     "fishing.json": "2026-11-26T17:46:47Z",
     "patchnotes.md": "2026-11-19T19:32:47Z",
     "about.md": "2026-11-12T10:57:17Z",
