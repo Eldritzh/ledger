@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T20:21:37.3127149Z",
+  "updated": "2026-11-26T20:33:24.8883423Z",
   "unlocked": [
     "toad",
     "margins",
@@ -13,7 +13,7 @@
     "checkins": 107,
     "fed": 1655288,
     "tsath_fills": 16,
-    "messages": 1175,
+    "messages": 1200,
     "banishes": 69,
     "delve_bottoms": 7,
     "sunwait_candles": 3,
@@ -32,7 +32,7 @@
     "sum:goblins_grabbed": 14,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 36,
-    "stream:messages": 50,
+    "stream:messages": 75,
     "sum:circle_top": 0,
     "stream:banishes": 2,
     "@moon": 75,
