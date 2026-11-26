@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T19:36:16.0376646Z",
+  "updated": "2026-11-26T19:54:34.1639801Z",
   "unlocked": [
     "toad",
     "margins",
@@ -10,10 +10,10 @@
     "vigil"
   ],
   "counters": {
-    "checkins": 103,
-    "fed": 1649501,
-    "tsath_fills": 15,
-    "messages": 1125,
+    "checkins": 105,
+    "fed": 1655288,
+    "tsath_fills": 16,
+    "messages": 1150,
     "banishes": 67,
     "delve_bottoms": 7,
     "sunwait_candles": 3,
@@ -25,17 +25,17 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 4,
+    "stream:checkins": 6,
     "sum:merchant_buys": 3,
     "gilded_merchants": 0,
     "@leng": 7,
     "sum:goblins_grabbed": 14,
     "sum:hg_challenges_held": 0,
-    "count:streams_attended": 32,
-    "stream:messages": 0,
+    "count:streams_attended": 34,
+    "stream:messages": 25,
     "sum:circle_top": 0,
     "stream:banishes": 0,
-    "@moon": 25,
+    "@moon": 37,
     "kinds:beings_seen": 15,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -54,11 +54,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 68.7,
+      "pct": 70.0,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 103,
+          "have": 105,
           "need": 150
         }
       ],
@@ -153,11 +153,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 26.7,
+      "pct": 40.0,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 4,
+          "have": 6,
           "need": 15
         }
       ],
@@ -197,11 +197,11 @@
       "wait": ""
     },
     "census": {
-      "pct": 32.0,
+      "pct": 34.0,
       "parts": [
         {
           "label": "One hundred different souls sign the Ledger",
-          "have": 32,
+          "have": 34,
           "need": 100
         }
       ],
@@ -219,11 +219,11 @@
       "wait": ""
     },
     "moon": {
-      "pct": 25.0,
+      "pct": 37.5,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 4,
+          "have": 6,
           "need": 8
         },
         {
@@ -284,11 +284,11 @@
       "wait": ""
     },
     "dreams": {
-      "pct": 60.0,
+      "pct": 64.0,
       "parts": [
         {
           "label": "Fill Tsathoggua to sleeping 25 times",
-          "have": 15,
+          "have": 16,
           "need": 25
         }
       ],
@@ -410,11 +410,11 @@
       "wait": ""
     },
     "hand": {
-      "pct": 8.4,
+      "pct": 8.6,
       "parts": [
         {
           "label": "Signatures",
-          "have": 103,
+          "have": 105,
           "need": 2500
         },
         {
@@ -429,7 +429,7 @@
         },
         {
           "label": "Souls",
-          "have": 32,
+          "have": 34,
           "need": 200
         }
       ],

@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-26T19:36:56Z",
+  "updated": "2026-11-26T19:56:27Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -262,6 +262,16 @@
   ],
   "members": [
     {
+      "name": "revenantmessiah",
+      "platform": "twitch",
+      "rank": 3,
+      "rankName": "Dreamer",
+      "circle": 1,
+      "days": 8,
+      "rep": 1393,
+      "astray": false
+    },
+    {
       "name": "s1tv",
       "platform": "twitch",
       "rank": 3,
@@ -269,16 +279,6 @@
       "circle": 1,
       "days": 8,
       "rep": 1212,
-      "astray": false
-    },
-    {
-      "name": "revenantmessiah",
-      "platform": "twitch",
-      "rank": 3,
-      "rankName": "Dreamer",
-      "circle": 1,
-      "days": 7,
-      "rep": 1293,
       "astray": false
     },
     {
@@ -483,6 +483,16 @@
     },
     {
       "name": "Genin85",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "TheDukeDeath",
       "platform": "twitch",
       "rank": 1,
       "rankName": "Seeker",
