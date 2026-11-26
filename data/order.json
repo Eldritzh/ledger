@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-26T21:44:28Z",
+  "updated": "2026-11-26T22:19:42Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -268,7 +268,7 @@
       "rankName": "Dreamer",
       "circle": 1,
       "days": 8,
-      "rep": 1393,
+      "rep": 1493,
       "astray": false
     },
     {
@@ -282,6 +282,16 @@
       "astray": false
     },
     {
+      "name": "First_NaPaLm",
+      "platform": "twitch",
+      "rank": 3,
+      "rankName": "Dreamer",
+      "circle": 1,
+      "days": 8,
+      "rep": 1268,
+      "astray": false
+    },
+    {
       "name": "datduckhs",
       "platform": "twitch",
       "rank": 3,
@@ -292,23 +302,13 @@
       "astray": false
     },
     {
-      "name": "First_NaPaLm",
-      "platform": "twitch",
-      "rank": 2,
-      "rankName": "Listener",
-      "circle": 1,
-      "days": 8,
-      "rep": 1174,
-      "astray": false
-    },
-    {
       "name": "PithyPlinth",
       "platform": "twitch",
       "rank": 2,
       "rankName": "Listener",
       "circle": 1,
       "days": 7,
-      "rep": 1010,
+      "rep": 1032,
       "astray": false
     },
     {
@@ -318,7 +318,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 4,
-      "rep": 547,
+      "rep": 566,
       "astray": false
     },
     {
@@ -328,7 +328,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 2,
-      "rep": 300,
+      "rep": 347,
       "astray": false
     },
     {
@@ -488,7 +488,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
-      "rep": 100,
+      "rep": 127,
       "astray": false
     },
     {
@@ -498,7 +498,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
-      "rep": 100,
+      "rep": 129,
       "astray": false
     },
     {
@@ -518,7 +518,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
-      "rep": 100,
+      "rep": 148,
       "astray": false
     },
     {
@@ -528,7 +528,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
-      "rep": 100,
+      "rep": 108,
       "astray": false
     }
   ]
