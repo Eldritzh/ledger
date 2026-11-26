@@ -364,7 +364,7 @@ Some sounds are cheaper (or free) for subs, members and the special folk. Happy 
 | `!shards` | The shards you hold. In Discord: `/shards`, `/shard open`, `/shard give` |
 | Discord `/shard key` | A private link to the Rift page on eldritzh.com, where you see your shards and open your sealed ones. It can't give, buy or fire anything. `/shard key revoke:True` kills it |
 | `!seal` | Spend an Elder Sign to stop an Eldritch effect before it lands |
-| `!claim <code>` | Bind a Ko-fi or Fourthwall offering to your account (any account you've linked with `!link` works). Put `@twitchname`, `kick:name`, `yt:name` or `discord:name` (after `/forge link`) in your Ko-fi note to skip the code |
+| `!claim <code>` | Bind a Ko-fi or Fourthwall offering to your account (any account you've linked with `!link` works). A bare `!claim` binds every offering waiting under your names. Put `@twitchname`, `kick:name`, `yt:name` or `discord:name` (after `/forge link`) in your Ko-fi note to skip the code |
 | `!partners` | The stream's current partners and their commands |
 | `!charity` | The cause we're raising for right now: how much is in, the goal and where to give |
 | `!stirring` | How close the stars are to a hype train |

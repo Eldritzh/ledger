@@ -15,7 +15,7 @@
 **Developers' notes:** Until now only a dozen systems went through the Herald; the rest posted straight to chat, so they could still flood it in a busy moment. With every line in one place, the Herald can now also decide which platforms get a line and keep a sponsored stream quiet, without touching each game.
 
 ### Ko-fi and the shop
-- **One donor, every account.** If you've linked your accounts with `!link`, you can `!claim` a Ko-fi or Fourthwall offering from any of them, not just the one whose name matches.
+- **One donor, every account.** If you've linked your accounts with `!link`, you can `!claim` a Ko-fi or Fourthwall offering from any of them, not just the one whose name matches. A bare `!claim` binds every offering waiting under your names, so you don't need the code if you gave under your own name.
 - Write `kick:yourname`, `yt:yourname` or `discord:yourname` in your Ko-fi note to have it paid on that account straight away, if the Codex knows it. For Discord that's the account you tied with `/forge link`.
 - Gifts on different linked accounts now count together towards your next Pact and Eldritch Pact, and the bonus for a first membership is once per person.
 - `!link status` shows your Discord (once you've used `/forge link`) and when your accounts carry Ko-fi or Fourthwall offerings.
