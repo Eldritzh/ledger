@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T20:11:30.6030812Z",
+  "updated": "2026-11-27T20:45:03.8559145Z",
   "unlocked": [
     "toad",
     "margins",
@@ -14,11 +14,11 @@
     "checkins": 114,
     "fed": 1661364,
     "tsath_fills": 17,
-    "messages": 1300,
+    "messages": 1325,
     "banishes": 74,
     "delve_bottoms": 7,
     "sunwait_candles": 3,
-    "deaths": 19,
+    "deaths": 20,
     "gilded_merchants": 1,
     "chants": 0,
     "rituals": 0,
@@ -33,7 +33,7 @@
     "sum:goblins_grabbed": 16,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 37,
-    "stream:messages": 75,
+    "stream:messages": 100,
     "sum:circle_top": 0,
     "stream:banishes": 2,
     "@moon": 62,
@@ -77,11 +77,11 @@
       "wait": ""
     },
     "deaths": {
-      "pct": 19.0,
+      "pct": 20.0,
       "parts": [
         {
           "label": "The Keeper must fall 100 times",
-          "have": 19,
+          "have": 20,
           "need": 100
         }
       ],
@@ -329,11 +329,11 @@
       "wait": ""
     },
     "graves": {
-      "pct": 3.8,
+      "pct": 4.0,
       "parts": [
         {
           "label": "The Keeper must fall 500 times",
-          "have": 19,
+          "have": 20,
           "need": 500
         }
       ],
