@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T23:14:14Z",
+  "updated": "2026-11-27T23:29:14Z",
   "version": "1.7.0",
   "reason": "routine",
   "files": {
@@ -7,7 +7,7 @@
     "story_state.json": "2026-11-27T22:10:10Z",
     "pacts.json": "2026-11-21T11:31:35Z",
     "circles.json": "2026-11-27T22:10:10Z",
-    "codex.json": "2026-11-27T22:10:10Z",
+    "codex.json": "2026-11-27T23:29:14Z",
     "partners.json": "2026-11-26T18:26:51Z",
     "commands.md": "2026-11-27T19:45:46Z",
     "guide.md": "2026-11-26T18:46:50Z",
@@ -22,7 +22,7 @@
     "about.md": "2026-11-12T10:57:17Z",
     "nav.json": "2026-11-26T18:46:50Z",
     "covenant.json": "2026-11-27T22:10:10Z",
-    "people.json": "2026-11-27T22:10:10Z",
+    "people.json": "2026-11-27T23:29:14Z",
     "fx.json": "2026-11-21T19:34:25Z",
     "winners.json": "2026-11-27T19:00:41Z",
     "events.json": "2026-11-27T23:14:14Z",
