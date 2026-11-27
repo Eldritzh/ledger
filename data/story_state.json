@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26T21:57:11.2623860Z",
+  "updated": "2026-11-27T18:44:27.6719100Z",
   "unlocked": [
     "toad",
     "margins",
@@ -11,9 +11,9 @@
     "leng"
   ],
   "counters": {
-    "checkins": 108,
-    "fed": 1655288,
-    "tsath_fills": 16,
+    "checkins": 110,
+    "fed": 1661364,
+    "tsath_fills": 17,
     "messages": 1225,
     "banishes": 72,
     "delve_bottoms": 7,
@@ -27,16 +27,16 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 9,
+    "stream:checkins": 2,
     "sum:merchant_buys": 3,
     "@leng": 100,
     "sum:goblins_grabbed": 14,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 36,
-    "stream:messages": 100,
+    "stream:messages": 0,
     "sum:circle_top": 0,
-    "stream:banishes": 5,
-    "@moon": 100,
+    "stream:banishes": 0,
+    "@moon": 12,
     "kinds:beings_seen": 15,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -55,11 +55,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 72.0,
+      "pct": 73.3,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 108,
+          "have": 110,
           "need": 150
         }
       ],
@@ -154,11 +154,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 60.0,
+      "pct": 13.3,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 9,
+          "have": 2,
           "need": 15
         }
       ],
@@ -209,16 +209,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 100.0,
+      "pct": 12.5,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 8,
+          "have": 2,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 4,
+          "have": 0,
           "need": 4
         }
       ],
@@ -274,11 +274,11 @@
       "wait": ""
     },
     "dreams": {
-      "pct": 64.0,
+      "pct": 68.0,
       "parts": [
         {
           "label": "Fill Tsathoggua to sleeping 25 times",
-          "have": 16,
+          "have": 17,
           "need": 25
         }
       ],
@@ -404,7 +404,7 @@
       "parts": [
         {
           "label": "Signatures",
-          "have": 108,
+          "have": 110,
           "need": 2500
         },
         {
