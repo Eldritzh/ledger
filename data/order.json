@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-27T21:00:46Z",
+  "updated": "2026-11-27T21:15:24Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -372,6 +372,16 @@
       "astray": false
     },
     {
+      "name": "NalleVonSlampa",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 2,
+      "rep": 248,
+      "astray": false
+    },
+    {
       "name": "yrael15",
       "platform": "twitch",
       "rank": 1,
@@ -519,16 +529,6 @@
       "circle": 1,
       "days": 1,
       "rep": 100,
-      "astray": false
-    },
-    {
-      "name": "NalleVonSlampa",
-      "platform": "twitch",
-      "rank": 1,
-      "rankName": "Seeker",
-      "circle": 1,
-      "days": 1,
-      "rep": 148,
       "astray": false
     },
     {
