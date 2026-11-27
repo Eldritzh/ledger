@@ -2,6 +2,16 @@
 
 *What's new on the stream, in Discord and on this site. Newest first.*
 
+## Patch 0.19: Town Crier
+
+*28 November 2026.* The patch notes now reach the Discord too, and Clipomania's yearly champions get a role of their own.
+
+### Discord
+- **Patch notes in Discord.** Every new patch note is posted in the Discord's patch-notes channel as soon as it's on this site, so you can read what changed without leaving Discord. A patch that gets a fix later the same evening is updated in place, not posted twice.
+
+### Clipomania
+- **A role for each year's champions.** The year's top clippers get their own Discord role, "Clipomaniac 2026", made fresh every year, so last year's champions keep theirs.
+
 ## Patch 0.18: On Air
 
 *28 November 2026.* The shop shows where the stream is live right now.
