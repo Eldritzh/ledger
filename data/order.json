@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-27T21:30:57Z",
+  "updated": "2026-11-27T22:09:25Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -268,7 +268,7 @@
       "rankName": "Dreamer",
       "circle": 1,
       "days": 9,
-      "rep": 1593,
+      "rep": 1675,
       "astray": false
     },
     {
@@ -298,7 +298,7 @@
       "rankName": "Dreamer",
       "circle": 1,
       "days": 7,
-      "rep": 1352,
+      "rep": 1444,
       "astray": false
     },
     {
@@ -308,7 +308,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 8,
-      "rep": 1132,
+      "rep": 1141,
       "astray": false
     },
     {
@@ -318,7 +318,7 @@
       "rankName": "Listener",
       "circle": 1,
       "days": 5,
-      "rep": 666,
+      "rep": 695,
       "astray": false
     },
     {
@@ -368,7 +368,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 2,
-      "rep": 229,
+      "rep": 245,
       "astray": false
     },
     {
@@ -378,7 +378,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 2,
-      "rep": 248,
+      "rep": 292,
       "astray": false
     },
     {
@@ -388,7 +388,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 2,
-      "rep": 200,
+      "rep": 300,
       "astray": false
     },
     {
@@ -548,7 +548,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
-      "rep": 100,
+      "rep": 132,
       "astray": false
     },
     {
@@ -558,7 +558,7 @@
       "rankName": "Seeker",
       "circle": 1,
       "days": 1,
-      "rep": 100,
+      "rep": 160,
       "astray": false
     }
   ]

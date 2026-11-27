@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T21:46:00.3383803Z",
+  "updated": "2026-11-27T22:05:56.5903554Z",
   "unlocked": [
     "toad",
     "margins",
@@ -15,7 +15,7 @@
     "fed": 1661364,
     "tsath_fills": 17,
     "messages": 1400,
-    "banishes": 78,
+    "banishes": 80,
     "delve_bottoms": 7,
     "sunwait_candles": 3,
     "deaths": 24,
@@ -30,12 +30,12 @@
     "stream:checkins": 9,
     "sum:merchant_buys": 3,
     "@leng": 100,
-    "sum:goblins_grabbed": 17,
+    "sum:goblins_grabbed": 18,
     "sum:hg_challenges_held": 0,
     "count:streams_attended": 39,
     "stream:messages": 175,
     "sum:circle_top": 0,
-    "stream:banishes": 6,
+    "stream:banishes": 8,
     "@moon": 100,
     "kinds:beings_seen": 15,
     "pacts": 0,
@@ -47,10 +47,10 @@
     "sum:clip_wins": 0,
     "count:cults_joined": 0,
     "sum:haunts_sent": 0,
-    "kinds:legend_weapons": 0,
+    "kinds:legend_weapons": 1,
     "episodes": 0,
     "max:streak": 40,
-    "@hand": 9,
+    "@hand": 10,
     "stream:chants": 0
   },
   "progress": {
@@ -165,11 +165,11 @@
       "wait": ""
     },
     "goblins": {
-      "pct": 68.0,
+      "pct": 72.0,
       "parts": [
         {
           "label": "Grab 25 treasure goblins",
-          "have": 17,
+          "have": 18,
           "need": 25
         }
       ],
@@ -318,11 +318,11 @@
       "wait": ""
     },
     "borrowed": {
-      "pct": 0.0,
+      "pct": 6.7,
       "parts": [
         {
           "label": "The congregation draws 15 different legendary weapons",
-          "have": 0,
+          "have": 1,
           "need": 15
         }
       ],
@@ -400,7 +400,7 @@
       "wait": ""
     },
     "hand": {
-      "pct": 9.9,
+      "pct": 10.0,
       "parts": [
         {
           "label": "Signatures",
@@ -409,7 +409,7 @@
         },
         {
           "label": "Banishments",
-          "have": 78,
+          "have": 80,
           "need": 500
         },
         {
