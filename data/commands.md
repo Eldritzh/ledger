@@ -216,7 +216,7 @@ Goals on stream for the game Dave is playing: *Headshots 3/10*, *Kills 7/15*, a 
 | `!tracker swap <name>` | Spend 1 Pact to trade a goal for a random one from the pool |
 | `!tracker pick <new> [old]` | Spend 2 Pacts to choose the goal yourself: into a free slot, or in place of another |
 | `!tracker reroll <name>` | Spend 1 Pact on a new weapon for the Gunathon's current step, before it has started |
-| `!stabby` / `!stabbings` | Count one of Dave's stabbings / how many so far, this stream and all time |
+| `!stabby` / `!stabbings` | Count one of Dave's stabbings / how many so far, this stream and all time. One stab counts once: after a count, the counter waits a few seconds before anyone can count again |
 | `!execution` / `!executions` | Count one of Dave's executions / how many so far, this stream and all time |
 
 A goal more than half done can't be swapped away, and a goal that was just changed rests for a minute. What you spend goes into the Pact pool. When a goal you shaped is fulfilled, the Codex remembers.
