@@ -2,6 +2,14 @@
 
 *What's new on the stream, in Discord and on this site. Newest first.*
 
+## Patch 0.18: On Air
+
+*28 November 2026.* The shop shows where the stream is live right now.
+
+### The site
+- **LIVE tags on the social links.** While Eldritzh is live on YouTube, its buttons at the top of eldritzh.com and the little icon at the bottom light up in YouTube red with a small LIVE tag. The same goes for TikTok, Instagram, X and Facebook when the stream is on there too. Twitch keeps the shop's own live badge.
+- The tags come and go by themselves within a minute or two of going live or ending.
+
 ## Patch 0.17: The Fast Lane
 
 *27 November 2026.* The Codex stops holding everything up behind its rewards, and the shop's product cards keep their gold edge.

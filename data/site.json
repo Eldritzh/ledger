@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-27T22:59:13Z",
-  "version": "1.6.0",
+  "updated": "2026-11-27T23:14:14Z",
+  "version": "1.7.0",
   "reason": "routine",
   "files": {
     "story_chapters.json": "2026-11-04T19:52:27Z",
@@ -18,15 +18,16 @@
     "remembrance.json": "2026-11-05T19:10:46Z",
     "investigator.json": "2026-11-27T22:10:10Z",
     "fishing.json": "2026-11-27T22:10:10Z",
-    "patchnotes.md": "2026-11-27T22:59:13Z",
+    "patchnotes.md": "2026-11-27T23:14:14Z",
     "about.md": "2026-11-12T10:57:17Z",
     "nav.json": "2026-11-26T18:46:50Z",
     "covenant.json": "2026-11-27T22:10:10Z",
     "people.json": "2026-11-27T22:10:10Z",
     "fx.json": "2026-11-21T19:34:25Z",
     "winners.json": "2026-11-27T19:00:41Z",
-    "events.json": "2026-11-26T23:02:22Z",
-    "fair.json": "2026-11-26T18:26:51Z"
+    "events.json": "2026-11-27T23:14:14Z",
+    "fair.json": "2026-11-26T18:26:51Z",
+    "live.json": "2026-11-27T23:14:14Z"
   },
   "staffApi": "https://forge-web.warden.se",
   "membersPage": "https://eldritzh.com/pages/sanctum"
