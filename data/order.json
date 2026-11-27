@@ -1,7 +1,7 @@
 {
   "type": "order",
   "version": 1,
-  "updated": "2026-11-27T21:15:24Z",
+  "updated": "2026-11-27T21:30:57Z",
   "name": "The Esoteric Order of the Tentacle",
   "rules": {
     "standingDays": 3,
@@ -543,6 +543,16 @@
     },
     {
       "name": "AngryVampiress",
+      "platform": "twitch",
+      "rank": 1,
+      "rankName": "Seeker",
+      "circle": 1,
+      "days": 1,
+      "rep": 100,
+      "astray": false
+    },
+    {
+      "name": "raduqhd",
       "platform": "twitch",
       "rank": 1,
       "rankName": "Seeker",

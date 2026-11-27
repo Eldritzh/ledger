@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T21:15:05.7394054Z",
+  "updated": "2026-11-27T21:18:48.8949943Z",
   "unlocked": [
     "toad",
     "margins",
@@ -11,10 +11,10 @@
     "leng"
   ],
   "counters": {
-    "checkins": 116,
+    "checkins": 117,
     "fed": 1661364,
     "tsath_fills": 17,
-    "messages": 1350,
+    "messages": 1375,
     "banishes": 76,
     "delve_bottoms": 7,
     "sunwait_candles": 3,
@@ -27,13 +27,13 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 8,
+    "stream:checkins": 9,
     "sum:merchant_buys": 3,
     "@leng": 100,
     "sum:goblins_grabbed": 17,
     "sum:hg_challenges_held": 0,
-    "count:streams_attended": 38,
-    "stream:messages": 125,
+    "count:streams_attended": 39,
+    "stream:messages": 150,
     "sum:circle_top": 0,
     "stream:banishes": 4,
     "@moon": 100,
@@ -55,11 +55,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 77.3,
+      "pct": 78.0,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 116,
+          "have": 117,
           "need": 150
         }
       ],
@@ -154,11 +154,11 @@
       "wait": ""
     },
     "pews": {
-      "pct": 53.3,
+      "pct": 60.0,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 8,
+          "have": 9,
           "need": 15
         }
       ],
@@ -187,11 +187,11 @@
       "wait": ""
     },
     "census": {
-      "pct": 38.0,
+      "pct": 39.0,
       "parts": [
         {
           "label": "One hundred different souls sign the Ledger",
-          "have": 38,
+          "have": 39,
           "need": 100
         }
       ],
@@ -400,11 +400,11 @@
       "wait": ""
     },
     "hand": {
-      "pct": 9.7,
+      "pct": 9.8,
       "parts": [
         {
           "label": "Signatures",
-          "have": 116,
+          "have": 117,
           "need": 2500
         },
         {
@@ -419,7 +419,7 @@
         },
         {
           "label": "Souls",
-          "have": 38,
+          "have": 39,
           "need": 200
         }
       ],
