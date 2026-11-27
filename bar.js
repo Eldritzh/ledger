@@ -29,6 +29,12 @@
    with a slow pulse, so it stands out on every page. Found by its address (any link to a page whose address has
    "ledger" in it) or its text ("The Ledger"); never the other menu items. data-eldr-glow="0" turns it off,
    data-eldr-glow="<text>" matches that address part instead. Respects "reduce motion" (no pulse then).
+   1.3.0 (28 Nov): LIVE tags on the shop's social links. While a platform is live, every link to it (the button row
+   up top, the footer icons, the Links page) gets a small "LIVE" tag and a soft ring in that platform's colour.
+   From data/live.json (Website :: Publish): YouTube and Kick straight from Streamer.bot (the Herald), TikTok,
+   Instagram, X and Facebook by hand (!web live tiktok on) or following the stream (web_liveWith). Twitch is left to
+   the shop's own live badge; data-eldr-live-twitch="1" tags it too. data-eldr-live="0" turns the tags off.
+   Try it: ?eldrlive=youtube,tiktok on any page address shows those as live.
    ===================================================================================== */
 (function () {
   'use strict';
@@ -36,7 +42,7 @@
 
   var me = document.currentScript;
   var BASE = (me && me.src) ? me.src.replace(/[^\/]*(\?.*)?$/, '') : 'https://ledger.eldritzh.com/';
-  var VERSION = '1.2.0';
+  var VERSION = '1.3.0';
   var OPT = function (k, d) { var v = me && me.getAttribute('data-eldr-' + k); return v == null || v === '' ? d : v; };
   var TZ = 'Europe/Stockholm';
   var GOLD = '#D4AF37', GREEN = '#52B788';
@@ -439,20 +445,100 @@
     }
   }
 
+  // 1.3.0: LIVE tags on the social links
+  var LIVE_PLATS = [
+    { id: 'twitch', re: /(^|\.)twitch\.tv$/, c: '#9146FF', ink: '#fff' },
+    { id: 'youtube', re: /(^|\.)(youtube\.com|youtu\.be)$/, c: '#FF0033', ink: '#fff' },
+    { id: 'kick', re: /(^|\.)kick\.com$/, c: '#53FC18', ink: '#0b0e0f' },
+    { id: 'tiktok', re: /(^|\.)tiktok\.com$/, c: '#FE2C55', ink: '#fff' },
+    { id: 'instagram', re: /(^|\.)instagram\.com$/, c: '#E1306C', ink: '#fff' },
+    { id: 'x', re: /(^|\.)(x\.com|twitter\.com)$/, c: '#e7e9ea', ink: '#0b0e0f' },
+    { id: 'facebook', re: /(^|\.)(facebook\.com|fb\.com|fb\.gg|fb\.watch)$/, c: '#1877F2', ink: '#fff' }
+  ];
+  var liveNow = {};
+  function liveStyles() {
+    if (document.getElementById('eldr-live-style')) return;
+    var st = document.createElement('style'); st.id = 'eldr-live-style';
+    st.textContent = [
+      'a.eldr-live{position:relative;overflow:visible !important}',
+      'a.eldr-live:not(.eldr-live-icon){box-shadow:0 0 0 2px var(--eldr-live-c),0 0 14px var(--eldr-live-a) !important}',
+      'a.eldr-live.eldr-live-icon{color:var(--eldr-live-c) !important;filter:drop-shadow(0 0 5px var(--eldr-live-a))}',
+      '.eldr-live-tag{all:initial;position:absolute;top:-8px;right:-6px;z-index:2;display:inline-flex;align-items:center;gap:4px;padding:2px 6px 2px 5px;border-radius:5px;',
+      '  background:var(--eldr-live-c);color:var(--eldr-live-ink);font:700 9px/1.2 Montserrat,system-ui,sans-serif;letter-spacing:.09em;text-transform:uppercase;',
+      '  box-shadow:0 2px 8px rgba(0,0,0,.55);pointer-events:none;white-space:nowrap}',
+      'a.eldr-live-icon .eldr-live-tag{top:-15px;right:auto;left:50%;transform:translateX(-50%);font-size:8px;padding:1px 4px 1px 3px;gap:3px}',
+      '.eldr-live-tag i{all:initial;display:block;width:5px;height:5px;border-radius:50%;background:var(--eldr-live-ink)}',
+      '@keyframes eldr-live-ring{0%,100%{box-shadow:0 0 0 2px var(--eldr-live-c),0 0 8px var(--eldr-live-a)}50%{box-shadow:0 0 0 2px var(--eldr-live-c),0 0 20px var(--eldr-live-a)}}',
+      '@keyframes eldr-live-dot{0%,100%{opacity:1}50%{opacity:.25}}',
+      '@media (prefers-reduced-motion:no-preference){a.eldr-live:not(.eldr-live-icon){animation:eldr-live-ring 2.4s ease-in-out infinite}.eldr-live-tag i{animation:eldr-live-dot 1.2s ease-in-out infinite}}'
+    ].join('\n');
+    document.head.appendChild(st);
+  }
+  function platOf(a) {
+    var h = '';
+    try { h = new URL(a.getAttribute('href'), location.href).hostname.toLowerCase(); } catch (e) { return null; }
+    for (var i = 0; i < LIVE_PLATS.length; i++) if (LIVE_PLATS[i].re.test(h)) return LIVE_PLATS[i];
+    return null;
+  }
+  function setLive(data) {
+    var max = 16 * 3600, now = Date.now() / 1000, out = {};
+    var forced = (location.search.match(/[?&]eldrlive=([a-z,]+)/i) || [])[1];
+    if (forced) forced.toLowerCase().split(',').forEach(function (p) { out[p] = now; });
+    else if (data && data.live) for (var k in data.live) {
+      var t = +data.live[k];
+      if (data.live.hasOwnProperty(k) && t > 0 && now - t < max) out[k] = t;
+    }
+    liveNow = out;
+    markLive();
+  }
+  function markLive() {
+    if (OPT('live', '1') === '0') return;
+    var tagTwitch = OPT('live-twitch', '0') === '1';
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      if ((root && root.contains(a)) || (a.closest && a.closest('.eldr-site'))) continue;
+      var pl = platOf(a);
+      var on = !!(pl && liveNow[pl.id] && (pl.id !== 'twitch' || tagTwitch));
+      var has = a.classList.contains('eldr-live');
+      if (on && !has) {
+        liveStyles();
+        var icon = (a.textContent || '').replace(/\s+/g, '').length === 0;
+        a.classList.add('eldr-live', 'eldr-live-' + pl.id);
+        if (icon) a.classList.add('eldr-live-icon');
+        a.style.setProperty('--eldr-live-c', pl.c);
+        a.style.setProperty('--eldr-live-a', hexA(pl.c, 0.55));
+        a.style.setProperty('--eldr-live-ink', pl.ink);
+        a.appendChild(el('span', { class: 'eldr-live-tag' }, [el('i'), 'Live']));
+      } else if (!on && has) {
+        a.classList.remove('eldr-live', 'eldr-live-icon');
+        LIVE_PLATS.forEach(function (p) { a.classList.remove('eldr-live-' + p.id); });
+        var tags = a.querySelectorAll('.eldr-live-tag');
+        for (var j = 0; j < tags.length; j++) tags[j].parentNode.removeChild(tags[j]);
+      }
+    }
+  }
+  function refreshLive() {
+    if (document.hidden || OPT('live', '1') === '0') return;
+    load('live.json').then(setLive);
+  }
+
   function start() {
     refresh();
+    refreshLive();
     markGlow();
     watchOverlays();
     // Fourthwall swaps the page on its own navigation: put the bar back from the last data when it goes missing
     var t = null;
     var g = null;
     if (window.MutationObserver) new MutationObserver(function () {
-      if (!g) g = setTimeout(function () { g = null; markGlow(); }, 200);   // menus drawn or swapped later (the phone drawer)
+      if (!g) g = setTimeout(function () { g = null; markGlow(); markLive(); }, 200);   // menus drawn or swapped later (the phone drawer)
       if (t || !lastData || (root && root.isConnected)) return;
       t = setTimeout(function () { t = null; if (root && !root.isConnected) { lastSig = ''; root = null; render(lastData[0], lastData[1]); } }, 150);
     }).observe(document.body, { childList: true, subtree: true });
     setInterval(refresh, 5 * 60 * 1000);   // also turns the day over at midnight
-    document.addEventListener('visibilitychange', function () { if (!document.hidden) refresh(); });
+    setInterval(refreshLive, 90 * 1000);   // 1.3.0: the LIVE tags follow within a minute or two
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) { refresh(); refreshLive(); } });
   }
   window.__eldrBar = { refresh: refresh, version: VERSION, base: BASE };
   if (document.body) start(); else document.addEventListener('DOMContentLoaded', start);
