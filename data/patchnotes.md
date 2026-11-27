@@ -2,6 +2,29 @@
 
 *What's new on the stream, in Discord and on this site. Newest first.*
 
+## Patch 0.16: Clockwork
+
+*27 November 2026.* Fixes from Friday's stream: thank-yous arrive on time, one Being per spawn, the timed messages and the Rift's timed events run again, and the Litany card stays up long enough to read.
+
+### Thanks and offerings
+- **Your thank-you comes right away.** A sub, resub, gift or cheer is thanked the moment it lands; the achievements, cult and story updates it brings follow just after. Before, the line waited for all of those first and could come 20 seconds late.
+
+**Developers' notes:** yrael15's resub on 27 Nov was thanked 24 seconds after it arrived. The Herald sent the line within a third of a second of getting it; the other 22 seconds went to Codex and Community updates that ran before the line was even written.
+
+### The Beings
+- **One Being per spawn.** Since 26 Nov every spawn brought a second Being right after the first was banished. Now it's one again.
+- The "an eldritch being appeared!" line goes only to the platforms Dave is live on, like the rest of chat.
+
+**Developers' notes:** last night's update put the whole spawn into a small first step of the spawn action as well as the real one, so each spawn ran twice.
+
+### The Rift and timed messages
+- **Timed messages and partner reminders run again**, and so do the Rift's timed events (the FX timer). Neither had been able to start since at least the morning of 26 Nov.
+
+**Developers' notes:** both actions were missing a reference Streamer.bot needs to compile them, so every run quietly failed: the timed messages 1,335 times and the FX timer 1,993 times on 27 Nov. A new check (`check_refs.py`) now catches this before an install.
+
+### The Codex
+- **The Litany card stays on screen 20 seconds**, twice as long as before, so there's time to read all three rites.
+
 ## Patch 0.15: One Voice
 
 *26 November 2026.* Every game and system now speaks through the Herald, so a busy chat stays readable and only the platforms we're live on hear it; your gifts on Ko-fi and the shop count on every account you've linked, Discord included; and Ropes are cheaper to forge.
