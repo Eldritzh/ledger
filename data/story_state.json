@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T20:45:03.8559145Z",
+  "updated": "2026-11-27T21:00:15.4974192Z",
   "unlocked": [
     "toad",
     "margins",
@@ -11,14 +11,14 @@
     "leng"
   ],
   "counters": {
-    "checkins": 114,
+    "checkins": 115,
     "fed": 1661364,
     "tsath_fills": 17,
     "messages": 1325,
-    "banishes": 74,
+    "banishes": 76,
     "delve_bottoms": 7,
     "sunwait_candles": 3,
-    "deaths": 20,
+    "deaths": 22,
     "gilded_merchants": 1,
     "chants": 0,
     "rituals": 0,
@@ -27,16 +27,16 @@
     "tomes": 0,
     "nemeses_slain": 0,
     "warchiefs": 0,
-    "stream:checkins": 6,
+    "stream:checkins": 7,
     "sum:merchant_buys": 3,
     "@leng": 100,
-    "sum:goblins_grabbed": 16,
+    "sum:goblins_grabbed": 17,
     "sum:hg_challenges_held": 0,
-    "count:streams_attended": 37,
+    "count:streams_attended": 38,
     "stream:messages": 100,
     "sum:circle_top": 0,
-    "stream:banishes": 2,
-    "@moon": 62,
+    "stream:banishes": 4,
+    "@moon": 93,
     "kinds:beings_seen": 15,
     "pacts": 0,
     "sunwait_unseen": 0,
@@ -55,11 +55,11 @@
   },
   "progress": {
     "ink": {
-      "pct": 76.0,
+      "pct": 76.7,
       "parts": [
         {
           "label": "Sign the Ledger 150 times (check-ins)",
-          "have": 114,
+          "have": 115,
           "need": 150
         }
       ],
@@ -77,11 +77,11 @@
       "wait": ""
     },
     "deaths": {
-      "pct": 20.0,
+      "pct": 22.0,
       "parts": [
         {
           "label": "The Keeper must fall 100 times",
-          "have": 20,
+          "have": 22,
           "need": 100
         }
       ],
@@ -154,22 +154,22 @@
       "wait": ""
     },
     "pews": {
-      "pct": 40.0,
+      "pct": 46.7,
       "parts": [
         {
           "label": "Fifteen souls sign the Ledger in a single stream",
-          "have": 6,
+          "have": 7,
           "need": 15
         }
       ],
       "wait": ""
     },
     "goblins": {
-      "pct": 64.0,
+      "pct": 68.0,
       "parts": [
         {
           "label": "Grab 25 treasure goblins",
-          "have": 16,
+          "have": 17,
           "need": 25
         }
       ],
@@ -187,11 +187,11 @@
       "wait": ""
     },
     "census": {
-      "pct": 37.0,
+      "pct": 38.0,
       "parts": [
         {
           "label": "One hundred different souls sign the Ledger",
-          "have": 37,
+          "have": 38,
           "need": 100
         }
       ],
@@ -209,16 +209,16 @@
       "wait": ""
     },
     "moon": {
-      "pct": 62.5,
+      "pct": 93.8,
       "parts": [
         {
           "label": "Souls signed tonight",
-          "have": 6,
+          "have": 7,
           "need": 8
         },
         {
           "label": "Beings banished tonight",
-          "have": 2,
+          "have": 4,
           "need": 4
         }
       ],
@@ -329,11 +329,11 @@
       "wait": ""
     },
     "graves": {
-      "pct": 4.0,
+      "pct": 4.4,
       "parts": [
         {
           "label": "The Keeper must fall 500 times",
-          "have": 20,
+          "have": 22,
           "need": 500
         }
       ],
@@ -400,16 +400,16 @@
       "wait": ""
     },
     "hand": {
-      "pct": 9.5,
+      "pct": 9.7,
       "parts": [
         {
           "label": "Signatures",
-          "have": 114,
+          "have": 115,
           "need": 2500
         },
         {
           "label": "Banishments",
-          "have": 74,
+          "have": 76,
           "need": 500
         },
         {
@@ -419,7 +419,7 @@
         },
         {
           "label": "Souls",
-          "have": 37,
+          "have": 38,
           "need": 200
         }
       ],
