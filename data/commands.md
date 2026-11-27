@@ -415,7 +415,7 @@ On Twitch, prophecies also appear as a **Twitch prediction** (bet Sanity there) 
 | `!board 1000` | **Galley Night** (the new moon): when a galley of Celephaïs comes down out of the clouds, go aboard for Serannian and come back richer, or fall through a cloud. `!board key` with a Turquoise Key sails free *(new)* |
 | `!feast` | Kuranes invites the congregation to a feast now and then on Galley Nights and in the Timeless Hours: join in time for Madness and a personal happy hour *(new)* |
 | `!haunt @user <message>` | 1 Pact: a whisper that finds them the next time they speak |
-| {off} `!riddle` / `!riddle hint` | The lore riddle hanging in the air. Type the answer in chat. A dreamer who Seeks sometimes brings back a **riddle hint**: `!riddle hint` while a riddle is open tells you the answer's length and first letter |
+| `!riddle` / `!riddle hint` | The lore riddle hanging in the air. Type the answer in chat. A dreamer who Seeks sometimes brings back a **riddle hint**: `!riddle hint` while a riddle is open tells you the answer's length and first letter |
 | `Iä! Iä!` | Chant the old words in chat. When enough voices chant together, something answers |
 | `!story` | The Eldritch Ledger, the community's story. New pages unlock as you play |
 | `!story goals` | The three sealed pages closest to opening, and how far along each is |
