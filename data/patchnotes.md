@@ -2,6 +2,19 @@
 
 *What's new on the stream, in Discord and on this site. Newest first.*
 
+## Patch 0.17: The Fast Lane
+
+*27 November 2026.* The Codex stops holding everything up behind its rewards, and the shop's product cards keep their gold edge.
+
+### The Codex
+- **Codex commands answer faster on a busy stream.** `!level`, `!litany`, `!codex` and the rest no longer wait in line behind someone else's level-up or achievement rewards.
+- Rewards from one moment (a level-up, the coffer it opens and the achievement it unlocks) now arrive together as one payment.
+
+**Developers' notes:** on 27 Nov half the Codex's calls took about a tenth of a second, but one in ten took over 1.4 seconds and the slowest 10. Those were the calls paying out: each reward ran Streamer.bot's own points three times over (Madness, Pacts and Eldritch Pacts, even when two of them were zero), and every other Codex call waited until they were done. The payments now go out on their own, summed per person, after the Codex has moved on.
+
+### The site
+- **Product cards in the shop keep their gold border on hover.** The card used to lift a little, and the shelf it sits on cut its top edge off; it now glows in place instead.
+
 ## Patch 0.16: Clockwork
 
 *27 November 2026.* Fixes from Friday's stream: thank-yous arrive on time, one Being per spawn, the timed messages and the Rift's timed events run again, and the Litany card stays up long enough to read.
